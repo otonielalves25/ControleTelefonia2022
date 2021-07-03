@@ -11,27 +11,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.Categoria;
+import modelo.Localidade;
 
 /**
  *
  * @author Tony
  */
-public class CategoriaDao {
+public class LocalidadeDao {
 
     Connection con;
     PreparedStatement stm = null;
     ResultSet rs;
 
     //INSERINDO NOVO CADASTRO **************************************************    
-    public boolean insert(Categoria categoria) {
+    public boolean insert(Localidade localidade) {
 
-        String sql = "INSERT INTO categoria (categoria) VALUES (?)";
+        String sql = "INSERT INTO localidade (nomeLocalidade, tipoLocalidade) VALUES (?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, categoria.getCategoria());
+            stm.setString(1, localidade.getNomeLocalidade());
+            stm.setString(2, localidade.getTipoLocalidade());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -45,14 +46,15 @@ public class CategoriaDao {
     }
 
     // ------------ALTERAR CADASTRA  --------------------------------------    
-    public boolean update(Categoria categoria) {
+    public boolean update(Localidade localidade) {
 
-        String sql = "UPDATE categoria set categoria = ? where idCategoria = ?";
+        String sql = "UPDATE localidade set nomeLocalidade=?, tipoLocalidade=? where idLocalidade = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, categoria.getCategoria());
-            stm.setInt(2, categoria.getIdCategoria());
+            stm.setString(1, localidade.getNomeLocalidade());
+            stm.setString(2, localidade.getTipoLocalidade());
+            stm.setInt(3, localidade.getIdLocalidade());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -66,7 +68,7 @@ public class CategoriaDao {
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {
-        String sql = "DELETE from categoria where idCategoria= ?";
+        String sql = "DELETE from localidade where idLocalidade= ?";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -85,10 +87,10 @@ public class CategoriaDao {
     }
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
-    public Categoria retornaPorID(int codigo) {
+    public Localidade retornaPorID(int codigo) {
 
         String sql = "SELECT * FROM categoria WHERE idCategoria = ?";
-        Categoria categoria = null;
+        Localidade localidade = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -96,9 +98,10 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getInt("idCategoria"));
-                    categoria.setCategoria(rs.getString("categoria"));
+                    localidade = new Localidade();
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                 }
             }
             //fechando as conexões
@@ -108,14 +111,14 @@ public class CategoriaDao {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
         }
 
-        return categoria;
+        return localidade;
     }
-    
+
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
-    public Categoria retornaPorNome(String procura) {
+    public Localidade retornaPorNome(String procura) {
 
         String sql = "SELECT * FROM categoria WHERE categoria = ?";
-        Categoria categoria = null;
+        Localidade localidade = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -123,9 +126,10 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getInt("idCategoria"));
-                    categoria.setCategoria(rs.getString("categoria"));
+                    localidade = new Localidade();
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                 }
             }
             //fechando as conexões
@@ -135,15 +139,15 @@ public class CategoriaDao {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
         }
 
-        return categoria;
+        return localidade;
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Categoria> getListagemLike(String busca) {
+    public ArrayList<Localidade> getListagemLike(String busca) {
 
-        ArrayList<Categoria> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM categoria WHERE categoria LIKE ? ORDER BY categoria";
-        Categoria categoria;
+        ArrayList<Localidade> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM localidade WHERE nomeLocalidade LIKE ? ORDER BY nomeLocalidade";
+        Localidade localidade;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -152,10 +156,11 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             while (rs.next()) {
 
-                categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("idCategoria"));
-                categoria.setCategoria(rs.getString("categoria"));
-                Listagem.add(categoria);
+                localidade = new Localidade();
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                Listagem.add(localidade);
             }
             //fechando as conexões
             con.close();

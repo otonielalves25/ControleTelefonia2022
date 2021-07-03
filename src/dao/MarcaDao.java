@@ -12,26 +12,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Categoria;
+import modelo.Marca;
 
 /**
  *
  * @author Tony
  */
-public class CategoriaDao {
+public class MarcaDao {
 
     Connection con;
     PreparedStatement stm = null;
     ResultSet rs;
 
     //INSERINDO NOVO CADASTRO **************************************************    
-    public boolean insert(Categoria categoria) {
+    public boolean insert(Marca marca) {
 
-        String sql = "INSERT INTO categoria (categoria) VALUES (?)";
+        String sql = "INSERT INTO marca (marca, categoria_id) VALUES (?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, categoria.getCategoria());
+            stm.setString(1, marca.getMarca());
+            stm.setInt(2, marca.getCategoria().getIdCategoria());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -45,14 +47,15 @@ public class CategoriaDao {
     }
 
     // ------------ALTERAR CADASTRA  --------------------------------------    
-    public boolean update(Categoria categoria) {
+    public boolean update(Marca marca) {
 
-        String sql = "UPDATE categoria set categoria = ? where idCategoria = ?";
+        String sql = "UPDATE marca SET marca =?, categoria_id = ? where idMarca = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, categoria.getCategoria());
-            stm.setInt(2, categoria.getIdCategoria());
+            stm.setString(1, marca.getMarca());
+            stm.setInt(2, marca.getCategoria().getIdCategoria());
+            stm.setInt(3, marca.getIdMarca());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -66,7 +69,7 @@ public class CategoriaDao {
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {
-        String sql = "DELETE from categoria where idCategoria= ?";
+        String sql = "DELETE from marca where idMarca = ?";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -85,10 +88,10 @@ public class CategoriaDao {
     }
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
-    public Categoria retornaPorID(int codigo) {
+    public Marca retornaPorID(int codigo) {
 
-        String sql = "SELECT * FROM categoria WHERE idCategoria = ?";
-        Categoria categoria = null;
+        String sql = "SELECT * FROM marca WHERE idMarca = ?";
+        Marca marca = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -96,9 +99,11 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getInt("idCategoria"));
-                    categoria.setCategoria(rs.getString("categoria"));
+                    marca = new Marca();
+                    marca.setIdMarca(rs.getInt("idMarca"));
+                    marca.setMarca(rs.getString("marca"));
+                    Categoria categoria = new CategoriaDao().retornaPorID(rs.getInt("categoria_id"));
+                    marca.setCategoria(categoria);
                 }
             }
             //fechando as conexões
@@ -108,14 +113,14 @@ public class CategoriaDao {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
         }
 
-        return categoria;
+        return marca;
     }
-    
-    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
-    public Categoria retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM categoria WHERE categoria = ?";
-        Categoria categoria = null;
+    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    public Marca retornaPorNome(String procura) {
+
+        String sql = "SELECT * FROM marca WHERE marca = ?";
+        Marca marca = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -123,9 +128,11 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getInt("idCategoria"));
-                    categoria.setCategoria(rs.getString("categoria"));
+                    marca = new Marca();
+                    marca.setIdMarca(rs.getInt("idMarca"));
+                    marca.setMarca(rs.getString("marca"));
+                    Categoria categoria = new CategoriaDao().retornaPorID(rs.getInt("categoria_id"));
+                    marca.setCategoria(categoria);
                 }
             }
             //fechando as conexões
@@ -135,15 +142,15 @@ public class CategoriaDao {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
         }
 
-        return categoria;
+        return marca;
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Categoria> getListagemLike(String busca) {
+    public ArrayList<Marca> getListagemLike(String busca) {
 
-        ArrayList<Categoria> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM categoria WHERE categoria LIKE ? ORDER BY categoria";
-        Categoria categoria;
+        ArrayList<Marca> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM marca WHERE marca LIKE ? ORDER BY marca";
+        Marca marca = null;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -152,10 +159,12 @@ public class CategoriaDao {
             rs = stm.executeQuery();
             while (rs.next()) {
 
-                categoria = new Categoria();
-                categoria.setIdCategoria(rs.getInt("idCategoria"));
-                categoria.setCategoria(rs.getString("categoria"));
-                Listagem.add(categoria);
+                marca = new Marca();
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                Categoria categoria = new CategoriaDao().retornaPorID(rs.getInt("categoria_id"));
+                marca.setCategoria(categoria);
+                Listagem.add(marca);
             }
             //fechando as conexões
             con.close();
