@@ -18,10 +18,9 @@ public class Localidade {
     public Localidade() {
     }
 
-    public Localidade(int idLocalidade, String nomeLocalidade, String tipoLocalidade) {
+    public Localidade(int idLocalidade) {
         this.idLocalidade = idLocalidade;
-        this.nomeLocalidade = nomeLocalidade;
-        this.tipoLocalidade = tipoLocalidade;
+     
     }
 
     /**

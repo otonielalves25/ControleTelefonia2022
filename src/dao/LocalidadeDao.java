@@ -89,7 +89,7 @@ public class LocalidadeDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Localidade retornaPorID(int codigo) {
 
-        String sql = "SELECT * FROM categoria WHERE idCategoria = ?";
+        String sql = "SELECT * FROM localidade WHERE idLocalidade = ?";
         Localidade localidade = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -101,7 +101,7 @@ public class LocalidadeDao {
                     localidade = new Localidade();
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                     localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
-                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
                 }
             }
             //fechando as conexões
@@ -117,7 +117,7 @@ public class LocalidadeDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Localidade retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM categoria WHERE categoria = ?";
+        String sql = "SELECT * FROM localidade WHERE nomeLocalidade = ?";
         Localidade localidade = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -129,7 +129,7 @@ public class LocalidadeDao {
                     localidade = new Localidade();
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                     localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
-                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
                 }
             }
             //fechando as conexões
@@ -159,7 +159,7 @@ public class LocalidadeDao {
                 localidade = new Localidade();
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                 localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
-                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
                 Listagem.add(localidade);
             }
             //fechando as conexões

@@ -5,32 +5,67 @@
  */
 package formulario;
 
-import dao.CategoriaDao;
+import dao.LocalidadeDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.Categoria;
+import modelo.Localidade;
 
 /**
  *
  * @author otoniel.aalves
  */
-public class FrmCategoria extends javax.swing.JFrame {
+public class FrmLocalidade extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    int localidade_id;
 
     //Variaveis
-    CategoriaDao categoriaDao = new CategoriaDao();
+    LocalidadeDao localidadeDao = new LocalidadeDao();
 
-    public FrmCategoria() {
+    public FrmLocalidade() {
         initComponents();
         txtCodigo.setVisible(false);
         botaoInicial();
         habilitado(false);
         carregaGrelha();
 
+    }
+
+    //CARREGA GRELHA OTIMIZADA-------------------------------------------------
+    public final void carregaGrelha() {
+
+        int contador = 0;
+        DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
+        modelo.setNumRows(0);
+
+        List<Localidade> lista = localidadeDao.getListagemLike("");
+
+        for (Localidade localidade : lista) {
+
+            modelo.addRow(new Object[]{
+                localidade.getIdLocalidade(),
+                localidade.getNomeLocalidade(),
+                localidade.getTipoLocalidade()
+
+            });
+        }
+    }
+
+    //LIMPAR******************************************************************
+    private void limparTudo() {
+
+        txtLocalidade.setText("");
+        cboTipoLocalidade.setSelectedItem("Selecione...");
+    }
+
+    //LIMPAR******************************************************************
+    private void habilitado(boolean y) {
+        txtLocalidade.setEnabled(y);
+        grelha.setEnabled(!y);
+        cboTipoLocalidade.setEnabled(y);
     }
 
     /**
@@ -44,7 +79,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtTexto = new javax.swing.JTextField();
+        txtLocalidade = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         grelha = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
@@ -54,6 +89,8 @@ public class FrmCategoria extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         lblTitulo = new javax.swing.JLabel();
+        cboTipoLocalidade = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -61,13 +98,13 @@ public class FrmCategoria extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(189, 210, 116));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Categoria de Equipamento:");
+        jLabel1.setText("Nome Local:");
 
-        txtTexto.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        txtTexto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtLocalidade.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        txtLocalidade.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        txtLocalidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTextoKeyPressed(evt);
+                txtLocalidadeKeyPressed(evt);
             }
         });
 
@@ -78,11 +115,11 @@ public class FrmCategoria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "NOME CATEGORIA"
+                "CÓDIGO", "NOME LOCALIDADE", "TIPO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -167,9 +204,14 @@ public class FrmCategoria extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Cadastro de Categoria de Equipamento");
+        lblTitulo.setText("Cadastro de Localidade/Setor");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
+
+        cboTipoLocalidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "SETOR", "OUTRO", " " }));
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel2.setText("Tipo Localidade:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,11 +221,6 @@ public class FrmCategoria extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtTexto)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +231,18 @@ public class FrmCategoria extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLocalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboTipoLocalidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -202,11 +250,15 @@ public class FrmCategoria extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLocalidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboTipoLocalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,10 +290,17 @@ public class FrmCategoria extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (grelha.getRowCount() > 0) {
-                txtCodigo.setText(grelha.getValueAt(grelha.getSelectedRow(), 0).toString());
-                txtTexto.setText((String) grelha.getValueAt(grelha.getSelectedRow(), 1));
+
+                int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
+                Localidade localidade = localidadeDao.retornaPorID(codigo);
+
+                txtCodigo.setText(localidade.getIdLocalidade() + "");
+                txtLocalidade.setText(localidade.getNomeLocalidade());
+                cboTipoLocalidade.setSelectedItem(localidade.getTipoLocalidade());
+
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
+                novo = false;
             }
 
         } catch (Exception e) {
@@ -252,10 +311,11 @@ public class FrmCategoria extends javax.swing.JFrame {
         // TODO add your handling code here:
         botaoNovo();
         novo = true;
-        txtTexto.setEnabled(true);
+        txtLocalidade.setEnabled(true);
+        cboTipoLocalidade.setEnabled(true);
         grelha.setEnabled(false);
         limparTudo();
-        txtTexto.requestFocus();
+        txtLocalidade.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -270,7 +330,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
 
-                categoriaDao.delete(Integer.parseInt(txtCodigo.getText()));
+                localidadeDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
                 carregaGrelha();
 
@@ -302,40 +362,52 @@ public class FrmCategoria extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
 
-        if (txtTexto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
-        } else {
-            Categoria categoria = new Categoria();
-            categoria.setCategoria(txtTexto.getText().toUpperCase());
-            // CADATRAO NOVO NO BANCO //////////////////////////////////////////
-            if (novo) {
-                Categoria teste = categoriaDao.retornaPorNome(txtTexto.getText().toUpperCase());
-                if (teste != null) {
-                    JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                categoriaDao.insert(categoria);
-                JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
-                // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
-            } else {
-
-                categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText()));
-                categoriaDao.update(categoria);
-                JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-            }
-
-            botaoInicial();
-            novo = false;
-            habilitado(false);
-            limparTudo();
-            carregaGrelha();
+        if (txtLocalidade.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Localidade não informada", null, JOptionPane.ERROR_MESSAGE);
+            txtLocalidade.requestFocus();
+            return;
         }
+        if (cboTipoLocalidade.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Tipo localidde não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboTipoLocalidade.requestFocus();
+            return;
+        }
+
+        // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
+        Localidade localidade = new Localidade();
+
+        localidade.setNomeLocalidade(txtLocalidade.getText().toUpperCase());
+        localidade.setTipoLocalidade(cboTipoLocalidade.getSelectedItem().toString());
+
+        // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
+        if (novo) {
+            Localidade m = localidadeDao.retornaPorNome(txtLocalidade.getText().toUpperCase());
+            if (m != null) {
+                JOptionPane.showMessageDialog(this, "Localidade já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            localidadeDao.insert(localidade);
+            JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
+        } else {
+
+            localidade.setIdLocalidade(Integer.parseInt(txtCodigo.getText()));
+            localidadeDao.update(localidade);
+            JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+        }
+
+        botaoInicial();
+        novo = false;
+        habilitado(false);
+        limparTudo();
+        carregaGrelha();
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
+    private void txtLocalidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocalidadeKeyPressed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_txtTextoKeyPressed
+    }//GEN-LAST:event_txtLocalidadeKeyPressed
 
     /**
      * @param args the command line arguments
@@ -354,14 +426,398 @@ public class FrmCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLocalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLocalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLocalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLocalidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -494,7 +950,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCategoria().setVisible(true);
+                new FrmLocalidade().setVisible(true);
             }
         });
     }
@@ -519,35 +975,6 @@ public class FrmCategoria extends javax.swing.JFrame {
         btnSalvar.setEnabled(true);
     }
 
-    //LIMPAR******************************************************************
-    private void limparTudo() {
-    
-        txtTexto.setText("")  ;      
-    }
-
-    //LIMPAR******************************************************************
-    private void habilitado(boolean y) {
-        txtTexto.setEnabled(y);
-        grelha.setEnabled(!y);
-    }
-
-    //CARREGA GRELHA OTIMIZADA-------------------------------------------------
-    public final void carregaGrelha() {
-
-        int contador = 0;
-        DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
-        modelo.setNumRows(0);
-
-        List<Categoria> lista = categoriaDao.getListagemLike("");
-
-        for (Categoria categ : lista) {
-
-            modelo.addRow(new Object[]{
-                categ.getIdCategoria(),
-                categ.getCategoria(),});
-        }
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -555,12 +982,14 @@ public class FrmCategoria extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox cboTipoLocalidade;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtTexto;
+    private javax.swing.JTextField txtLocalidade;
     // End of variables declaration//GEN-END:variables
 }

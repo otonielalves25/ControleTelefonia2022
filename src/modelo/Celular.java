@@ -9,65 +9,66 @@ package modelo;
  *
  * @author Tony
  */
-public class Equipamento {
+public class Celular {
 
-    private int idAparelho;
-    private String codigo;
-    private String telefone;
+    private int idCelular;
+    private String imei1;
+    private String imei2;
     private String status;
     private String observacao;
+    private String serie;
     private Marca marca;
+    
 
-    public Equipamento() {
+    public Celular() {
     }
 
-    public Equipamento(int idAparelho) {
-        this.idAparelho = idAparelho;
+    public Celular(int idCelular) {
+        this.idCelular = idCelular;
 
-    }
-
-    /**
-     * @return the codigo
-     */
-    public String getCodigo() {
-        return codigo;
     }
 
     /**
-     * @param codigo the codigo to set
+     * @return the idCelular
      */
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public int getIdCelular() {
+        return idCelular;
     }
 
     /**
-     * @return the telefone
+     * @param idCelular the idCelular to set
      */
-    public String getTelefone() {
-        return telefone;
+    public void setIdCelular(int idCelular) {
+        this.idCelular = idCelular;
     }
 
     /**
-     * @param telefone the telefone to set
+     * @return the imei1
      */
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public String getImei1() {
+        return imei1;
     }
 
     /**
-     * @return the idAparelho
+     * @param imei1 the imei1 to set
      */
-    public int getIdAparelho() {
-        return idAparelho;
+    public void setImei1(String imei1) {
+        this.imei1 = imei1;
     }
 
     /**
-     * @param idAparelho the idAparelho to set
+     * @return the imei2
      */
-    public void setIdAparelho(int idAparelho) {
-        this.idAparelho = idAparelho;
+    public String getImei2() {
+        return imei2;
     }
 
+    /**
+     * @param imei2 the imei2 to set
+     */
+    public void setImei2(String imei2) {
+        this.imei2 = imei2;
+    }
 
     /**
      * @return the status
@@ -111,4 +112,19 @@ public class Equipamento {
         this.marca = marca;
     }
 
+    /**
+     * @return the serie
+     */
+    public String getSerie() {
+        return serie;
+    }
+
+    /**
+     * @param serie the serie to set
+     */
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+  
 }

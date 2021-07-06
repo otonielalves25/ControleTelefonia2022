@@ -6,46 +6,35 @@
 package formulario;
 
 import dao.CategoriaDao;
-import dao.MarcaDao;
+import dao.UsuarioDao;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Marca;
+import modelo.Usuario;
 
 /**
  *
  * @author otoniel.aalves
  */
-public class FrmMarca extends javax.swing.JFrame {
+public class FrmUsuario extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
-    int categoria_id;
 
     //Variaveis
-    CategoriaDao categoriaDao = new CategoriaDao();
-    MarcaDao marcaDao = new MarcaDao();
+    UsuarioDao usuarioDao = new UsuarioDao();
 
-    public FrmMarca() {
+    public FrmUsuario() {
         initComponents();
         txtCodigo.setVisible(false);
         botaoInicial();
         habilitado(false);
         carregaGrelha();
-        carregarCombobox();
-
-    }
-
-    // CARREGA COMBOBOX ////////////////////////////////////////////////////////
-    private void carregarCombobox() {
-        List<Categoria> lista = categoriaDao.getListagemLike("");
-        cboCategoria.removeAllItems();
-        cboCategoria.addItem("Selecione...");
-        for (Categoria categoria : lista) {
-            cboCategoria.addItem(categoria);
-        }
 
     }
 
@@ -56,29 +45,37 @@ public class FrmMarca extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
 
-        List<Marca> lista = marcaDao.getListagemLike("");
+        List<Usuario> lista = usuarioDao.getListagem();
 
-        for (Marca marca : lista) {
+        for (Usuario usuario : lista) {
 
             modelo.addRow(new Object[]{
-                marca.getIdMarca(),
-                marca.getMarca(),
-                marca.getCategoria().getCategoria(),});
+                usuario.getIdUsuario(),
+                usuario.getNome(),
+                usuario.getPrevilegio(),
+                usuario.getStatus(),});
         }
     }
 
     //LIMPAR******************************************************************
     private void limparTudo() {
 
-        txtTexto.setText("");
-        cboCategoria.setSelectedItem(0);
+        txtNome.setText("");
+        cboPrevilegio.setSelectedItem(0);
+        txtLogin.setText("");
+        txtSenha.setText("");
+        ckAtivo.setSelected(false);
+
     }
 
     //LIMPAR******************************************************************
     private void habilitado(boolean y) {
-        txtTexto.setEnabled(y);
+        txtNome.setEnabled(y);
         grelha.setEnabled(!y);
-        cboCategoria.setEnabled(y);
+        cboPrevilegio.setEnabled(y);
+        txtLogin.setEnabled(y);
+        txtSenha.setEnabled(y);
+        ckAtivo.setEnabled(y);
     }
 
     /**
@@ -92,7 +89,7 @@ public class FrmMarca extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtTexto = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         grelha = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
@@ -102,8 +99,13 @@ public class FrmMarca extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         lblTitulo = new javax.swing.JLabel();
-        cboCategoria = new javax.swing.JComboBox();
+        cboPrevilegio = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtLogin = new javax.swing.JTextField();
+        txtSenha = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        ckAtivo = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -111,13 +113,13 @@ public class FrmMarca extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(189, 210, 116));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Marca Modelo:");
+        jLabel1.setText("Nome:");
 
-        txtTexto.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        txtTexto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtNome.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        txtNome.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTextoKeyPressed(evt);
+                txtNomeKeyPressed(evt);
             }
         });
 
@@ -128,11 +130,11 @@ public class FrmMarca extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "MARCA MODELO", "CATEGORIA"
+                "CÓDIGO", "NOME:", "PREVILÊGIO:", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -151,6 +153,8 @@ public class FrmMarca extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
             grelha.getColumnModel().getColumn(0).setPreferredWidth(70);
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
@@ -217,14 +221,32 @@ public class FrmMarca extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Cadastro de Marca Modelo");
+        lblTitulo.setText("Cadastro de Usuários");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        cboCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboPrevilegio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "Consulta", "Admin" }));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel2.setText("Categoria:");
+        jLabel2.setText("Previlêgio:");
+
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel3.setText("Login:");
+
+        txtLogin.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        txtLogin.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLoginKeyPressed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel4.setText("Senha:");
+
+        ckAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckAtivo.setText("Ativo");
+        ckAtivo.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -246,16 +268,25 @@ public class FrmMarca extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtNome)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cboPrevilegio, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))
+                            .addComponent(ckAtivo, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -264,16 +295,24 @@ public class FrmMarca extends javax.swing.JFrame {
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckAtivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboPrevilegio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,12 +344,20 @@ public class FrmMarca extends javax.swing.JFrame {
             if (grelha.getRowCount() > 0) {
 
                 int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
-                Marca marca = marcaDao.retornaPorID(codigo);
 
-                txtCodigo.setText(marca.getIdMarca() + "");
-                txtTexto.setText(marca.getMarca());
-                cboCategoria.getModel().setSelectedItem(marca.getCategoria().getCategoria());
-                categoria_id = marca.getCategoria().getIdCategoria();
+                Usuario u = usuarioDao.getPorID(codigo);
+
+                txtCodigo.setText(u.getIdUsuario() + "");
+                txtNome.setText(u.getNome());
+                txtLogin.setText(u.getLogin());
+                cboPrevilegio.setSelectedItem(u.getPrevilegio());
+
+                if (u.getStatus().equalsIgnoreCase("Ativo")) {
+                    ckAtivo.setSelected(true);
+                } else {
+                    ckAtivo.setSelected(false);
+                }
+
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
                 novo = false;
@@ -324,11 +371,9 @@ public class FrmMarca extends javax.swing.JFrame {
         // TODO add your handling code here:
         botaoNovo();
         novo = true;
-        txtTexto.setEnabled(true);
-        cboCategoria.setEnabled(true);
-        grelha.setEnabled(false);
+        habilitado(true);
         limparTudo();
-        txtTexto.requestFocus();
+        txtNome.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -343,7 +388,7 @@ public class FrmMarca extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
 
-                marcaDao.delete(Integer.parseInt(txtCodigo.getText()));
+                usuarioDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
                 carregaGrelha();
 
@@ -375,38 +420,53 @@ public class FrmMarca extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
 
-        if (txtTexto.getText().equals("")) {
+        if (txtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Marca modelo não informada", null, JOptionPane.ERROR_MESSAGE);
-            txtTexto.requestFocus();
+            txtNome.requestFocus();
             return;
         }
-        if (cboCategoria.getSelectedItem().equals("Selecione...")) {
-            JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
-            cboCategoria.requestFocus();
+        if (cboPrevilegio.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Previlegio não informado", null, JOptionPane.ERROR_MESSAGE);
+            cboPrevilegio.requestFocus();
+            return;
+        }
+        if (txtLogin.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Login não informada", null, JOptionPane.ERROR_MESSAGE);
+            txtLogin.requestFocus();
+            return;
+        }
+        if (txtSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Senha não informada", null, JOptionPane.ERROR_MESSAGE);
+            txtSenha.requestFocus();
             return;
         }
 
         // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
-        Marca marca = new Marca();
-        Categoria categoria = categoriaDao.retornaPorNome(cboCategoria.getSelectedItem().toString());
-
-        marca.setMarca(txtTexto.getText().toUpperCase());
-        marca.setCategoria(categoria);
+        Usuario usuario = new Usuario();
+        usuario.setPrevilegio(cboPrevilegio.getSelectedItem().toString());
+        usuario.setNome(txtNome.getText().toUpperCase());
+        usuario.setLogin(txtLogin.getText());
+        usuario.setSenha(txtSenha.getText());
+        if (ckAtivo.isSelected()) {
+            usuario.setStatus("Ativo");
+        } else {
+            usuario.setStatus("Inativo");
+        }
 
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {
-            Marca m = marcaDao.retornaPorNome(txtTexto.getText().toUpperCase());
+            Usuario m = usuarioDao.retornaPorNome(txtNome.getText().toUpperCase());
             if (m != null) {
                 JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            marcaDao.insert(marca);
+            usuarioDao.insert(usuario);
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
 
-            marca.setIdMarca(Integer.parseInt(txtCodigo.getText()));
-            marcaDao.update(marca);
+            usuario.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
+            usuarioDao.update(usuario);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
         }
 
@@ -418,10 +478,14 @@ public class FrmMarca extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_txtTextoKeyPressed
+    }//GEN-LAST:event_txtNomeKeyPressed
+
+    private void txtLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoginKeyPressed
 
     /**
      * @param args the command line arguments
@@ -440,14 +504,270 @@ public class FrmMarca extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -708,7 +1028,7 @@ public class FrmMarca extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMarca().setVisible(true);
+                new FrmUsuario().setVisible(true);
             }
         });
     }
@@ -740,14 +1060,19 @@ public class FrmMarca extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox cboCategoria;
+    private javax.swing.JComboBox cboPrevilegio;
+    private javax.swing.JCheckBox ckAtivo;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtTexto;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }

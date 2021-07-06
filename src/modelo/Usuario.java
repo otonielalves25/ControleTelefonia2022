@@ -16,6 +16,7 @@ public class Usuario {
     private String login;
     private String senha;
     private String status;
+    private String previlegio;
 
     public Usuario() {
     }
@@ -98,6 +99,20 @@ public class Usuario {
     @Override
     public String toString() {
         return nome; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * @return the previlegio
+     */
+    public String getPrevilegio() {
+        return previlegio;
+    }
+
+    /**
+     * @param previlegio the previlegio to set
+     */
+    public void setPrevilegio(String previlegio) {
+        this.previlegio = previlegio;
     }
 
 }
