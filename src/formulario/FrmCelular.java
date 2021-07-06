@@ -5,14 +5,17 @@
  */
 package formulario;
 
+import dao.CategoriaDao;
 import dao.CelularDao;
+import dao.MarcaDao;
 
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.Categoria;
 import modelo.Celular;
-import modelo.Funcionario;
-import modelo.Localidade;
+import modelo.Marca;
 
 /**
  *
@@ -26,6 +29,8 @@ public class FrmCelular extends javax.swing.JFrame {
 
     //Variaveis
     CelularDao celularDao = new CelularDao();
+    CategoriaDao categoriaDao = new CategoriaDao();
+    MarcaDao marcaDao = new MarcaDao();
 
     public FrmCelular() {
         initComponents();
@@ -33,7 +38,17 @@ public class FrmCelular extends javax.swing.JFrame {
         botaoInicial();
         habilitado(false);
         carregaGrelha();
+        carregaComboCategoria();
 
+    }
+
+    // CARREGA COMBOBOX CATEGORIA //////////////////////////////////////////////
+    private void carregaComboCategoria() {
+        List<Categoria> listagem = categoriaDao.getListagemLike("");
+        cboCategoria.addItem("Selecione...");
+        for (Categoria categoria : listagem) {
+            cboCategoria.addItem(categoria);
+        }
     }
 
     //CARREGA GRELHA OTIMIZADA-------------------------------------------------
@@ -50,16 +65,20 @@ public class FrmCelular extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 celular.getIdCelular(),
                 celular.getMarca().getMarca(),
+                celular.getImei1(),
                 celular.getSerie(),
                 celular.getStatus(),});
+            contador++;
         }
+
+        lblQuantidade.setText("Quantidade: " + contador);
     }
 
     //LIMPAR******************************************************************
     private void limparTudo() {
 
         txtSerie.setText("");
-        cboTipo.setSelectedItem("Selecione...");
+        cboCategoria.setSelectedItem("Selecione...");
         txtEmei1.setText("");
         txtEmei2.setText("");
         txtObservacao.setText("");
@@ -72,7 +91,7 @@ public class FrmCelular extends javax.swing.JFrame {
     private void habilitado(boolean y) {
         txtSerie.setEnabled(y);
         grelha.setEnabled(!y);
-        cboTipo.setEnabled(y);
+        cboCategoria.setEnabled(y);
         txtEmei1.setEnabled(y);
         txtEmei2.setEnabled(y);
         txtObservacao.setEnabled(y);
@@ -101,7 +120,7 @@ public class FrmCelular extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         lblTitulo = new javax.swing.JLabel();
-        cboTipo = new javax.swing.JComboBox();
+        cboCategoria = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         cboMarca = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
@@ -115,14 +134,15 @@ public class FrmCelular extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
+        lblQuantidade = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(189, 210, 116));
+        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Serie");
+        jLabel1.setText("Serie:");
 
         txtSerie.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtSerie.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -238,12 +258,18 @@ public class FrmCelular extends javax.swing.JFrame {
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        cboTipo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "SETOR", "OUTRO", " " }));
+        cboCategoria.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cboCategoriaPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel3.setText("Tipo:");
-
-        cboMarca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "ASSESSOR(A)", "CHEFE DIVISÃO", "CHEFE INTERINA", "COMANDANTE", "COORDENADOR(A)", "DIRETOR", "MOTORISTA", "OUVIDOR", "PRESIDENTE", "SECRETARIA", "SERVIDOR(A)", "SUPERVISOR(A)", "SUPERVISORA", "TECNICO", "VISTORIADOR", " ", " " }));
+        jLabel3.setText("Categoria:");
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel5.setText("Observação:");
@@ -287,11 +313,17 @@ public class FrmCelular extends javax.swing.JFrame {
         });
 
         txtObservacao.setColumns(20);
+        txtObservacao.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         txtObservacao.setRows(5);
+        txtObservacao.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jScrollPane2.setViewportView(txtObservacao);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel4.setText("Marca Modelo:");
+
+        lblQuantidade.setForeground(new java.awt.Color(0, 0, 204));
+        lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblQuantidade.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -302,7 +334,7 @@ public class FrmCelular extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,7 +352,7 @@ public class FrmCelular extends javax.swing.JFrame {
                             .addComponent(txtPesquisa))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(cboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -344,20 +376,20 @@ public class FrmCelular extends javax.swing.JFrame {
                                             .addComponent(txtEmei2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(ckAtivo))))
-                                .addComponent(jLabel4)))))
-                .addGap(28, 28, Short.MAX_VALUE))
+                                .addComponent(jLabel4))))
+                    .addComponent(lblQuantidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel8)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,7 +402,7 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
@@ -388,8 +420,10 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblQuantidade)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -410,25 +444,27 @@ public class FrmCelular extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         try {
             if (grelha.getRowCount() > 0) {
 
                 int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
-//                Funcionario f = funcionarioDao.getPorID(codigo);
-//
-//                txtCodigo.setText(f.getIdFuncionario() + "");
-//                txtSerie.setText(f.getNome());
-//                txtCPF.setText("");
-//                txtCPF.setText(f.getCpf());
-//                txtRg.setText(f.getRg());
-//                cboTipo.getModel().setSelectedItem(f.getLocalidade());
-//                cboMarca.setSelectedItem(f.getCargo());
-//                if (f.getStatus().equalsIgnoreCase("Ativo")) {
-//                    ckAtivo.setSelected(true);
-//                } else {
-//                    ckAtivo.setSelected(false);
-//                }
+                Celular c = celularDao.getPorID(codigo);
+
+                txtCodigo.setText(c.getIdCelular()+ "");
+                txtSerie.setText(c.getSerie());
+                txtEmei1.setText(c.getImei1());
+                txtEmei2.setText(c.getImei2());
+                cboCategoria.getModel().setSelectedItem(c.getMarca().getCategoria());
+                cboMarca.getModel().setSelectedItem(c.getMarca());
+                marca_id = c.getMarca().getIdMarca();
+                txtObservacao.setText(c.getObservacao());
+                
+                if (c.getStatus().equalsIgnoreCase("Ativo")) {
+                    ckAtivo.setSelected(true);
+                } else {
+                    ckAtivo.setSelected(false);
+                }
 
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
@@ -445,6 +481,8 @@ public class FrmCelular extends javax.swing.JFrame {
         novo = true;
         habilitado(true);
         limparTudo();
+        ckAtivo.setSelected(true);
+        ckAtivo.setEnabled(false);
         txtSerie.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -497,44 +535,69 @@ public class FrmCelular extends javax.swing.JFrame {
             txtSerie.requestFocus();
             return;
         }
-        if (cboTipo.getSelectedItem().equals("Selecione...")) {
-            JOptionPane.showMessageDialog(this, "Tipo localidde não informada", null, JOptionPane.ERROR_MESSAGE);
-            cboTipo.requestFocus();
+        if (txtEmei1.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Emei 1 não informada", null, JOptionPane.ERROR_MESSAGE);
+            txtSerie.requestFocus();
+            return;
+        }
+        if (cboCategoria.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboCategoria.requestFocus();
+            return;
+        }
+        if (cboMarca.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Marca modelo não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboCategoria.requestFocus();
             return;
         }
 
-//        // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
-//        Funcionario funcionario = new Funcionario();
-//        Localidade localidade = null;
-//        funcionario.setNome(txtSerie.getText());
-//   
-//        funcionario.setCargo(cboMarca.getSelectedItem().toString());
-//        if (ckAtivo.isSelected()) {
-//            funcionario.setStatus("Ativo");
-//        } else {
-//            funcionario.setStatus("Inativo");
-//        }
-//
-//        try {
-//            localidade = (Localidade) cboTipo.getSelectedItem();
-//        } catch (Exception e) {
-//            localidade = new Localidade(localidade_id);
-//        }
-//        funcionario.setLocalidade(localidade);
-//
-//        // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
-//        if (novo) {
-//     
-//            funcionarioDao.insert(funcionario);
-//            JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
-//            // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
-//        } else {
-//
-//            localidade.setIdLocalidade(Integer.parseInt(txtCodigo.getText()));
-//            funcionarioDao.update(funcionario);
-//            JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-//        }
+        // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
+        Celular celular = new Celular();
+        celular.setSerie(txtSerie.getText());
+        celular.setImei1(txtEmei1.getText());
+        celular.setImei2(txtEmei2.getText());
+        Marca marca;
+        try {
+            marca = (Marca) cboMarca.getSelectedItem();
+        } catch (Exception e) {
+            marca = new Marca(marca_id);
+        }
 
+        if (ckAtivo.isSelected()) {
+            celular.setStatus("Ativo");
+        } else {
+            celular.setStatus("Inativo");
+        }
+
+        celular.setMarca(marca);
+        celular.setObservacao(txtObservacao.getText());
+
+        // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
+        if (novo) {
+            // verifica se ja em cadastro
+            Celular c = celularDao.verificarSeCadastrado(txtSerie.getText(), txtEmei1.getText());
+            if (c != null) {
+                JOptionPane.showMessageDialog(this, "Equipamento já tem no cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // se não tem cadastro continua
+            if (celularDao.insert(celular)) {
+                JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro no cadastro", null, JOptionPane.ERROR_MESSAGE);
+            }
+
+            // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
+        } else {
+
+            celular.setIdCelular(Integer.parseInt(txtCodigo.getText()));
+            if (celularDao.update(celular)) {
+                JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro na alteração.", null, JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
         botaoInicial();
         novo = false;
         habilitado(false);
@@ -560,6 +623,18 @@ public class FrmCelular extends javax.swing.JFrame {
     private void txtEmei2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei2KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmei2KeyPressed
+
+    private void cboCategoriaPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboCategoriaPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        Categoria categoria = (Categoria) cboCategoria.getSelectedItem();
+        List<Marca> listagem = marcaDao.getListagemPorCategoria(categoria.getIdCategoria());
+        cboMarca.removeAllItems();
+        cboMarca.addItem("Selecione...");
+        for (Marca marca : listagem) {
+            cboMarca.addItem(marca);
+        }
+
+    }//GEN-LAST:event_cboCategoriaPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
@@ -2670,8 +2745,8 @@ public class FrmCelular extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox cboCategoria;
     private javax.swing.JComboBox cboMarca;
-    private javax.swing.JComboBox cboTipo;
     private javax.swing.JCheckBox ckAtivo;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
@@ -2684,6 +2759,7 @@ public class FrmCelular extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEmei1;

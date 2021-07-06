@@ -20,7 +20,8 @@ public class Emprestimo {
     private Date dataDevolucao;
     private Funcionario funcionario;
     private Usuario usuario;
-
+    private Celular celular;
+    private Chip chip;
 
     public Emprestimo() {
     }
@@ -28,6 +29,34 @@ public class Emprestimo {
     public Emprestimo(int idEmprestimo) {
         this.idEmprestimo = idEmprestimo;
 
+    }
+
+    /**
+     * @return the celular
+     */
+    public Celular getCelular() {
+        return celular;
+    }
+
+    /**
+     * @param celular the celular to set
+     */
+    public void setCelular(Celular celular) {
+        this.celular = celular;
+    }
+
+    /**
+     * @return the chip
+     */
+    public Chip getChip() {
+        return chip;
+    }
+
+    /**
+     * @param chip the chip to set
+     */
+    public void setChip(Chip chip) {
+        this.chip = chip;
     }
 
     /**
@@ -114,8 +143,6 @@ public class Emprestimo {
         this.funcionario = funcionario;
     }
 
-
-
     /**
      * @return the usuario
      */
@@ -129,7 +156,5 @@ public class Emprestimo {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-
 
 }

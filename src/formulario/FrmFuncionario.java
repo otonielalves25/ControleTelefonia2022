@@ -62,6 +62,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
         txtCPF.setText("");
         txtRg.setText("");
         cboCargo.setSelectedItem("Selecione...");
+        ckAtivo.setSelected(false);
+        ckExonerado.setSelected(false);
 
     }
 
@@ -73,6 +75,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
         txtCPF.setEnabled(y);
         txtRg.setEnabled(y);
         cboCargo.setEnabled(y);
+        ckAtivo.setEnabled(y);
+        ckExonerado.setEnabled(y);
     }
 
     /**
@@ -107,11 +111,12 @@ public class FrmFuncionario extends javax.swing.JFrame {
         ckAtivo = new javax.swing.JCheckBox();
         txtPesquisa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        ckExonerado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(189, 210, 116));
+        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Nome:");
@@ -156,8 +161,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(200);
             grelha.getColumnModel().getColumn(2).setMaxWidth(200);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(70);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(70);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
@@ -263,6 +268,11 @@ public class FrmFuncionario extends javax.swing.JFrame {
         ckAtivo.setText("Ativo");
         ckAtivo.setToolTipText("");
         ckAtivo.setOpaque(false);
+        ckAtivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckAtivoActionPerformed(evt);
+            }
+        });
 
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -275,6 +285,16 @@ public class FrmFuncionario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel6.setText("Pesquisar:");
 
+        ckExonerado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckExonerado.setForeground(new java.awt.Color(153, 0, 0));
+        ckExonerado.setText("EXONERADO");
+        ckExonerado.setOpaque(false);
+        ckExonerado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckExoneradoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -283,20 +303,6 @@ public class FrmFuncionario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboCargo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,26 +313,44 @@ public class FrmFuncionario extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cboLocalidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ckAtivo))))
+                            .addComponent(cboLocalidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(cboCargo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ckExonerado)
+                                .addComponent(ckAtivo)))))
                 .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
@@ -342,8 +366,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboLocalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckAtivo))
+                    .addComponent(cboLocalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -353,15 +376,17 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckAtivo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckExonerado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -405,6 +430,11 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 } else {
                     ckAtivo.setSelected(false);
                 }
+                if (f.getStatus().equalsIgnoreCase("EXONERADO")) {
+                    ckExonerado.setSelected(true);
+                } else {
+                    ckExonerado.setSelected(false);
+                }
 
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
@@ -418,11 +448,12 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
         botaoNovo();
-        novo = true;
-        txtNome.setEnabled(true);
-        cboLocalidade.setEnabled(true);
-        grelha.setEnabled(false);
+        novo = true;    
+        habilitado(novo);        
         limparTudo();
+        ckAtivo.setSelected(true);
+        ckAtivo.setEnabled(false);
+        ckExonerado.setEnabled(false);
         txtNome.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -494,6 +525,10 @@ public class FrmFuncionario extends javax.swing.JFrame {
             funcionario.setStatus("Inativo");
         }
 
+        if (ckExonerado.isSelected()) {
+            funcionario.setStatus("EXONERADO");
+        }
+
         try {
             localidade = (Localidade) cboLocalidade.getSelectedItem();
         } catch (Exception e) {
@@ -513,7 +548,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
 
-            localidade.setIdLocalidade(Integer.parseInt(txtCodigo.getText()));
+            funcionario.setIdFuncionario(Integer.parseInt(txtCodigo.getText()));
             funcionarioDao.update(funcionario);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
         }
@@ -536,9 +571,25 @@ public class FrmFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRgKeyPressed
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
-          // TODO add your handling code here:
-         carregaGrelha();
+        // TODO add your handling code here:
+        carregaGrelha();
     }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void ckAtivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckAtivoActionPerformed
+        // TODO add your handling code here:
+        if (ckAtivo.isSelected()) {
+            ckExonerado.setSelected(false);
+        } 
+    }//GEN-LAST:event_ckAtivoActionPerformed
+
+    private void ckExoneradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckExoneradoActionPerformed
+        // TODO add your handling code here:
+        if (ckExonerado.isSelected()) {
+            ckAtivo.setSelected(false);
+        } else {
+            ckAtivo.setSelected(true);
+        }
+    }//GEN-LAST:event_ckExoneradoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1628,6 +1679,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private javax.swing.JComboBox cboCargo;
     private javax.swing.JComboBox cboLocalidade;
     private javax.swing.JCheckBox ckAtivo;
+    private javax.swing.JCheckBox ckExonerado;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

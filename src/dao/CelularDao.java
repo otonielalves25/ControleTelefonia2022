@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Categoria;
 import modelo.Celular;
-import modelo.Chip;
 import modelo.Marca;
 
 /**
@@ -29,7 +28,7 @@ public class CelularDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Celular celular) {
 
-        String sql = "INSERT INTO celular (serie, imei1,i mei2, marca_id, status, observacao) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO celular (serie, imei1, imei2, marca_id, status, observacao) values(?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -56,7 +55,7 @@ public class CelularDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Celular celular) {
 
-        String sql = "UPDATE celular set serie=?, imei1=?,i mei2=?, marca_id=?, status=?, observacao=? where idCelular = ?";
+        String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -123,6 +122,7 @@ public class CelularDao {
                     celular.setIdCelular(rs.getInt("idCelular"));
                     celular.setImei1(rs.getString("imei1"));
                     celular.setImei2(rs.getString("imei2"));
+                    celular.setSerie(rs.getString("serie"));
                     celular.setStatus(rs.getString("status"));
                     celular.setObservacao(rs.getString("observacao"));
                     marca.setIdMarca(rs.getInt("idMarca"));
@@ -172,6 +172,7 @@ public class CelularDao {
                 celular.setIdCelular(rs.getInt("idCelular"));
                 celular.setImei1(rs.getString("imei1"));
                 celular.setImei2(rs.getString("imei2"));
+                celular.setSerie(rs.getString("serie"));
                 celular.setStatus(rs.getString("status"));
                 celular.setObservacao(rs.getString("observacao"));
                 marca.setIdMarca(rs.getInt("idMarca"));
@@ -192,4 +193,51 @@ public class CelularDao {
         return Listagem;
     }
 
+        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    public Celular verificarSeCadastrado(String serie, String imei) {
+
+        String sql = "SELECT * FROM celular "
+                + "JOIN marca ON  celular.marca_id = marca.idMarca "
+                + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "WHERE imei1 = ? OR serie = ?";
+        Celular celular = null;
+        Marca marca = null;
+        Categoria categoria = null;
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, imei);
+            stm.setString(2, serie);
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+
+                    celular = new Celular();
+                    categoria = new Categoria();
+                    marca = new Marca();
+
+                    celular.setIdCelular(rs.getInt("idCelular"));
+                    celular.setImei1(rs.getString("imei1"));
+                    celular.setImei2(rs.getString("imei2"));
+                    celular.setSerie(rs.getString("serie"));
+                    celular.setStatus(rs.getString("status"));
+                    celular.setObservacao(rs.getString("observacao"));
+                    marca.setIdMarca(rs.getInt("idMarca"));
+                    marca.setMarca(rs.getString("marca"));
+                    categoria.setIdCategoria(rs.getInt("idCategoria"));
+                    categoria.setCategoria(rs.getString("categoria"));
+                    marca.setCategoria(categoria);
+                    celular.setMarca(marca);
+
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
+        }
+
+        return celular;
+    }
 }

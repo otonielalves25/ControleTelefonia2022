@@ -175,5 +175,35 @@ public class MarcaDao {
         }
         return Listagem;
     }
+        //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    public ArrayList<Marca> getListagemPorCategoria(int categoria_id) {
+
+        ArrayList<Marca> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM marca WHERE categoria_id = ? ORDER BY marca";
+        Marca marca = null;
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, categoria_id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                marca = new Marca();
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                Categoria categoria = new CategoriaDao().retornaPorID(rs.getInt("categoria_id"));
+                marca.setCategoria(categoria);
+                Listagem.add(marca);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex);
+        }
+        return Listagem;
+    }
 
 }

@@ -9,6 +9,7 @@ package modelo;
  *
  * @author Tony
  */
+
 public class Categoria {
 
     private int idCategoria;

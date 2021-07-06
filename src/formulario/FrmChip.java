@@ -108,7 +108,7 @@ public class FrmChip extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N

@@ -108,7 +108,7 @@ public class FrmMarca extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(189, 210, 116));
+        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Marca Modelo:");

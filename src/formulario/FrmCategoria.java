@@ -58,7 +58,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(189, 210, 116));
+        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Categoria de Equipamento:");
@@ -315,6 +315,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                     return;
                 }
                 categoriaDao.insert(categoria);
+                
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
                 // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
             } else {
@@ -328,7 +329,7 @@ public class FrmCategoria extends javax.swing.JFrame {
             novo = false;
             habilitado(false);
             limparTudo();
-            carregaGrelha();
+            
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
