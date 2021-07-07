@@ -22,6 +22,7 @@ public class Emprestimo {
     private Usuario usuario;
     private Celular celular;
     private Chip chip;
+    private String observacaoDevolucao;
 
     public Emprestimo() {
     }
@@ -155,6 +156,20 @@ public class Emprestimo {
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    /**
+     * @return the observacaoDevolucao
+     */
+    public String getObservacaoDevolucao() {
+        return observacaoDevolucao;
+    }
+
+    /**
+     * @param observacaoDevolucao the observacaoDevolucao to set
+     */
+    public void setObservacaoDevolucao(String observacaoDevolucao) {
+        this.observacaoDevolucao = observacaoDevolucao;
     }
 
 }

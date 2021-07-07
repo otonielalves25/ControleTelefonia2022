@@ -91,7 +91,7 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
+        lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

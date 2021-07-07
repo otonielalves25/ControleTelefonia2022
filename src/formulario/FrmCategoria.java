@@ -282,6 +282,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         novo = false;
         habilitado(false);
         limparTudo();
+        carregaGrelha();
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
