@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Chip;
 
@@ -166,6 +167,39 @@ public class ChipDao {
 
         ArrayList<Chip> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM chip WHERE numeroLinha LIKE ? OR codigoChip LIKE ? ORDER BY numeroLinha";
+        Chip chip;
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, "%" + busca + "%");
+            stm.setString(2, "%" + busca + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                chip = new Chip();
+                chip.setIdChip(rs.getInt("idChip"));
+                chip.setCodigoChip(rs.getString("codigoChip"));
+                chip.setNumeroLinha(rs.getString("numeroLinha"));
+                chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                chip.setIsDado(rs.getBoolean("dados"));
+                chip.setStatus(rs.getString("status"));
+                chip.setObservacao(rs.getString("observacao"));
+                Listagem.add(chip);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos clip DAO. " + ex);
+        }
+        return Listagem;
+    }
+
+    public List<Chip> getListagemLikeAtivos(String busca) {
+         ArrayList<Chip> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM chip WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Ativo' ORDER BY numeroLinha";
         Chip chip;
 
         try {

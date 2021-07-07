@@ -198,5 +198,41 @@ public class FuncionarioDao {
         }
         return Listagem;
     }
+    
+     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    public ArrayList<Funcionario> getListagemLikeAtivos(String busca) {
+
+        ArrayList<Funcionario> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM funcionario WHERE nome LIKE ? AND status = 'Ativo' ORDER BY nome";
+        Funcionario funcionario = null;
+        Localidade localidade = null;
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, "%" + busca + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                funcionario = new Funcionario();
+                funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setCpf(rs.getString("cpf"));
+                funcionario.setRg(rs.getString("rg"));
+                funcionario.setCargo(rs.getString("cargo"));
+                funcionario.setStatus(rs.getString("status"));
+                localidade = new LocalidadeDao().retornaPorID(rs.getInt("localidade_id"));
+                funcionario.setLocalidade(localidade);
+                Listagem.add(funcionario);
+            }
+            //fechando as conexõesfuncionariolocalidade
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos DAO. " + ex);
+        }
+        return Listagem;
+    }
 
 }

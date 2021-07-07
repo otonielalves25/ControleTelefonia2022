@@ -192,6 +192,54 @@ public class CelularDao {
         }
         return Listagem;
     }
+     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    public ArrayList<Celular> getListagemLikeAtivos(String busca) {
+
+        ArrayList<Celular> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM celular "
+                + "JOIN marca ON  celular.marca_id = marca.idMarca "
+                + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "WHERE (serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?) AND celular.status = 'Ativo'";
+        Celular celular = null;
+        Marca marca = null;
+        Categoria categoria = null;
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, "%" + busca + "%");
+            stm.setString(2, "%" + busca + "%");
+            stm.setString(3, "%" + busca + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                celular = new Celular();
+                categoria = new Categoria();
+                marca = new Marca();
+
+                celular.setIdCelular(rs.getInt("idCelular"));
+                celular.setImei1(rs.getString("imei1"));
+                celular.setImei2(rs.getString("imei2"));
+                celular.setSerie(rs.getString("serie"));
+                celular.setStatus(rs.getString("status"));
+                celular.setObservacao(rs.getString("observacao"));
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setCategoria(rs.getString("categoria"));
+                marca.setCategoria(categoria);
+                celular.setMarca(marca);
+                Listagem.add(celular);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos DAO. " + ex);
+        }
+        return Listagem;
+    }
 
         //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Celular verificarSeCadastrado(String serie, String imei) {
