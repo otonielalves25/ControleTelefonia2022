@@ -5,43 +5,42 @@
  */
 package formulario;
 
-
-import dao.ChipDao;
+import dao.EmprestimoDao;
+import dao.FuncionarioDao;
 import java.util.List;
-
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-import modelo.Chip;
-
+import modelo.Funcionario;
 
 /**
  *
  * @author Tony
  */
-public class FrmChipConsultaRapida extends javax.swing.JDialog {
+public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
     /**
-     * @return the codigoChip
+     * @return the codigoFuncionario
      */
-    public int getCodigoChip() {
-        return codigoChip;
+    public int getCodigoFuncionario() {
+        return codigoFuncionario;
     }
 
     /**
-     * @param codigoChip the codigoChip to set
+     * @param codigoFuncionario the codigoFuncionario to set
      */
-    public void setCodigoChip(int codigoChip) {
-        this.codigoChip = codigoChip;
+    public void setCodigoFuncionario(int codigoFuncionario) {
+        this.codigoFuncionario = codigoFuncionario;
     }
 
     DefaultTableModel modeloTabela;
-    private ChipDao chipDao = new ChipDao();
-       
+    FuncionarioDao funcionarioDao = new FuncionarioDao();
 
     /**
      * Creates new form FrmFuncionarioConsultaRapida
+     *
+     * @param parent
      */
-    public FrmChipConsultaRapida(java.awt.Frame parent, boolean modal) {
+    public FrmFuncionarioExonerado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         modeloTabela = (DefaultTableModel) grelha.getModel();
@@ -50,16 +49,13 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
     // PESQUISA AVANÇADA DE FUNCIONARIOS ///////////////////////////////////////
     private void carregaPesquisa() {
-        List<Chip> listagem = chipDao.getListagemLikeAtivos(txtPesquisa.getText());
+        List<Funcionario> listagem = funcionarioDao.getListagemLikeAtivos(txtPesquisa.getText());
         modeloTabela.setNumRows(0);
-        for (Chip chip : listagem) {
+        for (Funcionario funcionario : listagem) {
             modeloTabela.addRow(new Object[]{
-                chip.getIdChip(),
-                chip.getNumeroLinha(),
-                chip.getCodigoChip(),
-                chip.getStatus(),
-            
-            });
+                funcionario.getIdFuncionario(),
+                funcionario.getNome(),
+                funcionario.getLocalidade().getNomeLocalidade(),});
         }
     }
 
@@ -80,6 +76,7 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
         txtPesquisa = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         grelha = new javax.swing.JTable();
+        btnAlterar = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,15 +95,15 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
+        lblTitulo.setBackground(new java.awt.Color(102, 0, 0));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Chip Consulta Rápida");
+        lblTitulo.setText("Funcionário - EXONERADO");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        jLabel1.setText("Nª Linha ou Código:");
+        jLabel1.setText("Nome do Funcionário:");
 
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -119,11 +116,11 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Nª LINHA", "CODIGO", "STATUS"
+                "ID", "NOME", "SETOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -136,15 +133,28 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
                 grelhaMouseClicked(evt);
             }
         });
+        grelha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                grelhaKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(grelha);
         if (grelha.getColumnModel().getColumnCount() > 0) {
             grelha.getColumnModel().getColumn(0).setPreferredWidth(30);
             grelha.getColumnModel().getColumn(0).setMaxWidth(30);
-            grelha.getColumnModel().getColumn(1).setPreferredWidth(150);
-            grelha.getColumnModel().getColumn(1).setMaxWidth(150);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(120);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(120);
+            grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
+            grelha.getColumnModel().getColumn(2).setMaxWidth(180);
         }
+
+        btnAlterar.setBackground(new java.awt.Color(51, 51, 51));
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAlterar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAlterar.setText("Marcar como exonerado");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,11 +164,14 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisa)))
+                        .addComponent(txtPesquisa))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,7 +183,9 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -196,14 +211,34 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
         carregaPesquisa();
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
+    private void grelhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_grelhaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_grelhaKeyPressed
+
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()>1){            
-            int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
-            this.setCodigoChip(codigo);
-            this.dispose();
-        }
+
+
     }//GEN-LAST:event_grelhaMouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+        System.out.println(grelha.getSelectedRow());
+        if (grelha.getSelectedRow() >= 0) {
+            int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
+            if (new EmprestimoDao().verificaEmprestimoFuncionario(codigo) > 0) {
+                JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em Aberto.", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                if (funcionarioDao.marcarExonerado(codigo)) {
+                    JOptionPane.showMessageDialog(this, "Funcionario Exonerado.", null, JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        }else{
+             JOptionPane.showMessageDialog(this, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,23 +257,21 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmChipConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmFuncionarioExonerado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmChipConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmFuncionarioExonerado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmChipConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmFuncionarioExonerado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmChipConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmFuncionarioExonerado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmChipConsultaRapida dialog = new FrmChipConsultaRapida(new javax.swing.JFrame(), true);
+                FrmFuncionarioExonerado dialog = new FrmFuncionarioExonerado(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -249,11 +282,9 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
             }
         });
     }
-    
-    private int codigoChip;
-    
-    
+    private int codigoFuncionario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -263,8 +294,4 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the chipDao
-     */
 }

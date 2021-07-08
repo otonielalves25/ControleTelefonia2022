@@ -257,7 +257,7 @@ public class FrmChip extends javax.swing.JFrame {
         ckAtivo.setText("Ativo");
         ckAtivo.setToolTipText("");
         ckAtivo.setOpaque(false);
-        jPanel1.add(ckAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 87, -1, -1));
+        jPanel1.add(ckAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, -1, -1));
 
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -277,14 +277,14 @@ public class FrmChip extends javax.swing.JFrame {
         ckVoz.setText("Voz");
         ckVoz.setToolTipText("");
         ckVoz.setOpaque(false);
-        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 87, -1, -1));
+        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
 
         ckDados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckDados.setForeground(new java.awt.Color(153, 51, 0));
         ckDados.setText("Dados");
         ckDados.setToolTipText("");
         ckDados.setOpaque(false);
-        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 87, -1, -1));
+        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
 
         txtObservacao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jPanel1.add(txtObservacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 135, 638, -1));

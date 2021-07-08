@@ -94,6 +94,28 @@ public class FuncionarioDao {
         }
 
     }
+    
+    
+    
+    //-----------DELETAR USUARIO -----------------------------------------------
+    public boolean marcarExonerado(int codigo) {
+        String sql = "UPDATE funcionario SET status = 'EXONERADO' where idFuncionario= ?";
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, codigo);
+            stm.executeUpdate();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e);
+            return false;
+        }
+
+    }
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Funcionario getPorID(int codigo) {

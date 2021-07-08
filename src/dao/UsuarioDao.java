@@ -43,7 +43,7 @@ public class UsuarioDao {
             stm.close();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar clip Dao. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar  Dao. " + ex);
             return false;
         }
 
@@ -68,7 +68,7 @@ public class UsuarioDao {
             stm.close();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar clip Dao. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Dao. " + ex);
             return false;
         }
     }
@@ -87,7 +87,7 @@ public class UsuarioDao {
             stm.close();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir clip Dao. " + e);
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir Dao. " + e);
             return false;
         }
 
@@ -118,7 +118,7 @@ public class UsuarioDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
         }
 
         return usuario;
@@ -148,7 +148,7 @@ public class UsuarioDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
         }
 
         return usuario;
@@ -180,7 +180,7 @@ public class UsuarioDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao DAO. " + ex);
         }
 
         return lista;
@@ -211,7 +211,7 @@ public class UsuarioDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
         }
 
         return usuario;

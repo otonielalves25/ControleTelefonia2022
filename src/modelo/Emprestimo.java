@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.util.Date;
+
 
 /**
  *
@@ -13,11 +13,39 @@ import java.util.Date;
  */
 public class Emprestimo {
 
+    /**
+     * @return the dataEmprestimo
+     */
+    public String getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    /**
+     * @param dataEmprestimo the dataEmprestimo to set
+     */
+    public void setDataEmprestimo(String dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    /**
+     * @return the dataDevolucao
+     */
+    public String getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    /**
+     * @param dataDevolucao the dataDevolucao to set
+     */
+    public void setDataDevolucao(String dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
     private int idEmprestimo;
     private String situacao;
     private String observacao;
-    private Date dataEmprestimo;
-    private Date dataDevolucao;
+    private String dataEmprestimo;
+    private String dataDevolucao;
     private Funcionario funcionario;
     private Usuario usuario;
     private Celular celular;
@@ -102,33 +130,7 @@ public class Emprestimo {
         this.observacao = observacao;
     }
 
-    /**
-     * @return the dataEmprestimo
-     */
-    public Date getDataEmprestimo() {
-        return dataEmprestimo;
-    }
 
-    /**
-     * @param dataEmprestimo the dataEmprestimo to set
-     */
-    public void setDataEmprestimo(Date dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
-    /**
-     * @return the dataDevolucao
-     */
-    public Date getDataDevolucao() {
-        return dataDevolucao;
-    }
-
-    /**
-     * @param dataDevolucao the dataDevolucao to set
-     */
-    public void setDataDevolucao(Date dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
 
     /**
      * @return the funcionario

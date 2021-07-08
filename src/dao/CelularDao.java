@@ -76,6 +76,26 @@ public class CelularDao {
             return false;
         }
     }
+    
+        // ------------ALTERAR CADASTRA  --------------------------------------    
+    public boolean updateStatus(Celular celular) {
+
+        String sql = "UPDATE celular set status=? where idCelular = ?";
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);      
+            stm.setString(1, celular.getStatus()); 
+            stm.setInt(2, celular.getIdCelular());
+            stm.execute();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Dao. " + ex);
+            return false;
+        }
+    }
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {

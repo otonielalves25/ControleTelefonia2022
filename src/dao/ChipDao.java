@@ -14,7 +14,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Chip;
 
-
 /**
  *
  * @author Tony
@@ -65,6 +64,48 @@ public class ChipDao {
             stm.setString(5, chip.getObservacao());
             stm.setString(6, chip.getCodigoChip());
             stm.setInt(7, chip.getIdChip());
+            stm.execute();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar clip Dao. " + ex);
+            return false;
+        }
+    }
+
+    // ------------ALTERAR CADASTRA  --------------------------------------    
+    public boolean updateTipoChip(Chip chip) {
+
+        String sql = "UPDATE chip set telefonia=?, dados=?, status=? where idChip = ?";
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setBoolean(1, chip.isIsTelefonia());
+            stm.setBoolean(2, chip.isIsDado());
+            stm.setString(3, chip.getStatus());
+            stm.setInt(4, chip.getIdChip());
+            stm.execute();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar clip Dao. " + ex);
+            return false;
+        }
+    }
+
+    // ------------ALTERAR CADASTRA  --------------------------------------    
+    public boolean updateStatus(Chip chip) {
+
+        String sql = "UPDATE chip set status=? where idChip = ?";
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, chip.getStatus());
+            stm.setInt(2, chip.getIdChip());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -198,7 +239,7 @@ public class ChipDao {
     }
 
     public List<Chip> getListagemLikeAtivos(String busca) {
-         ArrayList<Chip> Listagem = new ArrayList<>();
+        ArrayList<Chip> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM chip WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Ativo' ORDER BY numeroLinha";
         Chip chip;
 

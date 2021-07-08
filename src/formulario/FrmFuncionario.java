@@ -5,6 +5,7 @@
  */
 package formulario;
 
+import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 
 import java.util.List;
@@ -448,8 +449,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
         botaoNovo();
-        novo = true;    
-        habilitado(novo);        
+        novo = true;
+        habilitado(novo);
         limparTudo();
         ckAtivo.setSelected(true);
         ckAtivo.setEnabled(false);
@@ -547,6 +548,17 @@ public class FrmFuncionario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
+            // SE EXONERADO VERIFICA SE TEM EMPRESTIMO
+            if (ckExonerado.isSelected()) {
+                if (new EmprestimoDao().verificaEmprestimoFuncionario(Integer.parseInt(txtCodigo.getText())) > 0) {
+                    JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em Aberto.", null, JOptionPane.ERROR_MESSAGE);
+                    botaoInicial();
+                    limparTudo();
+                    habilitado(false);
+                     novo = false;
+                    return;
+                }
+            }
 
             funcionario.setIdFuncionario(Integer.parseInt(txtCodigo.getText()));
             funcionarioDao.update(funcionario);
@@ -579,7 +591,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (ckAtivo.isSelected()) {
             ckExonerado.setSelected(false);
-        } 
+        }
     }//GEN-LAST:event_ckAtivoActionPerformed
 
     private void ckExoneradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckExoneradoActionPerformed
