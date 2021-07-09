@@ -23,6 +23,7 @@ import modelo.Celular;
 import modelo.Chip;
 import modelo.Emprestimo;
 import modelo.Funcionario;
+import modelo.Session;
 
 import modelo.Usuario;
 
@@ -59,8 +60,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         initComponents();
         txtDataEmprestimo.setText(hoje());
         carregaCombobox();
-
+       // cboResponsavel.getSelectedItem(Session.getNome());
     }
+    
+    
 
     // CARREGA COMBOBOX USUARIO DO SISTEMA ////////////////////////////////////
     private void carregaCombobox() {
@@ -744,7 +747,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         emprestimo.setDataDevolucao(txtDataDevolucao.getText());
         Funcionario f = new Funcionario(funcionario_id);
         emprestimo.setFuncionario(f);
-        Usuario u = new Usuario(1); // MUDAR PARA SESSAÇAO ID
+        Usuario u = new Usuario(Session.getIdUsuario()); // MUDAR PARA SESSAÇAO ID
         emprestimo.setUsuario(u);
         emprestimo.setObservacao(txtObservacao.getText());
         Celular c = new Celular(celular_id);
@@ -752,6 +755,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         emprestimo.setCelular(c);
         Chip chip = new Chip(chip_id);
         emprestimo.setChip(chip);
+        chip.setStatus("EMPRESTADO");
 
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {

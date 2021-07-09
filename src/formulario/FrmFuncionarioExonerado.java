@@ -45,6 +45,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
         initComponents();
         modeloTabela = (DefaultTableModel) grelha.getModel();
         carregaPesquisa();
+        txtPesquisa.requestFocus();
     }
 
     // PESQUISA AVANÇADA DE FUNCIONARIOS ///////////////////////////////////////
@@ -95,7 +96,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
-        lblTitulo.setBackground(new java.awt.Color(102, 0, 0));
+        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -146,9 +147,10 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
             grelha.getColumnModel().getColumn(2).setMaxWidth(180);
         }
 
-        btnAlterar.setBackground(new java.awt.Color(51, 51, 51));
+        btnAlterar.setBackground(new java.awt.Color(153, 204, 255));
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnAlterar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAlterar.setForeground(new java.awt.Color(51, 51, 51));
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/funDelete.png"))); // NOI18N
         btnAlterar.setText("Marcar como exonerado");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +187,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -226,7 +226,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
         txtCodigo.setEnabled(false);
         txtCodigo.setOpaque(false);
 
-        lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
+        lblTitulo.setBackground(new java.awt.Color(0, 102, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -107,7 +107,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,8 +126,16 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             grelhaEmprestimo.getColumnModel().getColumn(2).setMaxWidth(150);
             grelhaEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(300);
             grelhaEmprestimo.getColumnModel().getColumn(3).setMaxWidth(300);
+            grelhaEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(230);
+            grelhaEmprestimo.getColumnModel().getColumn(4).setMaxWidth(230);
+            grelhaEmprestimo.getColumnModel().getColumn(8).setPreferredWidth(100);
+            grelhaEmprestimo.getColumnModel().getColumn(8).setMaxWidth(100);
+            grelhaEmprestimo.getColumnModel().getColumn(9).setPreferredWidth(100);
+            grelhaEmprestimo.getColumnModel().getColumn(9).setMaxWidth(100);
         }
 
+        btnNovo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/new.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +143,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/edit.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +152,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +161,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        btnDevolver.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/devolver.png"))); // NOI18N
         btnDevolver.setText("Devolução de Emprestimo");
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +178,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        btnReemitir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnReemitir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
         btnReemitir.setText("Reemitir Termo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -173,29 +189,33 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(15, 15, 15)
-                        .addComponent(radNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radImei)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radLinha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckDevolvidos))
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReemitir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 512, Short.MAX_VALUE)
-                        .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(15, 15, 15)
+                                .addComponent(radNome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radImei)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(radLinha)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 1051, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ckDevolvidos))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnNovo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnReemitir)))
+                        .addGap(0, 56, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -212,8 +232,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ckDevolvidos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo)
                     .addComponent(btnAlterar)
@@ -231,9 +251,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -302,8 +320,10 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        
 
-        if (grelhaEmprestimo.getRowCount() == -1) {
+
+        if (grelhaEmprestimo.getSelectedRow()< 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -331,7 +351,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
 
-        if (modeloGrelha.getRowCount() == -1) {
+        if (grelhaEmprestimo.getSelectedRow() < 0 ) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Excluír.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -369,7 +389,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
-        if (grelhaEmprestimo.getRowCount() == -1) {
+        if (grelhaEmprestimo.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }

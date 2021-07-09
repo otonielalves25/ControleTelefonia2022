@@ -56,7 +56,7 @@ public class FrmChip extends javax.swing.JFrame {
 
         txtChip.setText("");
         txtTelefone.setText("");
-        ckAtivo.setSelected(false);
+        cboSituacao.setSelectedIndex(0);
         ckDados.setSelected(false);
         ckVoz.setSelected(false);
         txtObservacao.setText("");
@@ -68,7 +68,7 @@ public class FrmChip extends javax.swing.JFrame {
         txtChip.setEnabled(y);
         grelha.setEnabled(!y);
         txtTelefone.setEnabled(y);
-        ckAtivo.setEnabled(y);
+        cboSituacao.setEnabled(y);
         ckDados.setEnabled(y);
         ckVoz.setEnabled(y);
         txtObservacao.setEnabled(y);
@@ -98,12 +98,13 @@ public class FrmChip extends javax.swing.JFrame {
         txtTelefone = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        ckAtivo = new javax.swing.JCheckBox();
         txtPesquisa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         ckVoz = new javax.swing.JCheckBox();
         ckDados = new javax.swing.JCheckBox();
         txtObservacao = new javax.swing.JTextField();
+        cboSituacao = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -112,8 +113,8 @@ public class FrmChip extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Còdigo Chip:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 59, -1, -1));
+        jLabel1.setText("Situação:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, -1, -1));
 
         txtChip.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtChip.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -156,8 +157,8 @@ public class FrmChip extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(200);
             grelha.getColumnModel().getColumn(2).setMaxWidth(200);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(70);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(70);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 256, 638, 288));
@@ -228,7 +229,7 @@ public class FrmChip extends javax.swing.JFrame {
         txtCodigo.setOpaque(false);
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 61, 47, -1));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
+        lblTitulo.setBackground(new java.awt.Color(102, 0, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -247,17 +248,11 @@ public class FrmChip extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel3.setText("Telefone:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 59, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel5.setText("Observação:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 114, -1, -1));
-
-        ckAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ckAtivo.setText("Ativo");
-        ckAtivo.setToolTipText("");
-        ckAtivo.setOpaque(false);
-        jPanel1.add(ckAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 90, -1, -1));
 
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -277,17 +272,24 @@ public class FrmChip extends javax.swing.JFrame {
         ckVoz.setText("Voz");
         ckVoz.setToolTipText("");
         ckVoz.setOpaque(false);
-        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
+        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
 
         ckDados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckDados.setForeground(new java.awt.Color(153, 51, 0));
         ckDados.setText("Dados");
         ckDados.setToolTipText("");
         ckDados.setOpaque(false);
-        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, -1));
+        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         txtObservacao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jPanel1.add(txtObservacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 135, 638, -1));
+
+        cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
+        jPanel1.add(cboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 160, -1));
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel2.setText("Còdigo Chip:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -317,13 +319,8 @@ public class FrmChip extends javax.swing.JFrame {
                 txtTelefone.setText("");
                 txtTelefone.setText(chip.getNumeroLinha());
                 txtObservacao.setText(chip.getObservacao());
-
-                if (chip.getStatus().equalsIgnoreCase("Ativo")) {
-                    ckAtivo.setSelected(true);
-                } else {
-                    ckAtivo.setSelected(false);
-                }
-
+                cboSituacao.setSelectedItem(chip.getStatus());
+            
                 if (chip.isIsTelefonia()) {
                     ckVoz.setSelected(true);
                 } else {
@@ -396,7 +393,7 @@ public class FrmChip extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
 
         if (txtChip.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Codigo do chip não informada", null, JOptionPane.ERROR_MESSAGE);
@@ -409,9 +406,9 @@ public class FrmChip extends javax.swing.JFrame {
             return;
 
         }
-        if (!ckAtivo.isSelected() && !ckDados.isSelected()) {
-            JOptionPane.showMessageDialog(this, "Informa se DADOS ou VOZ.", null, JOptionPane.ERROR_MESSAGE);
-            txtChip.requestFocus();
+        if (cboSituacao.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Situação não informada.", null, JOptionPane.ERROR_MESSAGE);
+            cboSituacao.requestFocus();
             return;
         }
 
@@ -420,12 +417,7 @@ public class FrmChip extends javax.swing.JFrame {
         chip.setCodigoChip(txtChip.getText());
         chip.setNumeroLinha(txtTelefone.getText());
         chip.setObservacao(txtObservacao.getText());
-
-        if (ckAtivo.isSelected()) {
-            chip.setStatus("Ativo");
-        } else {
-            chip.setStatus("Inativo");
-        }
+        chip.setStatus(cboSituacao.getSelectedItem().toString());
 
         if (ckDados.isSelected()) {
             chip.setIsDado(true);
@@ -440,11 +432,11 @@ public class FrmChip extends javax.swing.JFrame {
 
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {
-//            Chip m = chipDao.retornaPorNome(txtChip.getText().toUpperCase());
-//            if (m != null) {
-//                JOptionPane.showMessageDialog(this, "Localidade já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
+            Chip m = chipDao.retornaPorNome(txtChip.getText().toUpperCase());
+            if (m != null) {
+                JOptionPane.showMessageDialog(this, "Chip ou Número já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             chipDao.insert(chip);
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
@@ -469,7 +461,7 @@ public class FrmChip extends javax.swing.JFrame {
     }//GEN-LAST:event_txtChipKeyPressed
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
-         // TODO add your handling code here:
+          // TODO add your handling code here:
         carregaGrelha();
     }//GEN-LAST:event_txtPesquisaKeyPressed
 
@@ -2582,11 +2574,12 @@ public class FrmChip extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JCheckBox ckAtivo;
+    private javax.swing.JComboBox<String> cboSituacao;
     private javax.swing.JCheckBox ckDados;
     private javax.swing.JCheckBox ckVoz;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

@@ -5,26 +5,27 @@
  */
 package formulario;
 
-import dao.CategoriaDao;
+import dao.EmpresaDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.Categoria;
+import modelo.Empresa;
+
 
 /**
  *
  * @author otoniel.aalves
  */
-public class FrmCategoria extends javax.swing.JFrame {
+public class FrmEmpresa extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
 
     //Variaveis
-    CategoriaDao categoriaDao = new CategoriaDao();
+    EmpresaDao empresaDao = new EmpresaDao();
 
-    public FrmCategoria() {
+    public FrmEmpresa() {
         initComponents();
         txtCodigo.setVisible(false);
         botaoInicial();
@@ -61,7 +62,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Categoria de Equipamento:");
+        jLabel1.setText("Empresa:");
 
         txtTexto.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtTexto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -78,7 +79,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "NOME CATEGORIA"
+                "CÓDIGO", "EMPRESA"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -167,7 +168,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Cadastro de Categoria de Equipamento");
+        lblTitulo.setText("Cadastro de Empresa Telefonia");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
@@ -270,7 +271,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
             if (resposta == JOptionPane.YES_OPTION) {
 
-                categoriaDao.delete(Integer.parseInt(txtCodigo.getText()));
+                empresaDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
                 carregaGrelha();
 
@@ -306,23 +307,23 @@ public class FrmCategoria extends javax.swing.JFrame {
         if (txtTexto.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
         } else {
-            Categoria categoria = new Categoria();
-            categoria.setCategoria(txtTexto.getText().toUpperCase());
+            Empresa empresa = new Empresa();
+            empresa.setNomeEmpresa(txtTexto.getText().toUpperCase());
             // CADATRAO NOVO NO BANCO //////////////////////////////////////////
             if (novo) {
-                Categoria teste = categoriaDao.retornaPorNome(txtTexto.getText().toUpperCase());
+                Empresa teste = empresaDao.retornaPorNome(txtTexto.getText().toUpperCase());
                 if (teste != null) {
                     JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                categoriaDao.insert(categoria);
+                empresaDao.insert(empresa);
                 
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
                 // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
             } else {
 
-                categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText()));
-                categoriaDao.update(categoria);
+                empresa.setIdEmpresa(Integer.parseInt(txtCodigo.getText()));
+                empresaDao.update(empresa);
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
             }
             carregaGrelha();
@@ -356,14 +357,142 @@ public class FrmCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmpresa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -496,7 +625,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCategoria().setVisible(true);
+                new FrmEmpresa().setVisible(true);
             }
         });
     }
@@ -540,13 +669,13 @@ public class FrmCategoria extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
 
-        List<Categoria> lista = categoriaDao.getListagemLike("");
+        List<Empresa> lista = empresaDao.getListagemLike("");
 
-        for (Categoria categ : lista) {
+        for (Empresa empresa : lista) {
 
             modelo.addRow(new Object[]{
-                categ.getIdCategoria(),
-                categ.getCategoria(),});
+                empresa.getIdEmpresa(),
+                empresa.getNomeEmpresa(),});
         }
     }
 

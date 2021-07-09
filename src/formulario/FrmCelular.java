@@ -7,6 +7,7 @@ package formulario;
 
 import dao.CategoriaDao;
 import dao.CelularDao;
+import dao.EmpresaDao;
 import dao.MarcaDao;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Celular;
+import modelo.Empresa;
 import modelo.Marca;
 
 /**
@@ -25,11 +27,12 @@ public class FrmCelular extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
-    int marca_id;
+    int marca_id, operadora_id;
 
     //Variaveis
     CelularDao celularDao = new CelularDao();
     CategoriaDao categoriaDao = new CategoriaDao();
+    EmpresaDao empresaDao = new EmpresaDao();
     MarcaDao marcaDao = new MarcaDao();
 
     public FrmCelular() {
@@ -39,11 +42,21 @@ public class FrmCelular extends javax.swing.JFrame {
         habilitado(false);
         carregaGrelha();
         carregaComboCategoria();
+        carregaComboEmpresa();
 
     }
 
     // CARREGA COMBOBOX CATEGORIA //////////////////////////////////////////////
     private void carregaComboCategoria() {
+        List<Empresa> listagem = empresaDao.getListagemLike("");
+        cboOperadora.addItem("Selecione...");
+        for (Empresa empresa : listagem) {
+            cboOperadora.addItem(empresa);
+        }
+    }
+
+    // CARREGA COMBOBOX CATEGORIA //////////////////////////////////////////////
+    private void carregaComboEmpresa() {
         List<Categoria> listagem = categoriaDao.getListagemLike("");
         cboCategoria.addItem("Selecione...");
         for (Categoria categoria : listagem) {
@@ -58,7 +71,7 @@ public class FrmCelular extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
 
-        List<Celular> lista = celularDao.getListagemLike("");
+        List<Celular> lista = celularDao.getListagemLike(txtPesquisa.getText());
         modelo.setNumRows(0);
         for (Celular celular : lista) {
 
@@ -83,11 +96,21 @@ public class FrmCelular extends javax.swing.JFrame {
         txtEmei2.setText("");
         txtObservacao.setText("");
         cboMarca.setSelectedItem("Selecione...");
-        ckAtivo.setSelected(false);
+        cboOperadora.setSelectedItem("Selecione...");
+        cboSituacao.setSelectedItem("Selecione...");
+
+    }
+    //LIMPAR******************************************************************
+
+    private void limparPouco() {
+
+        txtSerie.setText("");
+        txtEmei1.setText("");
+        txtEmei2.setText("");
 
     }
 
-    //LIMPAR******************************************************************
+    // HABILITAR ******************************************************************
     private void habilitado(boolean y) {
         txtSerie.setEnabled(y);
         grelha.setEnabled(!y);
@@ -96,7 +119,8 @@ public class FrmCelular extends javax.swing.JFrame {
         txtEmei2.setEnabled(y);
         txtObservacao.setEnabled(y);
         cboMarca.setEnabled(y);
-        ckAtivo.setEnabled(y);
+        cboOperadora.setEnabled(y);
+        cboSituacao.setEnabled(y);
     }
 
     /**
@@ -124,7 +148,6 @@ public class FrmCelular extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cboMarca = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        ckAtivo = new javax.swing.JCheckBox();
         txtPesquisa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtEmei1 = new javax.swing.JTextField();
@@ -135,6 +158,11 @@ public class FrmCelular extends javax.swing.JFrame {
         txtObservacao = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         lblQuantidade = new javax.swing.JLabel();
+        cboOperadora = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
+        ckVarios = new javax.swing.JCheckBox();
+        cboSituacao = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -146,11 +174,6 @@ public class FrmCelular extends javax.swing.JFrame {
 
         txtSerie.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtSerie.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtSerieKeyPressed(evt);
-            }
-        });
 
         grelha.setAutoCreateRowSorter(true);
         grelha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -274,11 +297,6 @@ public class FrmCelular extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel5.setText("Observação:");
 
-        ckAtivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ckAtivo.setText("Ativo");
-        ckAtivo.setToolTipText("");
-        ckAtivo.setOpaque(false);
-
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -292,11 +310,6 @@ public class FrmCelular extends javax.swing.JFrame {
 
         txtEmei1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtEmei1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtEmei1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEmei1KeyPressed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel7.setText("Emei 1:");
@@ -323,7 +336,18 @@ public class FrmCelular extends javax.swing.JFrame {
 
         lblQuantidade.setForeground(new java.awt.Color(0, 0, 204));
         lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblQuantidade.setText("jLabel2");
+        lblQuantidade.setText("quantidade");
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel9.setText("Empresa Comodados:");
+
+        ckVarios.setText("Varios iguais");
+        ckVarios.setOpaque(false);
+
+        cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel2.setText("Situação:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -333,77 +357,91 @@ public class FrmCelular extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtPesquisa))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(txtEmei1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(txtEmei2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(ckAtivo))))
-                                .addComponent(jLabel4))))
-                    .addComponent(lblQuantidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                        .addComponent(ckVarios)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPesquisa))
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cboCategoria, 0, 192, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSerie))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txtEmei1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtEmei2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cboSituacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cboOperadora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2)
                     .addComponent(jLabel8)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmei1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmei2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckAtivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,25 +452,28 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckVarios))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblQuantidade)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(537, 537, 537))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,28 +485,24 @@ public class FrmCelular extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         try {
             if (grelha.getRowCount() > 0) {
 
                 int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
                 Celular c = celularDao.getPorID(codigo);
 
-                txtCodigo.setText(c.getIdCelular()+ "");
+                txtCodigo.setText(c.getIdCelular() + "");
                 txtSerie.setText(c.getSerie());
                 txtEmei1.setText(c.getImei1());
                 txtEmei2.setText(c.getImei2());
                 cboCategoria.getModel().setSelectedItem(c.getMarca().getCategoria());
+                cboOperadora.getModel().setSelectedItem(c.getEmpresa().getNomeEmpresa());
+                operadora_id = c.getEmpresa().getIdEmpresa();
                 cboMarca.getModel().setSelectedItem(c.getMarca());
                 marca_id = c.getMarca().getIdMarca();
                 txtObservacao.setText(c.getObservacao());
-                
-                if (c.getStatus().equalsIgnoreCase("Ativo")) {
-                    ckAtivo.setSelected(true);
-                } else {
-                    ckAtivo.setSelected(false);
-                }
-
+                cboSituacao.setSelectedItem(c.getStatus());
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
                 novo = false;
@@ -481,8 +518,7 @@ public class FrmCelular extends javax.swing.JFrame {
         novo = true;
         habilitado(true);
         limparTudo();
-        ckAtivo.setSelected(true);
-        ckAtivo.setEnabled(false);
+
         txtSerie.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -550,6 +586,16 @@ public class FrmCelular extends javax.swing.JFrame {
             cboCategoria.requestFocus();
             return;
         }
+        if (cboOperadora.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Empresa não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboOperadora.requestFocus();
+            return;
+        }
+        if (cboSituacao.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Situação não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboSituacao.requestFocus();
+            return;
+        }
 
         // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
         Celular celular = new Celular();
@@ -557,18 +603,22 @@ public class FrmCelular extends javax.swing.JFrame {
         celular.setImei1(txtEmei1.getText());
         celular.setImei2(txtEmei2.getText());
         Marca marca;
+        Empresa empresa;
         try {
             marca = (Marca) cboMarca.getSelectedItem();
         } catch (Exception e) {
             marca = new Marca(marca_id);
         }
 
-        if (ckAtivo.isSelected()) {
-            celular.setStatus("Ativo");
-        } else {
-            celular.setStatus("Inativo");
+        try {
+            empresa = (Empresa) cboOperadora.getSelectedItem();
+        } catch (Exception e) {
+            empresa = new Empresa(operadora_id);
         }
 
+        celular.setStatus(cboSituacao.getSelectedItem().toString());
+
+        celular.setEmpresa(empresa);
         celular.setMarca(marca);
         celular.setObservacao(txtObservacao.getText());
 
@@ -601,24 +651,20 @@ public class FrmCelular extends javax.swing.JFrame {
         botaoInicial();
         novo = false;
         habilitado(false);
-        limparTudo();
         carregaGrelha();
 
+        if (ckVarios.isSelected()) {
+            limparPouco();
+        } else {
+            limparTudo();
+        }
+
     }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void txtSerieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtSerieKeyPressed
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
         // TODO add your handling code here:
         carregaGrelha();
     }//GEN-LAST:event_txtPesquisaKeyPressed
-
-    private void txtEmei1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmei1KeyPressed
 
     private void txtEmei2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei2KeyPressed
         // TODO add your handling code here:
@@ -871,7 +917,7 @@ public class FrmCelular extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
+        //</editor-fold>  
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -2747,15 +2793,19 @@ public class FrmCelular extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox cboCategoria;
     private javax.swing.JComboBox cboMarca;
-    private javax.swing.JCheckBox ckAtivo;
+    private javax.swing.JComboBox cboOperadora;
+    private javax.swing.JComboBox<String> cboSituacao;
+    private javax.swing.JCheckBox ckVarios;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

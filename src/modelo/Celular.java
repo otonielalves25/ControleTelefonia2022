@@ -18,7 +18,7 @@ public class Celular {
     private String observacao;
     private String serie;
     private Marca marca;
-    
+    private Empresa empresa;
 
     public Celular() {
     }
@@ -124,6 +124,20 @@ public class Celular {
      */
     public void setSerie(String serie) {
         this.serie = serie;
+    }
+
+    /**
+     * @return the empresa
+     */
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    /**
+     * @param empresa the empresa to set
+     */
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
   

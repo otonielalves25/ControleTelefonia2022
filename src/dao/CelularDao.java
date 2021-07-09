@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Categoria;
 import modelo.Celular;
+import modelo.Empresa;
 import modelo.Marca;
 
 /**
@@ -28,7 +29,7 @@ public class CelularDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Celular celular) {
 
-        String sql = "INSERT INTO celular (serie, imei1, imei2, marca_id, status, observacao) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO celular (serie, imei1, imei2, marca_id, status, observacao, empresa_id) values(?,?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -39,6 +40,7 @@ public class CelularDao {
             stm.setInt(4, celular.getMarca().getIdMarca());
             stm.setString(5, celular.getStatus());
             stm.setString(6, celular.getObservacao());
+            stm.setInt(7, celular.getEmpresa().getIdEmpresa());
 
             stm.execute();
             //fechando as conexões
@@ -55,7 +57,7 @@ public class CelularDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Celular celular) {
 
-        String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=? where idCelular = ?";
+        String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=?, empresa_id=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -65,7 +67,8 @@ public class CelularDao {
             stm.setInt(4, celular.getMarca().getIdMarca());
             stm.setString(5, celular.getStatus());
             stm.setString(6, celular.getObservacao());
-            stm.setInt(7, celular.getIdCelular());
+            stm.setInt(7, celular.getEmpresa().getIdEmpresa());
+            stm.setInt(8, celular.getIdCelular());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -76,15 +79,15 @@ public class CelularDao {
             return false;
         }
     }
-    
-        // ------------ALTERAR CADASTRA  --------------------------------------    
+
+    // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean updateStatus(Celular celular) {
 
         String sql = "UPDATE celular set status=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
-            stm = con.prepareStatement(sql);      
-            stm.setString(1, celular.getStatus()); 
+            stm = con.prepareStatement(sql);
+            stm.setString(1, celular.getStatus());
             stm.setInt(2, celular.getIdCelular());
             stm.execute();
             //fechando as conexões
@@ -123,10 +126,12 @@ public class CelularDao {
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
                 + "WHERE idcelular = ?";
         Celular celular = null;
-        Marca marca = null;
-        Categoria categoria = null;
+        Marca marca;
+        Categoria categoria;
+        Empresa empresa;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -138,6 +143,7 @@ public class CelularDao {
                     celular = new Celular();
                     categoria = new Categoria();
                     marca = new Marca();
+                    empresa = new Empresa();
 
                     celular.setIdCelular(rs.getInt("idCelular"));
                     celular.setImei1(rs.getString("imei1"));
@@ -145,8 +151,14 @@ public class CelularDao {
                     celular.setSerie(rs.getString("serie"));
                     celular.setStatus(rs.getString("status"));
                     celular.setObservacao(rs.getString("observacao"));
+                    //empresa
+                    empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                    empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    celular.setEmpresa(empresa);
+                    // marca
                     marca.setIdMarca(rs.getInt("idMarca"));
                     marca.setMarca(rs.getString("marca"));
+                    // categoria
                     categoria.setIdCategoria(rs.getInt("idCategoria"));
                     categoria.setCategoria(rs.getString("categoria"));
                     marca.setCategoria(categoria);
@@ -171,10 +183,12 @@ public class CelularDao {
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
-                + "WHERE serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?";
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
+                + "WHERE serie LIKE ? OR imei1 LIKE ? OR marca.marca LIKE ?";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
+        Empresa empresa;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -188,15 +202,21 @@ public class CelularDao {
                 celular = new Celular();
                 categoria = new Categoria();
                 marca = new Marca();
-
+                empresa = new Empresa();
                 celular.setIdCelular(rs.getInt("idCelular"));
                 celular.setImei1(rs.getString("imei1"));
                 celular.setImei2(rs.getString("imei2"));
                 celular.setSerie(rs.getString("serie"));
                 celular.setStatus(rs.getString("status"));
                 celular.setObservacao(rs.getString("observacao"));
+                //empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                celular.setEmpresa(empresa);
+                // marca
                 marca.setIdMarca(rs.getInt("idMarca"));
                 marca.setMarca(rs.getString("marca"));
+                // categoria
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setCategoria(rs.getString("categoria"));
                 marca.setCategoria(categoria);
@@ -212,17 +232,20 @@ public class CelularDao {
         }
         return Listagem;
     }
-     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+
     public ArrayList<Celular> getListagemLikeAtivos(String busca) {
 
         ArrayList<Celular> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
                 + "WHERE (serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?) AND celular.status = 'Ativo'";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
+        Empresa empresa;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -236,6 +259,7 @@ public class CelularDao {
                 celular = new Celular();
                 categoria = new Categoria();
                 marca = new Marca();
+                empresa = new Empresa();
 
                 celular.setIdCelular(rs.getInt("idCelular"));
                 celular.setImei1(rs.getString("imei1"));
@@ -243,8 +267,14 @@ public class CelularDao {
                 celular.setSerie(rs.getString("serie"));
                 celular.setStatus(rs.getString("status"));
                 celular.setObservacao(rs.getString("observacao"));
+                //empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                celular.setEmpresa(empresa);
+                // marca
                 marca.setIdMarca(rs.getInt("idMarca"));
                 marca.setMarca(rs.getString("marca"));
+                // categoria
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setCategoria(rs.getString("categoria"));
                 marca.setCategoria(categoria);
@@ -261,16 +291,18 @@ public class CelularDao {
         return Listagem;
     }
 
-        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Celular verificarSeCadastrado(String serie, String imei) {
 
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
                 + "WHERE imei1 = ? OR serie = ?";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
+        Empresa empresa;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -283,6 +315,7 @@ public class CelularDao {
                     celular = new Celular();
                     categoria = new Categoria();
                     marca = new Marca();
+                    empresa = new Empresa();
 
                     celular.setIdCelular(rs.getInt("idCelular"));
                     celular.setImei1(rs.getString("imei1"));
@@ -290,8 +323,14 @@ public class CelularDao {
                     celular.setSerie(rs.getString("serie"));
                     celular.setStatus(rs.getString("status"));
                     celular.setObservacao(rs.getString("observacao"));
+                    //empresa
+                    empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                    empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    celular.setEmpresa(empresa);
+                    // marca
                     marca.setIdMarca(rs.getInt("idMarca"));
                     marca.setMarca(rs.getString("marca"));
+                    // categoria
                     categoria.setIdCategoria(rs.getInt("idCategoria"));
                     categoria.setCategoria(rs.getString("categoria"));
                     marca.setCategoria(categoria);

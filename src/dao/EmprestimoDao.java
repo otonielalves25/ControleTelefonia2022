@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import modelo.Categoria;
 import modelo.Celular;
 import modelo.Chip;
+import modelo.Empresa;
 import modelo.Emprestimo;
 import modelo.Funcionario;
 import modelo.Localidade;
@@ -25,16 +26,16 @@ import modelo.Usuario;
  * @author Tony
  */
 public class EmprestimoDao {
-
+    
     Connection con;
     PreparedStatement stm = null;
     ResultSet rs;
 
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Emprestimo emprestimo) {
-
+        
         String sql = "INSERT INTO emprestimo (situacao, dataEmprestimo, dataDevolucao, funcionario_id, usuario_id, observacao, celular_id, chip_id) VALUES (?,?,?,?,?,?,?,?)";
-
+        
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -55,12 +56,12 @@ public class EmprestimoDao {
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Dao. " + ex);
             return false;
         }
-
+        
     }
 
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Emprestimo emprestimo) {
-
+        
         String sql = "UPDATE emprestimo SET situacao=?, dataEmprestimo=?, dataDevolucao=?, funcionario_id=?, usuario_id=?, observacao=?, celular_id=?, chip_id=? where idEmprestimo = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -74,7 +75,7 @@ public class EmprestimoDao {
             stm.setInt(7, emprestimo.getCelular().getIdCelular());
             stm.setInt(8, emprestimo.getChip().getIdChip());
             stm.setInt(9, emprestimo.getIdEmprestimo());
-
+            
             stm.execute();
             //fechando as conexões
             con.close();
@@ -88,7 +89,7 @@ public class EmprestimoDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
 
     public boolean updateDevolver(Emprestimo emprestimo) {
-
+        
         String sql = "UPDATE emprestimo SET situacao=?, dataDevolucao=?, observacaoDevolucao = ? where idEmprestimo = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -97,7 +98,7 @@ public class EmprestimoDao {
             stm.setString(2, emprestimo.getDataDevolucao());
             stm.setString(3, emprestimo.getObservacaoDevolucao());
             stm.setInt(4, emprestimo.getIdEmprestimo());
-
+            
             stm.execute();
             //fechando as conexões
             con.close();
@@ -112,7 +113,7 @@ public class EmprestimoDao {
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean deleteUmItem(int codigo) {
         String sql = "DELETE FROM emprestimo WHERE idEmprestimo= ?";
-
+        
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -131,12 +132,12 @@ public class EmprestimoDao {
     // RETORNAR O ULTIMO ID ////////////////////////////////////////////////////
     public int retornaUltimoIDCadastrado() {
         int retorno = 0;
-
+        
         String sql = "SELECT MAX(idEmprestimo) FROM emprestimo";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-
+            
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -147,26 +148,27 @@ public class EmprestimoDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-
+            
             JOptionPane.showMessageDialog(null, "Erro ao Consultar acessorio DAO. " + ex);
-
+            
         }
         return retorno;
-
+        
     }
 
 //    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Emprestimo retornaPorID(int codigo) {
-
+        
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                 + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
                 + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
                 + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
+                + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = ?";
-
+        
         Emprestimo emprestimo = null;
         Funcionario funcionario;
         Localidade localidade;
@@ -175,7 +177,8 @@ public class EmprestimoDao {
         Celular celular;
         Chip chip;
         Marca marca;
-
+        Empresa empresa;
+        
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -191,6 +194,7 @@ public class EmprestimoDao {
                     marca = new Marca();
                     celular = new Celular();
                     chip = new Chip();
+                    empresa = new Empresa();
                     //----------------------------------------------------------
                     emprestimo.setIdEmprestimo(rs.getInt("idEmprestimo"));
                     emprestimo.setSituacao(rs.getString("situacao"));
@@ -219,8 +223,12 @@ public class EmprestimoDao {
                     marca.setIdMarca(rs.getInt("idMarca"));
                     marca.setMarca(rs.getString("marca"));
                     marca.setCategoria(categoria);
+                    // empresa
+                    empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                    empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
                     // celualar
                     celular.setMarca(marca);
+                    celular.setEmpresa(empresa);
                     celular.setIdCelular(rs.getInt("idCelular"));
                     celular.setImei1(rs.getString("imei1"));
                     emprestimo.setCelular(celular);
@@ -231,7 +239,7 @@ public class EmprestimoDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setIsTelefonia(rs.getBoolean("telefonia"));
                     emprestimo.setChip(chip);
-
+                    
                 }
             }
             //fechando as conexões
@@ -240,16 +248,16 @@ public class EmprestimoDao {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar um DAO. " + ex);
         }
-
+        
         return emprestimo;
     }
 
 //    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
     public ArrayList<Emprestimo> getListagemLike(String procura, String soEmprestados, String tipoPesquisa) {
-
+        
         ArrayList<Emprestimo> Listagem = new ArrayList<>();
         String sql;
-        
+
         // MODO DE PESQUISA
         String modoPesquisa;
         if (tipoPesquisa.equals("nome")) {
@@ -261,29 +269,30 @@ public class EmprestimoDao {
         }
         
         System.out.println(soEmprestados);
-        if(soEmprestados.equals("EMPRESTADO")){
-                 sql = "SELECT * FROM emprestimo "
-                + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
-                + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
-                + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
-                + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
-                + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
-                + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
-                + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                + "LIKE ? AND emprestimo.situacao = 'EMPRESTADO'";
-        } else{
-                sql = "SELECT * FROM emprestimo "
-                + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
-                + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
-                + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
-                + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
-                + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
-                + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
-                + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                + "LIKE ?";
+        if (soEmprestados.equals("EMPRESTADO")) {
+            sql = "SELECT * FROM emprestimo "
+                    + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
+                    + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
+                    + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
+                    + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
+                    + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
+                    + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
+                    + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                    + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
+                    + "LIKE ? AND emprestimo.situacao = 'EMPRESTADO'";
+        } else {
+            sql = "SELECT * FROM emprestimo "
+                    + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
+                    + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
+                    + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
+                    + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
+                    + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
+                    + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
+                    + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                    + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
+                    + "LIKE ?";
         }
         // PEQUISA POR NOME TUDO ///////////////////////////////////////////////////////////////// 
-   
 
         Emprestimo emprestimo = null;
         Funcionario funcionario;
@@ -293,15 +302,16 @@ public class EmprestimoDao {
         Celular celular;
         Chip chip;
         Marca marca;
-
+        Empresa empresa;
+        
         try {
             con = conexao.ConexaoSqLite.getConnection();
-      
+            
             stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + procura + "%");          
+            stm.setString(1, "%" + procura + "%");
             rs = stm.executeQuery();
             while (rs.next()) {
-
+                
                 emprestimo = new Emprestimo();
                 localidade = new Localidade();
                 funcionario = new Funcionario();
@@ -310,6 +320,7 @@ public class EmprestimoDao {
                 marca = new Marca();
                 celular = new Celular();
                 chip = new Chip();
+                empresa = new Empresa();
                 //----------------------------------------------------------
                 emprestimo.setIdEmprestimo(rs.getInt("idEmprestimo"));
                 emprestimo.setSituacao(rs.getString("situacao"));
@@ -338,11 +349,16 @@ public class EmprestimoDao {
                 marca.setIdMarca(rs.getInt("idMarca"));
                 marca.setMarca(rs.getString("marca"));
                 marca.setCategoria(categoria);
+                // empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
                 // celualar
                 celular.setMarca(marca);
+                celular.setEmpresa(empresa);
                 celular.setIdCelular(rs.getInt("idCelular"));
                 celular.setImei1(rs.getString("imei1"));
                 emprestimo.setCelular(celular);
+
                 // chip
                 chip.setIdChip(rs.getInt("idChip"));
                 chip.setStatus(rs.getString("codigoChip"));
@@ -350,24 +366,23 @@ public class EmprestimoDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
                 emprestimo.setChip(chip);
-
+                
                 Listagem.add(emprestimo);
             }
             //fechando as conexões
             con.close();
             stm.close();
-
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar todos DAO. " + ex);
         }
         return Listagem;
     }
-    
-    
+
     // RETORNAR O ULTIMO ID ////////////////////////////////////////////////////
     public int verificaEmprestimoFuncionario(int funcionario_id) {
         int retorno = 0;
-
+        
         String sql = "SELECT * FROM emprestimo WHERE funcionario_id = ? AND situacao = 'EMPRESTADO'";
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -383,12 +398,12 @@ public class EmprestimoDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-
+            
             JOptionPane.showMessageDialog(null, "Erro ao Consultar emprestimo do funcionario DAO. " + ex);
-
+            
         }
         return retorno;
-
+        
     }
     
 }

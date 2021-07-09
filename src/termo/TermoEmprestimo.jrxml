@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM itememprestimo
+inner JOIN emprestimo ON itememprestimo.emprestimo_id = emprestimo.idemprestimo
+inner join estadobem  on itememprestimo.estadoBem_id = estadobem.idestadobem
+inner join funcionario  on emprestimo.funcionario_id = funcionario.idfuncionario
+inner join localidade  on funcionario.localidade_id = localidade.idlocalidade
+inner join equipamento on itememprestimo.equipamento_patrimonio = equipamento.patrimonio
+inner join modelo on equipamento.modelo_id = modelo.idmodelo
+inner join categoria on modelo.categoria_id = categoria.idcategoria
+WHERE emprestimo.idemprestimo = 80]]>
+	</queryString>
+	<field name="iditemEmprestimo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtde" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="emprestimo_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estadoBem_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="equipamento_patrimonio" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idemprestimo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataDevolucao" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="funcionario_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="chamado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoMudanca_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idestadoBem" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estadoBem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idfuncionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="localidade_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="emailGmail" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idLocalidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeLocalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoCiretran_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patrimonio" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modelo_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mac" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataMudanca" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataAquisicao" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="garantia" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="situacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qtdeDefeito" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patrimonioAnterior" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ip" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataBaixa" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="motivoBaixa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresaEquipamento_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idModelo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeModelo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="categoria_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idcategoria" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeCategoria" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="68" uuid="c00cff7e-5aa3-4869-874b-b9618fde0441"/>
+				<imageExpression><![CDATA["C:\\Users\\otoniel.aalves\\Documents\\NetBeansProjects\\Controle_Equipamento_Novo\\src\\imagem\\Log Detran 2019.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="411" splitType="Stretch">
+			<staticText>
+				<reportElement x="140" y="0" width="272" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERMO DE EMPRÉSTIMO DE EQUIPAMENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="448" y="0" width="99" height="20" uuid="c2418c91-30a2-4035-b4f9-cb56559da7a1"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº "+$F{idemprestimo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="26" width="553" height="20" uuid="33db5234-fbfb-4fa3-881e-34dea33f835a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[COOGI – COORDENADORIA DE GESTÃO DA INFORMAÇÃO TELEFONE: 41 3361-1477/1184 - dot@detran.pr.gov.br]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="65" width="283" height="20" uuid="403992a8-3c2a-4d5a-81c5-2234b7e47047"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeLocalidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="65" width="81" height="20" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destino:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="371" y="65" width="176" height="20" uuid="ef3de2ed-7f5e-4904-a190-27866834439f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CPF: " +$F{cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="86" width="81" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="88" y="86" width="283" height="20" uuid="92005c34-d9a2-4136-b8b7-e793bd533689"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="86" width="77" height="20" uuid="5b7ededd-0f37-4263-ba7d-3450eeb2f752"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{dataDevolucao});]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="371" y="86" width="99" height="20" uuid="7a9f8503-9b88-4a7e-90c4-335a2045007d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data devolução:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="121" width="540" height="80" uuid="99130c46-dbdb-47f4-906b-c61fa29d0b58"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[    Considerando o contido na O.S. nº 001/2020, o Setor de Infraestrutura Tecnológicada Coordenadoria de GestãodaInformação, entrega neste ato o equipamento abaixo relacionado, para utilização na execução de suas atividades profissionais.
+Cumpre salientar que de acordo como contido no Estatuto do servidor do estado do Paraná, elegislações complementares, é dever do servidor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="205" width="540" height="90" uuid="772f29c3-bbbb-4d7b-b7dd-c57ba4eaa346"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[     • Zelar pela economia do material da instituição e pela conservação do que for confiado à sua guarda ou utilização.
+     • Todo servidor poderá ser chamado à responsabilidade pelo dano que dolosamente ou culposamente, causar ao equipamento que lhe foi confiado.
+     • Os equipamentos abaixo relacionados são para uso exclusivo profissional, sendo vedados a utilização para fins pessoais e adversos à função que exerce.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="302" width="540" height="46" uuid="358adf7c-7f62-4976-aac6-6f2a4c7be75b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[    Ao assinar o presente Termo o(a) servidor (a) assume total responsabilidade pela guarda e utilização do equipamento supra citado, inclusive a reposição do mesmo em caso de roubo, furto, depreciação ou dano, sob pena de responsabilização administrativa em caso de descumprimento.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="6" y="1" width="30" height="20" backcolor="#CCCCCC" uuid="0deb6101-8e79-4685-b272-f5d577701f7d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="36" y="1" width="90" height="20" backcolor="#CCCCCC" uuid="c5073ba8-ab69-468b-b985-65aa5b7dbf19"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PATRIMONIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="126" y="1" width="113" height="20" backcolor="#CCCCCC" uuid="b997bb05-4b38-4118-8f33-2a521f733341"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[CATEGORIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="239" y="1" width="204" height="20" backcolor="#CCCCCC" uuid="18ac6192-7d2b-424a-bbf0-16efceb82451"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MARCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="443" y="1" width="72" height="20" backcolor="#CCCCCC" uuid="dfee1cb3-dfa6-4eec-a263-1b9850461488"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="515" y="1" width="32" height="20" backcolor="#CCCCCC" uuid="c4c1971f-69f2-4a93-afd0-3f0e26286520"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTDE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="6" y="0" width="30" height="20" uuid="9508dd50-b7ad-4382-b351-779122b7990f"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{iditemEmprestimo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="36" y="0" width="90" height="20" uuid="940e0a46-9985-4396-930f-a0eb8fb7dbc0"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{patrimonio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="126" y="0" width="113" height="20" uuid="ba1fccfa-ddc0-4c74-85e2-8892f281bccc"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeCategoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="0" width="204" height="20" uuid="373d8bbe-ac4b-4a6c-bfda-a65a31b405fa"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeModelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="72" height="20" uuid="d68cf884-1892-4e95-8fc2-e51c442bc733"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estadoBem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="0" width="32" height="20" uuid="d7a227c6-568a-4339-84c1-b9663ab409e5"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{qtde}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="203" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="47" y="32" width="145" height="20" uuid="ea44645b-1511-4c4f-9088-57ef43d56bbb"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="119" width="229" height="1" uuid="bbe4a95f-a7e7-4439-81d1-73bfe792384c"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="32" width="40" height="20" uuid="09be560e-9cb9-434a-b8f7-a73a7df97052"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Curitiba:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="121" width="229" height="20" uuid="01c14a3f-3ae7-442c-bfb8-732ba6d89131"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="324" y="120" width="208" height="1" uuid="dc736187-c094-4539-9958-59ad7c65c213"/>
+			</line>
+			<staticText>
+				<reportElement x="324" y="121" width="208" height="20" uuid="79e84799-4a1a-43a4-9c4f-6398776804ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[COOGI - INFRAESTRUTURA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="412" y="161" width="133" height="31" uuid="b71e1694-e9bf-47dc-9b4a-8c23973c04a3"/>
+				<imageExpression><![CDATA["C:\\Users\\otoniel.aalves\\Documents\\NetBeansProjects\\Controle_Equipamento_Novo\\src\\imagem\\dot-icone.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="6" y="161" width="120" height="31" uuid="7d241502-5aaf-4c28-b2a5-664d634fda64"/>
+				<imageExpression><![CDATA["C:\\Users\\otoniel.aalves\\Documents\\NetBeansProjects\\Controle_Equipamento_Novo\\src\\imagem\\logo-coogi.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

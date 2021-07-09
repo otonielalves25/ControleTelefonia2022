@@ -58,6 +58,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         txtDataEmprestimo.setText(hoje());
+        txtCodigo.setVisible(false);
 
     }
 
@@ -567,12 +568,12 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
             // FIM VALIDAÇÃO DOS CAMPOS NECESSARIOS 
             Emprestimo emprestimo = new Emprestimo(Integer.parseInt(txtCodigo.getText()));
-            emprestimo.setSituacao("DEVOLVIDO");
+            emprestimo.setSituacao("DEVOLVIDO"); // EMPRESTIMO DEVOLVIDO
             emprestimo.setDataDevolucao(txtDataDevolucao.getText());
             Celular celular = new Celular(celular_id);
-            celular.setStatus("DEVOLVIDO");
-            Chip chip = new Chip(chip_id);
-            chip.setStatus("DEVOLVIDO");
+            celular.setStatus("Disponível"); // CHIP FICA ATIVO
+            Chip chip = new Chip(chip_id); // CHIP FICA ATIVO
+            chip.setStatus("Disponível");
             emprestimo.setObservacaoDevolucao(txtObservacao.getText());
 
             // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
