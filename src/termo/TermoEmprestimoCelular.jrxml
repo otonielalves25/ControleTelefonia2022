@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="0.8264462809917357"/>
+	<property name="ireport.zoom" value="1.24184264611831"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="241"/>
+	<property name="ireport.y" value="29"/>
+	<parameter name="acessorios" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -68,16 +69,16 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 		</band>
 	</title>
 	<pageHeader>
-		<band height="531" splitType="Stretch">
+		<band height="734" splitType="Stretch">
 			<staticText>
-				<reportElement x="47" y="22" width="478" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
+				<reportElement x="4" y="0" width="540" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[TERMO DE RESPONSABILIDADE PARA COMODATO DE CARTÃO SIM (CHIP)]]></text>
+				<text><![CDATA[TERMO DE RESPONSABILIDADE PARA COMODATO DE APARELHO SMARTPHONE.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="65" width="151" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
+				<reportElement x="4" y="40" width="151" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -90,7 +91,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[NOME: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="86" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
+				<reportElement x="4" y="61" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -103,22 +104,24 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[RG: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="270" width="540" height="261" uuid="358adf7c-7f62-4976-aac6-6f2a4c7be75b"/>
+				<reportElement x="7" y="225" width="540" height="367" uuid="358adf7c-7f62-4976-aac6-6f2a4c7be75b"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[    1.  É inteiramente responsável pelas boas condições de uso e conservação do cartão SIM (chip);
-    2.  Fará o uso exclusivamente para fins profissionais e dentro da necessidade funcional.
-    3.  Devolverá o cartão SIM (chip) no prazo máximo de 2 (dois) dias úteis quando solicitado formalmente, ou quando desligar-se do quadro de funcionários do Detran/PR;
-    4.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
-    5.  Assumirá conhecimento dos termos da Instrução Normativa n.º 001/2015 e da Portaria n.º 083/2019 – DG subsidiariamente.
-    6.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
-    7.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
-                                                                                                                                                                                                                                                  Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
+				<text><![CDATA[1.  É inteiramente responsável pelas boas condições de uso e conservação do aparelho e dos acessórios fornecidos em conjunto;
+2.  Fará o uso exclusivamente para fins profissionais e dentro da necessidade funcional.
+3.  Providenciará aparelho da mesma marca e modelo para restituição à proprietária em caso de extravio, furto ou roubo, acompanhado de Boletim de Ocorrência Policial ou, em caso de descontinuidade do aparelho da mesma marca e modelo, modelo equivalente ou superior ao cedido tendo como base o valor apresentado em Nota Fiscal;
+4.  Devolverá o aparelho e os acessórios que o acompanham no prazo máximo de 2 (dois) dias úteis quando solicitado formalmente, ou quando desligar-se do quadro de funcionários do Detran/PR;
+5.  Comunicará, de imediato, a COOGI/DOT em caso de defeito do aparelho. Neste caso, o Detran/PR realizará o envio para assistência técnica especializada do fabricante e, caso fique comprovado o defeito por má utilização, fica o cessionário responsável pelo reembolso ou pela reposição do aparelho e/ou dos acessórios ineficientes ou defeituosos, tais como carregadores, cabos, fones de ouvido, observadas as condições do item 3 para substituição ou reembolso;
+6.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
+7.  Assumirá conhecimento dos termos da Instrução Normativa n.º 001/2015 e da Portaria n.º 083/2019 – DG subsidiariamente.
+8.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
+9.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
+                                                                                                                                                                                             Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
 ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="158" y="65" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
+				<reportElement x="155" y="40" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -129,7 +132,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="158" y="86" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
+				<reportElement x="155" y="61" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -140,7 +143,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{rg}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="309" y="86" width="81" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
+				<reportElement x="306" y="61" width="81" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -153,7 +156,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[CFP: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="390" y="86" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
+				<reportElement x="387" y="61" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -164,7 +167,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="7" y="106" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
+				<reportElement x="4" y="81" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -177,7 +180,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[UNIDADE DE LOGAÇÃO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="158" y="106" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
+				<reportElement x="155" y="81" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -188,21 +191,21 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nomeLocalidade}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="309" y="106" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
+				<reportElement x="306" y="81" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.75"/>
-					<topPen lineWidth="1.75"/>
-					<leftPen lineWidth="1.75"/>
-					<bottomPen lineWidth="1.75"/>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CARGO: ]]></text>
+				<text><![CDATA[APARELHO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="390" y="106" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
+				<reportElement x="387" y="81" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -210,10 +213,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<rightPen lineWidth="1.25"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{cargo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{categoria}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="158" y="126" width="151" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
+				<reportElement x="155" y="101" width="151" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -221,10 +224,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<rightPen lineWidth="1.25"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{numeroLinha}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{marca}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="7" y="126" width="151" height="20" uuid="2a423cf5-a74c-4354-8b0f-19b714247b76"/>
+				<reportElement x="4" y="101" width="151" height="20" uuid="2a423cf5-a74c-4354-8b0f-19b714247b76"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -234,10 +237,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[LINHA: ]]></text>
+				<text><![CDATA[MODELO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="390" y="126" width="157" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
+				<reportElement x="387" y="101" width="157" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -245,74 +248,94 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<rightPen lineWidth="1.25"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{codigoChip}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$F{imei1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="309" y="126" width="81" height="20" uuid="1a35b4e9-c6b7-42c8-99c4-65121b3dd03e"/>
+				<reportElement x="306" y="101" width="81" height="20" uuid="1a35b4e9-c6b7-42c8-99c4-65121b3dd03e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.75"/>
-					<topPen lineWidth="1.75"/>
-					<leftPen lineWidth="1.75"/>
-					<bottomPen lineWidth="1.75"/>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SERIE CHIP: ]]></text>
+				<text><![CDATA[IMEI:  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="182" width="549" height="23" uuid="33ba041c-9252-4a2b-8831-2498dc4adbc0"/>
+				<reportElement x="10" y="143" width="549" height="17" uuid="33ba041c-9252-4a2b-8831-2498dc4adbc0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVAÇÕES GERAIS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="6" y="205" width="541" height="65" uuid="2655faca-a71e-4a09-96f6-df6957da2ba6"/>
+				<reportElement x="7" y="160" width="541" height="65" uuid="2655faca-a71e-4a09-96f6-df6957da2ba6"/>
 				<textElement textAlignment="Justified">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["      O cartão SIM (chip) em questão é de propriedade da "+$F{nomeEmpresa} + ". De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["      O smartphone em questão é de propriedade da "+$F{nomeEmpresa} + ". De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<pageFooter>
-		<band height="203" splitType="Stretch">
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="47" y="41" width="145" height="20" uuid="ea44645b-1511-4c4f-9088-57ef43d56bbb"/>
-				<textElement verticalAlignment="Bottom"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="10" y="119" width="229" height="1" uuid="bbe4a95f-a7e7-4439-81d1-73bfe792384c"/>
-			</line>
 			<staticText>
-				<reportElement x="7" y="41" width="40" height="20" uuid="09be560e-9cb9-434a-b8f7-a73a7df97052"/>
-				<textElement verticalAlignment="Bottom"/>
-				<text><![CDATA[Curitiba:]]></text>
-			</staticText>
-			<line>
-				<reportElement x="324" y="120" width="208" height="1" uuid="dc736187-c094-4539-9958-59ad7c65c213"/>
-			</line>
-			<staticText>
-				<reportElement x="21" y="121" width="208" height="20" uuid="79e84799-4a1a-43a4-9c4f-6398776804ab"/>
+				<reportElement x="21" y="652" width="223" height="20" uuid="66f04671-6a8d-4ed5-ae0f-b085df739ca7"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COOGI]]></text>
 			</staticText>
 			<image>
-				<reportElement x="397" y="168" width="158" height="35" uuid="550c4021-dcce-4a16-afcd-2f2169da5bfb"/>
+				<reportElement x="413" y="699" width="131" height="35" uuid="262ee2be-06dd-4477-afd1-b043696ce15d"/>
 				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\logo-coogi.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="0" y="168" width="158" height="35" uuid="07a77f3e-adf9-4aeb-a053-bfdc4f35b488"/>
+				<reportElement x="10" y="699" width="158" height="35" uuid="d02d30fb-75b1-4998-92d8-fb2617eedcb7"/>
 				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\dot-icone.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="7" y="592" width="40" height="20" uuid="5e186892-5c23-435c-b565-e521cc716051"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Curitiba:]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="336" y="121" width="196" height="20" uuid="dde97f6a-4eba-4f0b-9461-834503be6da5"/>
+				<reportElement x="306" y="652" width="226" height="20" uuid="2fc15e37-36d1-49c2-ae71-0dc4d8f8ba32"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="53" y="592" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="121" width="389" height="21" uuid="622a0d49-ce74-4bd6-82fc-14d8eb3142cc"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{acessorios}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="121" width="151" height="21" uuid="0c807280-a3d6-4cfe-8856-b8be8c5e9c18"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACESSÓRIOS: ]]></text>
+			</staticText>
 		</band>
-	</pageFooter>
+	</pageHeader>
 </jasperReport>

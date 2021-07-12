@@ -10,12 +10,14 @@ import dao.CelularDao;
 import dao.ChipDao;
 import dao.EmprestimoDao;
 import dao.FuncionarioDao;
+import dao.ImpressaoDao;
 import dao.UsuarioDao;
 
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Acessorio;
@@ -764,7 +766,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 cadatrarAcessorio(); // cadatrar acessorios
                 alterarChipBanco();
                 celularDao.updateStatus(c);
-                JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+                HashMap params = new HashMap<>();
+                 params.put("accessorios",acessorios);
+                 new ImpressaoDao().imprimirEmprestimoChip(emprestimo_id, params);
+                
+                //JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar.", null, JOptionPane.ERROR_MESSAGE);
             }
