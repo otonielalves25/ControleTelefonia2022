@@ -134,7 +134,7 @@ public class AcessorioDao {
     public ArrayList<Acessorio> getListagemPorEmprestimo(int emprestimo_id) {
 
         ArrayList<Acessorio> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM emprestimo_acessorio WHERE emprestimo_id = ? ORDER BY nomeAcessorio";
+        String sql = "SELECT * FROM emprestimo_acessorio WHERE emprestimo_id = ?";
         Acessorio acessorio;
 
         try {

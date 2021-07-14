@@ -6,11 +6,15 @@
 package formulario;
 
 import dao.ChipDao;
+import dao.EmpresaDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Chip;
+import modelo.Empresa;
+import modelo.Session;
+
 /**
  *
  * @author otoniel.aalves
@@ -19,6 +23,7 @@ public class FrmChip extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    String pegaSituacao;
 
     //Variaveis
     ChipDao chipDao = new ChipDao();
@@ -28,7 +33,19 @@ public class FrmChip extends javax.swing.JFrame {
         txtCodigo.setVisible(false);
         botaoInicial();
         habilitado(false);
+        carregaOperadora();
         carregaGrelha();
+
+    }
+
+    // carrega oprerador
+    private void carregaOperadora() {
+        List<Empresa> listagem = new EmpresaDao().getListagemLike("");
+        cboOperadora.removeAllItems();
+        cboOperadora.setSelectedItem("Selecione...");
+        for (Empresa empresa : listagem) {
+            cboOperadora.addItem(empresa);
+        }
 
     }
 
@@ -42,13 +59,22 @@ public class FrmChip extends javax.swing.JFrame {
         List<Chip> lista = chipDao.getListagemLike(txtPesquisa.getText());
         modelo.setNumRows(0);
         for (Chip chip : lista) {
+            
+             String sim = chip.isIsDado()==true? "X": "";
+            String nao = chip.isIsTelefonia()==true? "X": "";
 
             modelo.addRow(new Object[]{
                 chip.getIdChip(),
                 chip.getCodigoChip(),
                 chip.getNumeroLinha(),
+                sim,
+                nao,
+                chip.getEmpresa().getNomeEmpresa(),
                 chip.getStatus(),});
+
+            contador++;
         }
+        lblQuantidade.setText("Quantidade: " + contador);
     }
 
     //LIMPAR******************************************************************
@@ -56,6 +82,7 @@ public class FrmChip extends javax.swing.JFrame {
 
         txtChip.setText("");
         txtTelefone.setText("");
+        cboOperadora.setSelectedIndex(0);
         cboSituacao.setSelectedIndex(0);
         ckDados.setSelected(false);
         ckVoz.setSelected(false);
@@ -68,6 +95,7 @@ public class FrmChip extends javax.swing.JFrame {
         txtChip.setEnabled(y);
         grelha.setEnabled(!y);
         txtTelefone.setEnabled(y);
+        cboOperadora.setEnabled(y);
         cboSituacao.setEnabled(y);
         ckDados.setEnabled(y);
         ckVoz.setEnabled(y);
@@ -103,18 +131,19 @@ public class FrmChip extends javax.swing.JFrame {
         ckVoz = new javax.swing.JCheckBox();
         ckDados = new javax.swing.JCheckBox();
         txtObservacao = new javax.swing.JTextField();
-        cboSituacao = new javax.swing.JComboBox<>();
+        cboOperadora = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        lblQuantidade = new javax.swing.JLabel();
+        cboSituacao = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Situação:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, -1, -1));
+        jLabel1.setText("Operadora:");
 
         txtChip.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtChip.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -123,7 +152,6 @@ public class FrmChip extends javax.swing.JFrame {
                 txtChipKeyPressed(evt);
             }
         });
-        jPanel1.add(txtChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 87, 172, -1));
 
         grelha.setAutoCreateRowSorter(true);
         grelha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -132,11 +160,11 @@ public class FrmChip extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "CODIGO DO CHIP:", "NUMERO DA LINHA:", "STATUS:"
+                "CÓDIGO", "CODIGO DO CHIP:", "NUMERO DA LINHA:", "VOZ", "DADOS", "OPERADORA", "STATUS:"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -155,13 +183,15 @@ public class FrmChip extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
             grelha.getColumnModel().getColumn(0).setPreferredWidth(70);
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
-            grelha.getColumnModel().getColumn(2).setPreferredWidth(200);
-            grelha.getColumnModel().getColumn(2).setMaxWidth(200);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(100);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(2).setPreferredWidth(130);
+            grelha.getColumnModel().getColumn(2).setMaxWidth(130);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(60);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(60);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(60);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(60);
+            grelha.getColumnModel().getColumn(6).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(6).setMaxWidth(100);
         }
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 256, 638, 288));
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
         btnNovo.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -175,7 +205,6 @@ public class FrmChip extends javax.swing.JFrame {
                 btnNovoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 173, 95, 33));
 
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -187,7 +216,6 @@ public class FrmChip extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 173, 102, 33));
 
         btnExcluir.setBackground(new java.awt.Color(204, 204, 204));
         btnExcluir.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -199,7 +227,6 @@ public class FrmChip extends javax.swing.JFrame {
                 btnExcluirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 173, 99, 33));
 
         btnAlterar.setBackground(new java.awt.Color(204, 204, 204));
         btnAlterar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -211,7 +238,6 @@ public class FrmChip extends javax.swing.JFrame {
                 btnAlterarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 173, 94, 33));
 
         btnSalvar.setBackground(new java.awt.Color(204, 204, 204));
         btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -223,20 +249,17 @@ public class FrmChip extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(544, 173, 119, 33));
 
         txtCodigo.setEnabled(false);
         txtCodigo.setOpaque(false);
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 61, 47, -1));
 
-        lblTitulo.setBackground(new java.awt.Color(102, 0, 102));
+        lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Cadastro de Chip");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
-        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 695, 43));
 
         try {
             txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
@@ -244,15 +267,12 @@ public class FrmChip extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtTelefone.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 88, 113, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel3.setText("Telefone:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel5.setText("Observação:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 114, -1, -1));
 
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -261,45 +281,183 @@ public class FrmChip extends javax.swing.JFrame {
                 txtPesquisaKeyPressed(evt);
             }
         });
-        jPanel1.add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 224, 470, -1));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel6.setText("Pesquisar Chip/Numero:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 227, -1, -1));
 
         ckVoz.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckVoz.setForeground(new java.awt.Color(153, 51, 0));
         ckVoz.setText("Voz");
         ckVoz.setToolTipText("");
         ckVoz.setOpaque(false);
-        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
 
         ckDados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckDados.setForeground(new java.awt.Color(153, 51, 0));
         ckDados.setText("Dados");
         ckDados.setToolTipText("");
         ckDados.setOpaque(false);
-        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         txtObservacao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jPanel1.add(txtObservacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 135, 638, -1));
-
-        cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
-        jPanel1.add(cboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 160, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel2.setText("Còdigo Chip:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+
+        lblQuantidade.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblQuantidade.setText("quantidade 0");
+
+        cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
+        cboSituacao.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cboSituacaoPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel4.setText("Situação:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel2)
+                            .addGap(100, 100, 100)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(10, 10, 10)
+                                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(ckDados))
+                                .addComponent(jLabel5))
+                            .addGap(9, 9, 9)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(21, 21, 21)
+                                    .addComponent(jLabel1))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(ckVoz)
+                                    .addGap(45, 45, 45)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(cboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(9, 9, 9)
+                                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(ckDados))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(ckVoz))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(cboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel6))
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblQuantidade)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 694, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -320,13 +478,14 @@ public class FrmChip extends javax.swing.JFrame {
                 txtTelefone.setText(chip.getNumeroLinha());
                 txtObservacao.setText(chip.getObservacao());
                 cboSituacao.setSelectedItem(chip.getStatus());
-            
+                cboOperadora.getModel().setSelectedItem(chip.getEmpresa());
+
                 if (chip.isIsTelefonia()) {
                     ckVoz.setSelected(true);
                 } else {
                     ckVoz.setSelected(false);
                 }
-                
+
                 if (chip.isIsDado()) {
                     ckDados.setSelected(true);
                 } else {
@@ -344,15 +503,30 @@ public class FrmChip extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
+
         botaoNovo();
         novo = true;
         habilitado(true);
         limparTudo();
+        cboSituacao.setSelectedItem("Disponível");
+        cboSituacao.setEnabled(false);
         txtChip.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        // TODO add your handling code here:
+
+        if (cboOperadora.getSelectedItem().equals("EMPRESTADO")) {
+            JOptionPane.showMessageDialog(this, "Chip já EMPRESTADO, não permite exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
@@ -387,13 +561,27 @@ public class FrmChip extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         novo = false;
         habilitado(true);
         botaoNovo();
+
+        String emprestado = cboSituacao.getSelectedItem().toString().trim();
+        if (emprestado.equalsIgnoreCase("EMPRESTADO")) {           
+            cboSituacao.setEnabled(false);
+        } else {
+            cboSituacao.setEnabled(true);
+            pegaSituacao = cboSituacao.getSelectedItem().toString();
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
 
         if (txtChip.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Codigo do chip não informada", null, JOptionPane.ERROR_MESSAGE);
@@ -412,12 +600,20 @@ public class FrmChip extends javax.swing.JFrame {
             return;
         }
 
+        if (cboOperadora.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Operadora não informada.", null, JOptionPane.ERROR_MESSAGE);
+            cboOperadora.requestFocus();
+            return;
+        }
+
         // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
         Chip chip = new Chip();
         chip.setCodigoChip(txtChip.getText());
         chip.setNumeroLinha(txtTelefone.getText());
         chip.setObservacao(txtObservacao.getText());
         chip.setStatus(cboSituacao.getSelectedItem().toString());
+        Empresa empresa = (Empresa) cboOperadora.getSelectedItem();
+        chip.setEmpresa(empresa);
 
         if (ckDados.isSelected()) {
             chip.setIsDado(true);
@@ -452,7 +648,7 @@ public class FrmChip extends javax.swing.JFrame {
         habilitado(false);
         limparTudo();
         carregaGrelha();
-
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtChipKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChipKeyPressed
@@ -461,9 +657,18 @@ public class FrmChip extends javax.swing.JFrame {
     }//GEN-LAST:event_txtChipKeyPressed
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
-          // TODO add your handling code here:
+        // TODO add your handling code here:
         carregaGrelha();
+        
     }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void cboSituacaoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboSituacaoPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        
+               if(cboSituacao.getSelectedItem().equals("EMPRESTADO")){
+          cboSituacao.setSelectedItem(pegaSituacao);
+        }
+    }//GEN-LAST:event_cboSituacaoPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
@@ -2574,6 +2779,7 @@ public class FrmChip extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<Empresa> cboOperadora;
     private javax.swing.JComboBox<String> cboSituacao;
     private javax.swing.JCheckBox ckDados;
     private javax.swing.JCheckBox ckVoz;
@@ -2581,10 +2787,12 @@ public class FrmChip extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtChip;
     private javax.swing.JTextField txtCodigo;

@@ -19,6 +19,7 @@ public class Chip {
     private String codigoChip;
     private boolean isTelefonia;
     private boolean isDado;
+    private Empresa empresa;
     
 
     public Chip() {
@@ -127,6 +128,20 @@ public class Chip {
      */
     public void setCodigoChip(String codigoChip) {
         this.codigoChip = codigoChip;
+    }
+
+    /**
+     * @return the empresa
+     */
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    /**
+     * @param empresa the empresa to set
+     */
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
     
     

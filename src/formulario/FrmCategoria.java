@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
+import modelo.Session;
 
 /**
  *
@@ -260,6 +261,11 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
@@ -295,6 +301,12 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         novo = false;
         habilitado(true);
         botaoNovo();
@@ -316,7 +328,7 @@ public class FrmCategoria extends javax.swing.JFrame {
                     return;
                 }
                 categoriaDao.insert(categoria);
-                
+
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
                 // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
             } else {
@@ -330,7 +342,7 @@ public class FrmCategoria extends javax.swing.JFrame {
             novo = false;
             habilitado(false);
             limparTudo();
-            
+
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -523,8 +535,8 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     //LIMPAR******************************************************************
     private void limparTudo() {
-    
-        txtTexto.setText("")  ;      
+
+        txtTexto.setText("");
     }
 
     //LIMPAR******************************************************************

@@ -225,11 +225,14 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        System.out.println(grelha.getSelectedRow());
-        if (grelha.getSelectedRow() >= 0) {
+        if (grelha.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Excluír.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+     
             int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
             if (new EmprestimoDao().verificaEmprestimoFuncionario(codigo) > 0) {
-                JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em Aberto.", null, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em não Devolvido.", null, JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
                 if (funcionarioDao.marcarExonerado(codigo)) {
@@ -237,9 +240,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
                 }
             }
 
-        }else{
-             JOptionPane.showMessageDialog(this, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
-        }
+  
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**

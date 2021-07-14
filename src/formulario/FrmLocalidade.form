@@ -316,13 +316,14 @@
         <Component class="javax.swing.JComboBox" name="cboTipoLocalidade">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
+              <StringArray count="7">
                 <StringItem index="0" value="Selecione..."/>
                 <StringItem index="1" value="COORDENADORIA"/>
                 <StringItem index="2" value="CIRETRAN"/>
-                <StringItem index="3" value="SETOR"/>
-                <StringItem index="4" value="OUTRO"/>
-                <StringItem index="5" value=" "/>
+                <StringItem index="3" value="POSTO"/>
+                <StringItem index="4" value="SETOR"/>
+                <StringItem index="5" value="OUTRO"/>
+                <StringItem index="6" value=" "/>
               </StringArray>
             </Property>
           </Properties>

@@ -18,6 +18,7 @@ import modelo.Categoria;
 import modelo.Celular;
 import modelo.Empresa;
 import modelo.Marca;
+import modelo.Session;
 
 /**
  *
@@ -28,6 +29,7 @@ public class FrmCelular extends javax.swing.JFrame {
     // variavel controla novo ou alteração
     boolean novo;
     int marca_id, operadora_id;
+    String pegaSituacao;
 
     //Variaveis
     CelularDao celularDao = new CelularDao();
@@ -80,6 +82,7 @@ public class FrmCelular extends javax.swing.JFrame {
                 celular.getMarca().getMarca(),
                 celular.getImei1(),
                 celular.getSerie(),
+                celular.getEmpresa().getNomeEmpresa(),
                 celular.getStatus(),});
             contador++;
         }
@@ -182,11 +185,11 @@ public class FrmCelular extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "MARCA MODELO", "SERIE", "EMEI", "STATUS"
+                "CÓDIGO", "MARCA MODELO", "SERIE", "EMEI", "EMPRESA", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -209,8 +212,8 @@ public class FrmCelular extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(2).setMaxWidth(140);
             grelha.getColumnModel().getColumn(3).setPreferredWidth(140);
             grelha.getColumnModel().getColumn(3).setMaxWidth(140);
-            grelha.getColumnModel().getColumn(4).setPreferredWidth(90);
-            grelha.getColumnModel().getColumn(4).setMaxWidth(90);
+            grelha.getColumnModel().getColumn(5).setPreferredWidth(90);
+            grelha.getColumnModel().getColumn(5).setMaxWidth(90);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
@@ -343,8 +346,22 @@ public class FrmCelular extends javax.swing.JFrame {
 
         ckVarios.setText("Varios iguais");
         ckVarios.setOpaque(false);
+        ckVarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckVariosActionPerformed(evt);
+            }
+        });
 
         cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
+        cboSituacao.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cboSituacaoPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel2.setText("Situação:");
@@ -406,14 +423,14 @@ public class FrmCelular extends javax.swing.JFrame {
                                     .addComponent(cboSituacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel4)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(cboOperadora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(cboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
@@ -514,16 +531,29 @@ public class FrmCelular extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
+
         botaoNovo();
         novo = true;
         habilitado(true);
         limparTudo();
-
+        cboSituacao.setEnabled(false);
+        cboSituacao.setSelectedItem("Disponível");
+        cboSituacao.setEnabled(false);
         txtSerie.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        if (cboSituacao.getSelectedItem().equals("EMPRESTADO")) {
+            JOptionPane.showMessageDialog(this, "Chip já EMPRESTADO, não permite exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
@@ -558,9 +588,22 @@ public class FrmCelular extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         novo = false;
         habilitado(true);
         botaoNovo();
+        if (cboSituacao.getSelectedItem().equals("EMPRESTADO")) {
+            cboSituacao.setEnabled(false);
+
+        } else {
+            cboSituacao.setEnabled(true);
+            pegaSituacao = cboSituacao.getSelectedItem().toString();
+        }
+
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -681,6 +724,17 @@ public class FrmCelular extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_cboCategoriaPopupMenuWillBecomeInvisible
+
+    private void ckVariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckVariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckVariosActionPerformed
+
+    private void cboSituacaoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboSituacaoPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        if(cboSituacao.getSelectedItem().equals("EMPRESTADO")){
+          cboSituacao.setSelectedItem(pegaSituacao);
+        }
+    }//GEN-LAST:event_cboSituacaoPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments

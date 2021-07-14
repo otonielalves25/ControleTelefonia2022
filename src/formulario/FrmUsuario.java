@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.Session;
 
 import modelo.Usuario;
 
@@ -49,6 +50,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             modelo.addRow(new Object[]{
                 usuario.getIdUsuario(),
                 usuario.getNome(),
+                usuario.getLogin(),
                 usuario.getPrevilegio(),
                 usuario.getStatus(),});
         }
@@ -127,11 +129,11 @@ public class FrmUsuario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "NOME:", "PREVILÊGIO:", "STATUS"
+                "CÓDIGO", "NOME", "LOGIN", "PREVILÊGIO", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -150,8 +152,12 @@ public class FrmUsuario extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
             grelha.getColumnModel().getColumn(0).setPreferredWidth(70);
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(100);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(1).setPreferredWidth(200);
+            grelha.getColumnModel().getColumn(1).setMaxWidth(200);
+            grelha.getColumnModel().getColumn(2).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(2).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(80);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
@@ -299,9 +305,9 @@ public class FrmUsuario extends javax.swing.JFrame {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckAtivo))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ckAtivo)
+                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -370,6 +376,10 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para inserir.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         botaoNovo();
         novo = true;
         habilitado(true);
@@ -379,6 +389,11 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
@@ -413,6 +428,11 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         novo = false;
         habilitado(true);
         botaoNovo();

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Localidade;
+import modelo.Session;
 
 /**
  *
@@ -208,7 +209,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        cboTipoLocalidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "SETOR", "OUTRO", " " }));
+        cboTipoLocalidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "POSTO", "SETOR", "OUTRO", " " }));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel2.setText("Tipo Localidade:");
@@ -320,6 +321,10 @@ public class FrmLocalidade extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
@@ -354,6 +359,10 @@ public class FrmLocalidade extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         novo = false;
         habilitado(true);
         botaoNovo();

@@ -5,13 +5,31 @@
  */
 package modelo;
 
-
-
 /**
  *
  * @author Tony
  */
 public class Emprestimo {
+
+    private int idEmprestimo;
+    private String situacao;
+    private String observacao;
+    private String dataEmprestimo;
+    private String dataDevolucao;
+    private Funcionario funcionario;
+    private Usuario usuario;
+    private Celular celular;
+    private Chip chip;
+    private String observacaoDevolucao;
+    private String protocolo;
+
+    public Emprestimo() {
+    }
+
+    public Emprestimo(int idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
+
+    }
 
     /**
      * @return the dataEmprestimo
@@ -39,25 +57,6 @@ public class Emprestimo {
      */
     public void setDataDevolucao(String dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
-    }
-
-    private int idEmprestimo;
-    private String situacao;
-    private String observacao;
-    private String dataEmprestimo;
-    private String dataDevolucao;
-    private Funcionario funcionario;
-    private Usuario usuario;
-    private Celular celular;
-    private Chip chip;
-    private String observacaoDevolucao;
-
-    public Emprestimo() {
-    }
-
-    public Emprestimo(int idEmprestimo) {
-        this.idEmprestimo = idEmprestimo;
-
     }
 
     /**
@@ -130,8 +129,6 @@ public class Emprestimo {
         this.observacao = observacao;
     }
 
-
-
     /**
      * @return the funcionario
      */
@@ -172,6 +169,20 @@ public class Emprestimo {
      */
     public void setObservacaoDevolucao(String observacaoDevolucao) {
         this.observacaoDevolucao = observacaoDevolucao;
+    }
+
+    /**
+     * @return the protocolo
+     */
+    public String getProtocolo() {
+        return protocolo;
+    }
+
+    /**
+     * @param protocolo the protocolo to set
+     */
+    public void setProtocolo(String protocolo) {
+        this.protocolo = protocolo;
     }
 
 }

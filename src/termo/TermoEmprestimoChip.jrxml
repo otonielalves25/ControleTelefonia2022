@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="0.8264462809917357"/>
+	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="241"/>
+	<property name="ireport.y" value="15"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -150,7 +150,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CFP: ]]></text>
+				<text><![CDATA[CPF: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="390" y="86" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
@@ -274,6 +274,13 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA["      O cartão SIM (chip) em questão é de propriedade da "+$F{nomeEmpresa} + ". De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="42" width="47" height="20" uuid="2d949a45-eccf-40ac-93da-a2c4526cb75f"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº: "+$F{idEmprestimo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

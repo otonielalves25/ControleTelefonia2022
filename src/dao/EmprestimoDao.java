@@ -34,7 +34,8 @@ public class EmprestimoDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Emprestimo emprestimo) {
         
-        String sql = "INSERT INTO emprestimo (situacao, dataEmprestimo, dataDevolucao, funcionario_id, usuario_id, observacao, celular_id, chip_id) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO emprestimo (situacao, dataEmprestimo, dataDevolucao, funcionario_id, usuario_id, "
+                + "observacao, celular_id, chip_id, protocolo) VALUES (?,?,?,?,?,?,?,?,?)";
         
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -47,6 +48,7 @@ public class EmprestimoDao {
             stm.setString(6, emprestimo.getObservacao());
             stm.setInt(7, emprestimo.getCelular().getIdCelular());
             stm.setInt(8, emprestimo.getChip().getIdChip());
+            stm.setString(9, emprestimo.getProtocolo());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -62,7 +64,8 @@ public class EmprestimoDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Emprestimo emprestimo) {
         
-        String sql = "UPDATE emprestimo SET situacao=?, dataEmprestimo=?, dataDevolucao=?, funcionario_id=?, usuario_id=?, observacao=?, celular_id=?, chip_id=? where idEmprestimo = ?";
+        String sql = "UPDATE emprestimo SET situacao=?, dataEmprestimo=?, dataDevolucao=?, funcionario_id=?, usuario_id=?, "
+                + "observacao=?, celular_id=?, chip_id=?, protocolo = ? where idEmprestimo = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -74,7 +77,8 @@ public class EmprestimoDao {
             stm.setString(6, emprestimo.getObservacao());
             stm.setInt(7, emprestimo.getCelular().getIdCelular());
             stm.setInt(8, emprestimo.getChip().getIdChip());
-            stm.setInt(9, emprestimo.getIdEmprestimo());
+            stm.setString(9, emprestimo.getProtocolo());
+            stm.setInt(10, emprestimo.getIdEmprestimo());
             
             stm.execute();
             //fechando as conexões
@@ -200,6 +204,7 @@ public class EmprestimoDao {
                     emprestimo.setSituacao(rs.getString("situacao"));
                     emprestimo.setDataEmprestimo(rs.getString("dataEmprestimo"));
                     emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
+                    emprestimo.setProtocolo(rs.getString("protocolo"));
                     // localidade 
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                     localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
@@ -213,8 +218,8 @@ public class EmprestimoDao {
                     funcionario.setCargo(rs.getString("cargo"));
                     emprestimo.setFuncionario(funcionario);
                     // USUARIO QUE CADASTROU 
-                    usuario.setIdUsuario(rs.getInt(21));
-                    usuario.setNome(rs.getString(22)); // AQUI PEGA O NUMERO DA COLUNA  
+                    usuario.setIdUsuario(rs.getInt(22));
+                    usuario.setNome(rs.getString(23)); // AQUI PEGA O NUMERO DA COLUNA  
                     emprestimo.setUsuario(usuario);
                     // CATEGORIA
                     categoria.setIdCategoria(rs.getInt("idCategoria"));
@@ -326,6 +331,7 @@ public class EmprestimoDao {
                 emprestimo.setSituacao(rs.getString("situacao"));
                 emprestimo.setDataEmprestimo(rs.getString("dataEmprestimo"));
                 emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
+                emprestimo.setProtocolo(rs.getString("protocolo"));
                 // localidade 
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                 localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
@@ -340,7 +346,7 @@ public class EmprestimoDao {
                 emprestimo.setFuncionario(funcionario);
                 // USUARIO QUE CADASTROU 
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
-                usuario.setNome(rs.getString(22));  // PEGA NUMERO DA COLUNA                  
+                usuario.setNome(rs.getString(23));  // PEGA NUMERO DA COLUNA                  
                 emprestimo.setUsuario(usuario);
                 // CATEGORIA
                 categoria.setIdCategoria(rs.getInt("idCategoria"));

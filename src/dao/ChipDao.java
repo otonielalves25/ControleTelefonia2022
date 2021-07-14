@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.Chip;
+import modelo.Empresa;
 
 /**
  *
@@ -27,7 +28,7 @@ public class ChipDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Chip chip) {
 
-        String sql = "INSERT INTO chip (numeroLinha,telefonia,dados,status,observacao,codigoChip) values(?,?,?,?,?,?)";
+        String sql = "INSERT INTO chip (numeroLinha,telefonia,dados,status,observacao,codigoChip,empresa_id) values(?,?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -38,6 +39,7 @@ public class ChipDao {
             stm.setString(4, chip.getStatus());
             stm.setString(5, chip.getObservacao());
             stm.setString(6, chip.getCodigoChip());
+            stm.setInt(7, chip.getEmpresa().getIdEmpresa());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -53,7 +55,7 @@ public class ChipDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Chip chip) {
 
-        String sql = "UPDATE chip set numeroLinha=?, telefonia=?, dados=?,status=?,observacao=?, codigoChip=? where idChip = ?";
+        String sql = "UPDATE chip set numeroLinha=?, telefonia=?, dados=?,status=?,observacao=?, codigoChip=?, empresa_id = ? where idChip = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -63,7 +65,8 @@ public class ChipDao {
             stm.setString(4, chip.getStatus());
             stm.setString(5, chip.getObservacao());
             stm.setString(6, chip.getCodigoChip());
-            stm.setInt(7, chip.getIdChip());
+            stm.setInt(7, chip.getEmpresa().getIdEmpresa());
+            stm.setInt(8, chip.getIdChip());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -140,7 +143,7 @@ public class ChipDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Chip getPorID(int codigo) {
 
-        String sql = "SELECT * FROM Chip WHERE idChip = ?";
+        String sql = "SELECT * FROM Chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE idChip = ?";
         Chip chip = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -157,6 +160,10 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
+                    Empresa emp = new Empresa();
+                    emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                    emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    chip.setEmpresa(emp);
 
                 }
             }
@@ -173,7 +180,7 @@ public class ChipDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Chip retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM Chip WHERE codigoChip = ? OR numeroLinha = ? ";
+        String sql = "SELECT * FROM Chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ? OR numeroLinha = ? ";
         Chip chip = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -191,6 +198,10 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
+                    Empresa emp = new Empresa();
+                    emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                    emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    chip.setEmpresa(emp);
                 }
             }
             //fechando as conexões
@@ -207,7 +218,7 @@ public class ChipDao {
     public ArrayList<Chip> getListagemLike(String busca) {
 
         ArrayList<Chip> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM chip WHERE numeroLinha LIKE ? OR codigoChip LIKE ? ORDER BY numeroLinha";
+        String sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE ? OR codigoChip LIKE ? ORDER BY numeroLinha";
         Chip chip;
 
         try {
@@ -226,6 +237,10 @@ public class ChipDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setStatus(rs.getString("status"));
                 chip.setObservacao(rs.getString("observacao"));
+                Empresa emp = new Empresa();
+                emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                chip.setEmpresa(emp);
                 Listagem.add(chip);
             }
             //fechando as conexões
@@ -240,7 +255,7 @@ public class ChipDao {
 
     public List<Chip> getListagemLikeAtivos(String busca) {
         ArrayList<Chip> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM chip WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Ativo' ORDER BY numeroLinha";
+        String sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Disponível' ORDER BY numeroLinha";
         Chip chip;
 
         try {
@@ -259,6 +274,10 @@ public class ChipDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setStatus(rs.getString("status"));
                 chip.setObservacao(rs.getString("observacao"));
+                Empresa emp = new Empresa();
+                emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                chip.setEmpresa(emp);
                 Listagem.add(chip);
             }
             //fechando as conexões

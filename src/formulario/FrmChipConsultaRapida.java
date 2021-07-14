@@ -53,10 +53,14 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
         List<Chip> listagem = chipDao.getListagemLikeAtivos(txtPesquisa.getText());
         modeloTabela.setNumRows(0);
         for (Chip chip : listagem) {
+            String sim = chip.isIsDado()==true? "X": "";
+            String nao = chip.isIsTelefonia()==true? "X": "";
             modeloTabela.addRow(new Object[]{
                 chip.getIdChip(),
                 chip.getNumeroLinha(),
                 chip.getCodigoChip(),
+                sim,
+                nao,
                 chip.getStatus(),
             
             });
@@ -119,11 +123,11 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Nª LINHA", "CODIGO", "STATUS"
+                "ID", "Nª LINHA", "CODIGO", "INTERNET", "VOZ", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -140,10 +144,14 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
         if (grelha.getColumnModel().getColumnCount() > 0) {
             grelha.getColumnModel().getColumn(0).setPreferredWidth(30);
             grelha.getColumnModel().getColumn(0).setMaxWidth(30);
-            grelha.getColumnModel().getColumn(1).setPreferredWidth(150);
-            grelha.getColumnModel().getColumn(1).setMaxWidth(150);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(120);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(120);
+            grelha.getColumnModel().getColumn(1).setPreferredWidth(110);
+            grelha.getColumnModel().getColumn(1).setMaxWidth(110);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(80);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(80);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(80);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(80);
+            grelha.getColumnModel().getColumn(5).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

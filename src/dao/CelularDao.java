@@ -241,7 +241,7 @@ public class CelularDao {
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE (serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?) AND celular.status = 'Ativo'";
+                + "WHERE (serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?) AND celular.status = 'Disponível'";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
