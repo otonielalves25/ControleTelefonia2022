@@ -35,6 +35,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     EmprestimoDao emprestimoDao = new EmprestimoDao();
     DefaultTableModel modeloGrelha;
+    ImpressaoDao imprimir = new ImpressaoDao();
 
     /**
      * Creates new form FrmEmprestimoConsulta
@@ -335,15 +336,15 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 emprestimo.getChip().getNumeroLinha(),
                 dados,
                 voz,
-               emprestimo.getProtocolo(),
-               emprestimo.getDataDevolucao(),
-            }
+                emprestimo.getProtocolo(),
+                emprestimo.getDataDevolucao(),}
             );
 
             pinta();
         });
 
     }
+
     // PINTANDO GRADE 
     private void pinta() {
         grelhaEmprestimo.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -352,7 +353,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
                 //*******************************************
-                Object procurado = grelhaEmprestimo.getValueAt(row, 2);
+                int coluna = 2;
+                Object procurado = grelhaEmprestimo.getValueAt(row, coluna);
 
                 if (procurado.equals("EMPRESTADO")) {
                     label.setForeground(Color.BLACK);
@@ -488,23 +490,24 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         }
         HashMap params = new HashMap<>();
         params.put("acessorios", listagemACessorios);
+        // caminho imagem
 
         // VERIFICANDO DE É DEVOLVIDO OU EMPRESTIMO
         if (tipoTermo.equalsIgnoreCase("EMPRESTADO")) {
             // IMPRIMIR APARELHO E CHIP
             if (emp.getCelular().getIdCelular() > 0 && emp.getChip().getIdChip() > 0) {
-                new ImpressaoDao().imprimirEmprestimoCelularEChip(emprestimo_id, params);
+                imprimir.imprimirEmprestimoCelularEChip(emprestimo_id, params);
                 // APENA O APARELHO    
             } else if (emp.getCelular().getIdCelular() > 0 && emp.getChip().getIdChip() <= 0) {
-                new ImpressaoDao().imprimirEmprestimoCelular(emprestimo_id, params);
+                imprimir.imprimirEmprestimoCelular(emprestimo_id, params);
                 // APENA O CHIP   
             } else if (emp.getCelular().getIdCelular() <= 0 && emp.getChip().getIdChip() > 0) {
-                new ImpressaoDao().imprimirEmprestimoChip(emprestimo_id);
+                imprimir.imprimirEmprestimoChip(emprestimo_id);
 
             }
         } else {
             params.put("observacao", emp.getObservacaoDevolucao());
-            new ImpressaoDao().imprimirTermoDevolucao(emprestimo_id, params);
+            imprimir.imprimirTermoDevolucao(emprestimo_id, params);
         }
 
         params.clear();

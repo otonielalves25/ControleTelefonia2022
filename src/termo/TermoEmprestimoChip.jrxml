@@ -2,7 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="15"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="LOGO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -12,7 +13,7 @@ LEFT JOIN celular on emprestimo.celular_id = celular.idCelular
 LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa
 LEFT JOIN chip on emprestimo.chip_id = chip.idChip
 LEFT JOIN marca on celular.marca_id = marca.idMarca
-LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = 15]]>
+LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = 46]]>
 	</queryString>
 	<field name="idEmprestimo" class="java.lang.Object"/>
 	<field name="situacao" class="java.lang.Object"/>
@@ -24,6 +25,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	<field name="celular_id" class="java.lang.Object"/>
 	<field name="chip_id" class="java.lang.Object"/>
 	<field name="observacaoDevolucao" class="java.lang.Object"/>
+	<field name="protocolo" class="java.lang.Object"/>
 	<field name="idFuncionario" class="java.lang.Object"/>
 	<field name="nome" class="java.lang.Object"/>
 	<field name="cpf" class="java.lang.Object"/>
@@ -61,9 +63,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	</background>
 	<title>
 		<band height="68" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="555" height="68" uuid="5c137708-9501-4f9e-8bee-d88677b332ee"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\Log Detran 2019.png"]]></imageExpression>
+			<image scaleImage="FillFrame">
+				<reportElement x="7" y="11" width="544" height="57" uuid="3885d8e2-42ce-45c8-8f5a-ee65d8cdfd1a"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte [])$P{LOGO})]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -307,14 +309,6 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[COOGI]]></text>
 			</staticText>
-			<image>
-				<reportElement x="397" y="168" width="158" height="35" uuid="550c4021-dcce-4a16-afcd-2f2169da5bfb"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\logo-coogi.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="168" width="158" height="35" uuid="07a77f3e-adf9-4aeb-a053-bfdc4f35b488"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\dot-icone.png"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="336" y="121" width="196" height="20" uuid="dde97f6a-4eba-4f0b-9461-834503be6da5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>

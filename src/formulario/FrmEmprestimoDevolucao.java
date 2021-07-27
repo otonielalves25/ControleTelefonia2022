@@ -12,6 +12,8 @@ import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.ImpressaoDao;
 import dao.UsuarioDao;
+import java.io.File;
+import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 
@@ -25,7 +27,6 @@ import modelo.Celular;
 import modelo.Chip;
 import modelo.Emprestimo;
 import modelo.Session;
-
 
 /**
  *
@@ -532,7 +533,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             // situacao=?, dataDevolucao=?, observacaoDevolucao = ? where idEmprestimo = ?
             if (emprestimoDao.updateDevolver(emprestimo)) {
                 chipDao.updateStatus(chip);
-                celularDao.updateStatus(celular);              
+                celularDao.updateStatus(celular);
                 imprimirTermo();
                 //JOptionPane.showMessageDialog(this, "Devolvido com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
@@ -554,12 +555,11 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         params.put("acessorios", listagemACessorios);
         params.put("observacao", txtObservacao.getText());
         params.put("recebidoPor", Session.getNome());
+
         new ImpressaoDao().imprimirTermoDevolucao(emprestimo_id, params);
         params.clear();
 
     }
-
-
 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -620,13 +620,12 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             txtDataDevolucao.setText(emp.getDataDevolucao());
             txtObservacao.setText(emp.getObservacao());
             // PREENCHO OS DADOS DA COMBO DE ACESSORIOS
-            
+
             for (Acessorio acessorio : lista) {
                 listagemACessorios = listagemACessorios + acessorio.getNomeAcessorio() + ", ";
             }
-            
+
             txtComplementos.setText(listagemACessorios);
-            
 
         }
     }//GEN-LAST:event_formWindowActivated

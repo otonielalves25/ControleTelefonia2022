@@ -12,6 +12,8 @@ import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.ImpressaoDao;
 import dao.UsuarioDao;
+import java.io.File;
+import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Acessorio;
 import modelo.Celular;
@@ -53,7 +57,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     List<String> acessorios = new ArrayList<>();
 
     // VARIAVEIS DE ID ////////////////////////////////////////////////////////
-    int emprestimo_id, funcionario_id, celular_id, chip_id, usuario_id;  
+    int emprestimo_id, funcionario_id, celular_id, chip_id, usuario_id;
     String listagemACessorios = "";
 
     // CONSTRUTO DA CLASSE
@@ -792,9 +796,9 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
             emprestimo.setIdEmprestimo(emprestimo_id);
-            
+
             if (emprestimoDao.update(emprestimo)) {
-                cadatrarAcessorio();              
+                cadatrarAcessorio();
                 celularDao.updateStatus(c);
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso, reemitir termo.", null, JOptionPane.WARNING_MESSAGE);
                 this.dispose();
@@ -811,7 +815,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private void imprimirTermo() {
         // SE DEU TUDO CERTO IMPRIMR O TERMO ///////////////////////////////////
         HashMap params = new HashMap<>();
+        // caminho imagem
+
         params.put("acessorios", listagemACessorios);
+
         if (!txtAparelho.getText().equalsIgnoreCase("") && radComChip.isSelected()) {
             new ImpressaoDao().imprimirEmprestimoCelularEChip(emprestimo_id, params);
         } else if (txtAparelho.getText().equalsIgnoreCase("") && radComChip.isSelected()) {
@@ -877,7 +884,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         }
         chipDao.updateTipoChip(chip);
     }
-        // private void devolver os chip e celular da alteração ////////////////////
+    // private void devolver os chip e celular da alteração ////////////////////
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
@@ -907,7 +914,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 txtMarca.setText(emp.getCelular().getMarca().getMarca());
                 txtSerie.setText(emp.getCelular().getSerie());
                 txtImei.setText(emp.getCelular().getImei1());
-                 btnBuscaAparelho.setEnabled(false);
+                btnBuscaAparelho.setEnabled(false);
 
             } catch (Exception e) {
 
@@ -938,7 +945,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 btnBuscaChip.setEnabled(false);
                 radComChip.setEnabled(false);
                 radSemChip.setEnabled(false);
-               
+
             }
 
             //System.out.println(emp.getUsuario().getNome());
@@ -974,12 +981,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
                 }
             }
-            
-            btnBuscFuncionario1.setEnabled(false); 
-            
+
+            btnBuscFuncionario1.setEnabled(false);
+
         }
     }//GEN-LAST:event_formWindowActivated
-
 
 
     private void radSemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radSemChipMouseClicked

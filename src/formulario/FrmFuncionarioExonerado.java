@@ -96,7 +96,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 0, 102));
+        lblTitulo.setBackground(new java.awt.Color(102, 0, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -229,18 +229,30 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Excluír.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
-     
-            int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
-            if (new EmprestimoDao().verificaEmprestimoFuncionario(codigo) > 0) {
-                JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em não Devolvido.", null, JOptionPane.ERROR_MESSAGE);
-                return;
-            } else {
+
+        int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
+        if (new EmprestimoDao().verificaEmprestimoFuncionario(codigo) > 0) {
+            JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Exonerado.\nConsta EMPRÉSTIMO em não Devolvido.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+
+            int resposta;
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Escolha um", JOptionPane.YES_NO_OPTION);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
                 if (funcionarioDao.marcarExonerado(codigo)) {
                     JOptionPane.showMessageDialog(this, "Funcionario Exonerado.", null, JOptionPane.ERROR_MESSAGE);
                 }
+                carregaPesquisa();
+
+            } else if (resposta == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Operação Cancelada.");
             }
 
-  
+        }
+
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**

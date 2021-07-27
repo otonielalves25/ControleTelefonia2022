@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
 	<property name="ireport.zoom" value="1.366026910730144"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="316"/>
+	<property name="ireport.x" value="95"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="acessorios" class="java.lang.String"/>
 	<parameter name="observacao" class="java.lang.String"/>
 	<parameter name="recebidoPor" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -15,7 +16,7 @@ LEFT JOIN celular on emprestimo.celular_id = celular.idCelular
 LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa
 LEFT JOIN chip on emprestimo.chip_id = chip.idChip
 LEFT JOIN marca on celular.marca_id = marca.idMarca
-LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = 15]]>
+LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = 45]]>
 	</queryString>
 	<field name="idEmprestimo" class="java.lang.Object"/>
 	<field name="situacao" class="java.lang.Object"/>
@@ -25,10 +26,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	<field name="usuario_id" class="java.lang.Object"/>
 	<field name="observacao" class="java.lang.Object"/>
 	<field name="celular_id" class="java.lang.Object"/>
-	<field name="chip_id" class="java.lang.Object">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="chip_id" class="java.lang.Object"/>
 	<field name="observacaoDevolucao" class="java.lang.Object"/>
+	<field name="protocolo" class="java.lang.Object"/>
 	<field name="idFuncionario" class="java.lang.Object"/>
 	<field name="nome" class="java.lang.Object"/>
 	<field name="cpf" class="java.lang.Object"/>
@@ -66,24 +66,16 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	</background>
 	<title>
 		<band height="67" splitType="Stretch">
-			<image>
-				<reportElement x="6" y="-131" width="555" height="68" uuid="588467a8-d6d8-41da-9659-bbfae4b92bff"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\Log Detran 2019.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="6" y="-131" width="555" height="68" uuid="774b8c38-c00f-4b6f-a887-a804949cb1d3"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\Log Detran 2019.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="0" y="-1" width="555" height="68" uuid="d9a8fa38-4a59-4deb-82a2-42030a6db085"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\Log Detran 2019.png"]]></imageExpression>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="10" width="544" height="57" uuid="7b458926-5c66-48fb-bb7e-15e75f2437c3"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte [])$P{LOGO})]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="734" splitType="Stretch">
 			<staticText>
-				<reportElement x="4" y="0" width="540" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
+				<reportElement x="4" y="10" width="485" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -347,14 +339,6 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{codigoChip} != null ? $F{codigoChip} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="4" y="699" width="158" height="35" uuid="a021af98-f73f-4b6a-a9fd-55cf3d061763"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\dot-icone.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="407" y="699" width="131" height="35" uuid="441cbe26-c1fb-4865-8cda-c0ee73392351"/>
-				<imageExpression><![CDATA["C:\\Users\\Tony\\Documents\\NetBeansProjects\\ControleTelefonia2022\\src\\imagem\\logo-coogi.png"]]></imageExpression>
-			</image>
 			<textField>
 				<reportElement x="7" y="315" width="541" height="70" uuid="ff848808-4ff9-443b-9cd5-89754aa5f6c9"/>
 				<textElement>
@@ -371,12 +355,20 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$P{recebidoPor} != null ?"Recebido por "+$P{recebidoPor}  : "Recebido por"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="489" y="20" width="55" height="20" uuid="1d270684-8abb-48a8-a9c3-002570183852"/>
+				<reportElement x="489" y="10" width="55" height="20" uuid="1d270684-8abb-48a8-a9c3-002570183852"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Nº "+$F{idEmprestimo}]]></textFieldExpression>
 			</textField>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="0" y="701" width="138" height="33" uuid="aae55ce4-00d8-48ea-a2c5-b6c62ed9b300"/>
+				<imageExpression><![CDATA["dot-icone.png"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="410" y="691" width="134" height="43" uuid="2158e203-251d-4dbc-a420-b48743a1785e"/>
+				<imageExpression><![CDATA["logo-coogi.png"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 </jasperReport>

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -25,11 +26,13 @@ public class ImpressaoDao {
 
     Connection con;
     PreparedStatement stm = null;
+    PreparedStatement stmImagem = null;
     ResultSet rs;
+    ResultSet rsImagem;
 
     // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
     public void imprimirEmprestimoChip(int codigoTermo) {
-
+        Map parametroImagem = new HashMap();
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                 + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
@@ -44,16 +47,24 @@ public class ImpressaoDao {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            stmImagem = con.prepareStatement("SELECT * FROM logo");
+            rsImagem = stmImagem.executeQuery();
+
+            parametroImagem.put("LOGO", rsImagem.getBytes("imagem1"));
+            // FECHA O BANCO DE DADOS //////////////////////////////////////////
+            con.close();
 
         } catch (SQLException ex) {
 
         }
 
         InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/TermoEmprestimoChip.jasper");
+        //String caminho = "/termo/TermoEmprestimoChip.jasper";
         JRResultSetDataSource result = new JRResultSetDataSource(rs);
 
         try {
-            JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, null, result);
+            JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, parametroImagem, result);
             JasperViewer view = new JasperViewer(impressao, false);
             view.setVisible(true);
             //JasperPrintManager.printPage(impressao, 0, true);
@@ -76,10 +87,16 @@ public class ImpressaoDao {
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = " + codigoTermo;
         try {
 
-
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            stmImagem = con.prepareStatement("SELECT * FROM logo");
+            rsImagem = stmImagem.executeQuery();
+
+            paramatros.put("LOGO", rsImagem.getBytes("imagem1"));
+// BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            con.close();
 
         } catch (SQLException ex) {
 
@@ -117,11 +134,20 @@ public class ImpressaoDao {
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            stmImagem = con.prepareStatement("SELECT * FROM logo");
+            rsImagem = stmImagem.executeQuery();
+
+            paramatros.put("LOGO", rsImagem.getBytes("imagem1"));
+
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            
+            con.close();
+            
         } catch (SQLException ex) {
 
         }
 
-   
         InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/TermoEmprestimoCelularEChip.jasper");
         JRResultSetDataSource result = new JRResultSetDataSource(rs);
 
@@ -133,11 +159,11 @@ public class ImpressaoDao {
 
         } catch (JRException e) {
         }
-        
+
     }
-        
-        // IMPRIMIR TERMO DE CELULAR //////////////////////////////////////////////////
-    public void imprimirTermoDevolucao(int codigoTermo, HashMap paramatros){
+
+    // IMPRIMIR TERMO DE CELULAR //////////////////////////////////////////////////
+    public void imprimirTermoDevolucao(int codigoTermo, HashMap paramatros) {
 
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
@@ -150,17 +176,26 @@ public class ImpressaoDao {
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = " + codigoTermo;
         try {
 
-            // System.out.println(paramatros);
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            stmImagem = con.prepareStatement("SELECT * FROM logo");
+            rsImagem = stmImagem.executeQuery();
+
+            paramatros.put("LOGO", rsImagem.getBytes("imagem1"));
+
+            // FIM BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            
+            con.close();
+            
         } catch (SQLException ex) {
 
         }
 
-   
         InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/TermoDevolucao.jasper");
+        //String caminhoTeste = "../termo/TermoEmprestimoChip.jasper";
         JRResultSetDataSource result = new JRResultSetDataSource(rs);
 
         try {
@@ -172,8 +207,5 @@ public class ImpressaoDao {
         } catch (JRException e) {
         }
     }
-    
-    
-    
 
 }

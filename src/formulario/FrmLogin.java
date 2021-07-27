@@ -156,7 +156,7 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        // TODO add your handling code here:w 
+
         entrarSistema();
 
 
@@ -182,13 +182,14 @@ public class FrmLogin extends javax.swing.JFrame {
         String login = txtUsuario.getText();
         String senha = txtSenha.getText();
         //Convertendo senha para md5 no banco
-        
-        Usuario usuarioRetorno = usuarioDao.validarLogin(login,senha);
 
-        if (login.equals("detrandot") && senha.equals("detrandot")) {
+        Usuario usuarioRetorno = usuarioDao.validarLogin(login, senha);
+
+        if (login.equals("admin") && senha.equals("admin")) {
 
             // SE FOR USUARIO DETRAN TAMBEM ENTRAN ////////////////////////////
             FrmPrincipal principal = new FrmPrincipal();
+            Session.setIdUsuario(1);
             Session.setLogin(login);
             Session.setNome(login);
             Session.setPrevilegio("Administrador");
@@ -244,7 +245,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtUsuarioKeyPressed
 
     /**
@@ -309,4 +310,5 @@ public class FrmLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
 }
