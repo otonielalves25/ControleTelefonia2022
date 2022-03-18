@@ -14,10 +14,10 @@ public class Funcionario {
     private int  idFuncionario;
     private String nome;
     private String cpf;
-    private String rg;
-    private String cargo;
+    private String rg;   
     private String status;
     private Localidade localidade;
+    private Cargo cargo;
 
     public Funcionario() {
     }
@@ -83,19 +83,7 @@ public class Funcionario {
         this.rg = rg;
     }
 
-    /**
-     * @return the cargo
-     */
-    public String getCargo() {
-        return cargo;
-    }
 
-    /**
-     * @param cargo the cargo to set
-     */
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
 
     /**
      * @return the status
@@ -128,6 +116,14 @@ public class Funcionario {
     @Override
     public String toString() {
         return nome; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
     }
     
     

@@ -81,7 +81,7 @@ public class MarcaDao {
             stm.close();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e);
+            JOptionPane.showMessageDialog(null, "Marca não pode ser excluído,  tem funcionário cadastrado. ");
             return false;
         }
 

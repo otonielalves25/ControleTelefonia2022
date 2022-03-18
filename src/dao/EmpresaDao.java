@@ -79,7 +79,7 @@ public class EmpresaDao {
             stm.close();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir empresa Dao. " + e);
+            JOptionPane.showMessageDialog(null, "Empresa não pode ser excluído,  tem funcionário cadastrado. ");
             return false;
         }
 

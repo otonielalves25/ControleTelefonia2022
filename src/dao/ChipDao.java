@@ -5,6 +5,7 @@
  */
 package dao;
 
+import utilidade.SqlGlobal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -115,7 +116,7 @@ public class ChipDao {
             stm.close();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar clip Dao. " + ex);
+            JOptionPane.showMessageDialog(null, "Chip não pode ser excluído,  tem funcionário cadastrado. ");
             return false;
         }
     }
@@ -143,7 +144,7 @@ public class ChipDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Chip getPorID(int codigo) {
 
-        String sql = "SELECT * FROM Chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE idChip = ?";
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE idChip = ?";
         Chip chip = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -180,7 +181,7 @@ public class ChipDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Chip retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM Chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ? OR numeroLinha = ? ";
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ? OR numeroLinha = ? ";
         Chip chip = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -218,7 +219,47 @@ public class ChipDao {
     public ArrayList<Chip> getListagemLike(String busca) {
 
         ArrayList<Chip> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE ? OR codigoChip LIKE ? ORDER BY numeroLinha";
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' OR codigoChip LIKE '%" + busca + "%' ORDER BY numeroLinha";
+        // seta valor na variável global
+        SqlGlobal.setSqlGlogalChipes(sql);
+        Chip chip;
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+//            stm.setString(1, "%" + busca + "%");
+//            stm.setString(2, "%" + busca + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                chip = new Chip();
+                chip.setIdChip(rs.getInt("idChip"));
+                chip.setCodigoChip(rs.getString("codigoChip"));
+                chip.setNumeroLinha(rs.getString("numeroLinha"));
+                chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                chip.setIsDado(rs.getBoolean("dados"));
+                chip.setStatus(rs.getString("status"));
+                chip.setObservacao(rs.getString("observacao"));
+                Empresa emp = new Empresa();
+                emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                chip.setEmpresa(emp);
+                Listagem.add(chip);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos clip DAO. " + ex);
+        }
+        return Listagem;
+    }
+
+    // CONSULTA ATIVOS
+    public List<Chip> getListagemLikeAtivos(String busca) {
+        ArrayList<Chip> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Disponível' ORDER BY numeroLinha";
         Chip chip;
 
         try {
@@ -253,16 +294,108 @@ public class ChipDao {
         return Listagem;
     }
 
-    public List<Chip> getListagemLikeAtivos(String busca) {
+    // CONSULTA POR CHIP //////////////////////////////////////////////////
+    public Chip retornaPorChip(String procura) {
+
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ?";
+        Chip chip = null;
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, procura);
+            //stm.setString(2, procura);
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    chip = new Chip();
+                    chip.setIdChip(rs.getInt("idChip"));
+                    chip.setCodigoChip(rs.getString("codigoChip"));
+                    chip.setNumeroLinha(rs.getString("numeroLinha"));
+                    chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                    chip.setIsDado(rs.getBoolean("dados"));
+                    chip.setStatus(rs.getString("status"));
+                    chip.setObservacao(rs.getString("observacao"));
+                    Empresa emp = new Empresa();
+                    emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                    emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    chip.setEmpresa(emp);
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+        }
+
+        return chip;
+    }
+
+    // CONSULTA POR NUMERO DA LINHA //////////////////////////////////////////////////
+    public Chip retornaPorNumeroLinha(String procura) {
+
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha = ?";
+        Chip chip = null;
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, procura);
+            //stm.setString(2, procura);
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    chip = new Chip();
+                    chip.setIdChip(rs.getInt("idChip"));
+                    chip.setCodigoChip(rs.getString("codigoChip"));
+                    chip.setNumeroLinha(rs.getString("numeroLinha"));
+                    chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                    chip.setIsDado(rs.getBoolean("dados"));
+                    chip.setStatus(rs.getString("status"));
+                    chip.setObservacao(rs.getString("observacao"));
+                    Empresa emp = new Empresa();
+                    emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                    emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                    chip.setEmpresa(emp);
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+        }
+
+        return chip;
+    }
+
+    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    public ArrayList<Chip> getListagemLikePorChipOuCelular(String busca, String tipoBusca) {
+
         ArrayList<Chip> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Disponível' ORDER BY numeroLinha";
+        String sql = "";
+        String busca2 = busca.replaceAll("[()-]", "");
+        System.out.println(busca2);
+        if(tipoBusca.equalsIgnoreCase("buscarPorChip")){
+            sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip LIKE '%" + busca + "%' ORDER BY numeroLinha";
+        }else{
+            sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' ORDER BY numeroLinha";
+            
+            
+//             sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' "
+//                    + "OR (REPLACE(REPLACE(REPLACE(numeroLinha,'(',''),')',''),'-','') LIKE '%" + busca2 + "%') ORDER BY numeroLinha";
+        }
+        
+        //REPLACE(REPLACE(REPLACE(numeroLinha,'(',''),')',''),'-','')
+        
+        // seta valor na variável global
+        SqlGlobal.setSqlGlogalChipes(sql);
         Chip chip;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + busca + "%");
-            stm.setString(2, "%" + busca + "%");
+//            stm.setString(1, "%" + busca + "%");
+//            stm.setString(2, "%" + busca + "%");
             rs = stm.executeQuery();
             while (rs.next()) {
 

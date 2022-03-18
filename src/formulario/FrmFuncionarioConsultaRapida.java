@@ -6,7 +6,9 @@
 package formulario;
 
 import dao.FuncionarioDao;
+import dao.LogDao;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Funcionario;
 
@@ -17,6 +19,8 @@ import modelo.Funcionario;
 public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
     /**
+     * toni
+     *
      * @return the codigoFuncionario
      */
     public int getCodigoFuncionario() {
@@ -35,6 +39,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmFuncionarioConsultaRapida
+     *
      * @param parent
      */
     public FrmFuncionarioConsultaRapida(java.awt.Frame parent, boolean modal) {
@@ -46,13 +51,15 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
     // PESQUISA AVANÇADA DE FUNCIONARIOS ///////////////////////////////////////
     private void carregaPesquisa() {
-        List<Funcionario> listagem = funcionarioDao.getListagemLikeAtivos(txtPesquisa.getText());
+        List<Funcionario> listagem = funcionarioDao.getListagemLikeAtivos(txtPesquisa.getText().trim());
         modeloTabela.setNumRows(0);
         for (Funcionario funcionario : listagem) {
             modeloTabela.addRow(new Object[]{
                 funcionario.getIdFuncionario(),
                 funcionario.getNome(),
-                funcionario.getLocalidade().getNomeLocalidade(),});
+                funcionario.getLocalidade().getNomeLocalidade(),
+                funcionario.getStatus()
+            });
         }
     }
 
@@ -73,6 +80,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         txtPesquisa = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         grelha = new javax.swing.JTable();
+        btnOk1 = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,10 +99,11 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
-        lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
+        lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/func.png"))); // NOI18N
         lblTitulo.setText("Consulta Rápida de Funcionário - Ativos");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
@@ -112,11 +121,11 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "NOME", "SETOR"
+                "ID", "NOME", "SETOR", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -140,21 +149,35 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             grelha.getColumnModel().getColumn(0).setMaxWidth(30);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
             grelha.getColumnModel().getColumn(2).setMaxWidth(180);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(90);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(90);
         }
+
+        btnOk1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnOk1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ok.png"))); // NOI18N
+        btnOk1.setText("Selecionar");
+        btnOk1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOk1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisa)))
+                        .addComponent(txtPesquisa))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnOk1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -165,22 +188,22 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(btnOk1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -198,12 +221,26 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() > 1) {
+        if (evt.getClickCount() >= 1) {
             int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
             this.setCodigoFuncionario(codigo);
             this.dispose();
         }
     }//GEN-LAST:event_grelhaMouseClicked
+
+    private void btnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOk1ActionPerformed
+        // TODO add your handling code here:
+        int linhaSelecionada = grelha.getSelectedRowCount();
+        if (linhaSelecionada > 0) {
+            int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
+            this.setCodigoFuncionario(codigo);
+            this.dispose();
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btnOk1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,6 +285,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
     }
     private int codigoFuncionario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnOk1;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

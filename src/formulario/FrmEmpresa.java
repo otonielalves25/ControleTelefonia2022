@@ -6,13 +6,13 @@
 package formulario;
 
 import dao.EmpresaDao;
+import dao.LogDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Empresa;
 import modelo.Session;
-
 
 /**
  *
@@ -25,14 +25,15 @@ public class FrmEmpresa extends javax.swing.JFrame {
 
     //Variaveis
     EmpresaDao empresaDao = new EmpresaDao();
-
+    LogDao logDao = new LogDao();
+    
     public FrmEmpresa() {
         initComponents();
         txtCodigo.setVisible(false);
         botaoInicial();
         habilitado(false);
         carregaGrelha();
-
+        
     }
 
     /**
@@ -245,7 +246,7 @@ public class FrmEmpresa extends javax.swing.JFrame {
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
             }
-
+            
         } catch (Exception e) {
         }
     }//GEN-LAST:event_grelhaMouseClicked
@@ -262,25 +263,26 @@ public class FrmEmpresa extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
-               if (Session.getPrevilegio().equals("Consulta")) {
+        if (Session.getPrevilegio().equals("Consulta")) {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (this.txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
-
+            
         } else {
-
+            
             int resposta;
             resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Escolha um", JOptionPane.YES_NO_OPTION);
-
+            
             if (resposta == JOptionPane.YES_OPTION) {
-
+                
                 empresaDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                logDao.insert("Excluído empresa: " + txtTexto.getText().toUpperCase());
                 carregaGrelha();
-
+                
             } else if (resposta == JOptionPane.NO_OPTION) {
                 JOptionPane.showMessageDialog(this, "Operação Cancelada.");
             }
@@ -302,7 +304,7 @@ public class FrmEmpresa extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-               if (Session.getPrevilegio().equals("Consulta")) {
+        if (Session.getPrevilegio().equals("Consulta")) {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -329,12 +331,14 @@ public class FrmEmpresa extends javax.swing.JFrame {
                 empresaDao.insert(empresa);
                 
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
-                // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
+                // ALTERAR CADASTRO NO BANCO ///////////////////////////////////,
+                logDao.insert("Cadatrado nova empresa: " + txtTexto.getText().toUpperCase());
             } else {
-
+                
                 empresa.setIdEmpresa(Integer.parseInt(txtCodigo.getText()));
                 empresaDao.update(empresa);
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+                logDao.insert("Alterado empresa: " + txtTexto.getText().toUpperCase());
             }
             carregaGrelha();
             botaoInicial();
@@ -662,8 +666,8 @@ public class FrmEmpresa extends javax.swing.JFrame {
 
     //LIMPAR******************************************************************
     private void limparTudo() {
-    
-        txtTexto.setText("")  ;      
+        
+        txtTexto.setText("");        
     }
 
     //LIMPAR******************************************************************
@@ -674,15 +678,15 @@ public class FrmEmpresa extends javax.swing.JFrame {
 
     //CARREGA GRELHA OTIMIZADA-------------------------------------------------
     public final void carregaGrelha() {
-
+        
         int contador = 0;
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
-
+        
         List<Empresa> lista = empresaDao.getListagemLike("");
-
+        
         for (Empresa empresa : lista) {
-
+            
             modelo.addRow(new Object[]{
                 empresa.getIdEmpresa(),
                 empresa.getNomeEmpresa(),});

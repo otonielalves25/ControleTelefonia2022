@@ -6,6 +6,7 @@
 package formulario;
 
 import dao.CategoriaDao;
+import dao.LogDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     //Variaveis
     CategoriaDao categoriaDao = new CategoriaDao();
+    LogDao logDao = new LogDao();
 
     public FrmCategoria() {
         initComponents();
@@ -331,11 +333,15 @@ public class FrmCategoria extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
                 // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
+
+                logDao.insert("Cadatrado categoria: " + txtTexto.getText().trim());
             } else {
 
                 categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText()));
                 categoriaDao.update(categoria);
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+                //log do sistema
+                logDao.insert("Alterado categoria: " + txtTexto.getText().trim());
             }
             carregaGrelha();
             botaoInicial();

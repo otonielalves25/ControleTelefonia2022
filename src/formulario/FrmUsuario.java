@@ -5,6 +5,10 @@
  */
 package formulario;
 
+import utilidade.ConvertendoSenhaMD5;
+import dao.EmprestimoDao;
+import dao.LogDao;
+
 import dao.UsuarioDao;
 
 import java.util.List;
@@ -23,9 +27,11 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    String senha = "";
 
     //Variaveis
     UsuarioDao usuarioDao = new UsuarioDao();
+    LogDao logDao = new LogDao();
 
     public FrmUsuario() {
         initComponents();
@@ -258,42 +264,43 @@ public class FrmUsuario extends javax.swing.JFrame {
             .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNome)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel3))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 134, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ckAtivo, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboPrevilegio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckAtivo))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -359,6 +366,8 @@ public class FrmUsuario extends javax.swing.JFrame {
                 txtLogin.setText(u.getLogin());
                 cboPrevilegio.setSelectedItem(u.getPrevilegio());
 
+                senha = u.getSenha();
+
                 if (u.getStatus().equalsIgnoreCase("Ativo")) {
                     ckAtivo.setSelected(true);
                 } else {
@@ -384,6 +393,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         novo = true;
         habilitado(true);
         limparTudo();
+        ckAtivo.setSelected(true);
         txtNome.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
@@ -398,6 +408,13 @@ public class FrmUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
         } else {
+            // VERIFICA SE TEM EMPRESTIMO //////////////////////////////////////
+            int codigo = Integer.parseInt(txtCodigo.getText());
+            if (new EmprestimoDao().verificaEmprestimoFuncionario(codigo) > 0) {
+                JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Excluído.\n Consta EMPRÉSTIMO em não Devolvido.", null, JOptionPane.ERROR_MESSAGE);
+                return;
+
+            }
 
             int resposta;
             resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Escolha um", JOptionPane.YES_NO_OPTION);
@@ -406,6 +423,8 @@ public class FrmUsuario extends javax.swing.JFrame {
 
                 usuarioDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                // PEGANDO LOGS DO SISTEMA // REGISTRO DE LOGS
+                logDao.insert("Alterada usuario: " + txtNome.getText().toUpperCase());
                 carregaGrelha();
 
             } else if (resposta == JOptionPane.NO_OPTION) {
@@ -456,7 +475,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             txtLogin.requestFocus();
             return;
         }
-        if (txtSenha.getText().equals("")) {
+        if (txtSenha.getText().equals("") && novo) {
             JOptionPane.showMessageDialog(this, "Senha não informada", null, JOptionPane.ERROR_MESSAGE);
             txtSenha.requestFocus();
             return;
@@ -467,7 +486,8 @@ public class FrmUsuario extends javax.swing.JFrame {
         usuario.setPrevilegio(cboPrevilegio.getSelectedItem().toString());
         usuario.setNome(txtNome.getText().toUpperCase());
         usuario.setLogin(txtLogin.getText());
-        usuario.setSenha(txtSenha.getText());
+        usuario.setSenha(ConvertendoSenhaMD5.ConvertendoSenha(txtSenha.getText())); // CONVERTE MD5
+
         if (ckAtivo.isSelected()) {
             usuario.setStatus("Ativo");
         } else {
@@ -478,17 +498,30 @@ public class FrmUsuario extends javax.swing.JFrame {
         if (novo) {
             Usuario m = usuarioDao.retornaPorNome(txtNome.getText().toUpperCase());
             if (m != null) {
-                JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Usuário já tem cadastro.", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
             usuarioDao.insert(usuario);
+            // PEGANDO LOGS DO SISTEMA 
+            logDao.insert("Cadastrar nova usuario: " + txtNome.getText().toUpperCase());
+
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
 
             usuario.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
+            // VERIFICA SE A SENHA FOI ALTEADA 
+            // SE SIM ENTÃO PEGA A NOVA SENHA
+            if (!txtSenha.getText().equals("")) {
+                usuario.setSenha(ConvertendoSenhaMD5.ConvertendoSenha(txtSenha.getText()));
+            } else {
+                usuario.setSenha(senha);
+            }
+            // ATUALIZA NO BANCO
             usuarioDao.update(usuario);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            // PEGANDO LOGS DO SISTEMA 
+            logDao.insert("Alterada usuario: " + txtNome.getText().toUpperCase());
         }
 
         botaoInicial();

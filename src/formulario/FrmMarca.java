@@ -6,6 +6,7 @@
 package formulario;
 
 import dao.CategoriaDao;
+import dao.LogDao;
 import dao.MarcaDao;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class FrmMarca extends javax.swing.JFrame {
     //Variaveis
     CategoriaDao categoriaDao = new CategoriaDao();
     MarcaDao marcaDao = new MarcaDao();
+     LogDao logDao = new LogDao();
 
     public FrmMarca() {
         initComponents();
@@ -351,6 +353,8 @@ public class FrmMarca extends javax.swing.JFrame {
 
                 marcaDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                // LOG DO SISTEMA 
+                logDao.insert("Excluído marca: " + txtTexto.getText());
                 carregaGrelha();
 
             } else if (resposta == JOptionPane.NO_OPTION) {
@@ -412,12 +416,14 @@ public class FrmMarca extends javax.swing.JFrame {
             }
             marcaDao.insert(marca);
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            logDao.insert("Cadatrado nova marca: " + txtTexto.getText());
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
         } else {
 
             marca.setIdMarca(Integer.parseInt(txtCodigo.getText()));
             marcaDao.update(marca);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            logDao.insert("Alterada marca: " + txtTexto.getText());
         }
 
         botaoInicial();

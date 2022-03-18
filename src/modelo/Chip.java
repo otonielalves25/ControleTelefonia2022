@@ -11,7 +11,7 @@ package modelo;
  * @author Tony
  */
 public class Chip {
- 
+
     private int idChip;
     private String numeroLinha;
     private String status;
@@ -20,17 +20,15 @@ public class Chip {
     private boolean isTelefonia;
     private boolean isDado;
     private Empresa empresa;
-    
+    private String estadoBem;
 
     public Chip() {
     }
 
     public Chip(int idChip) {
         this.idChip = idChip;
-   
+
     }
-    
-    
 
     /**
      * @return the idChip
@@ -143,6 +141,13 @@ public class Chip {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
-    
-    
+
+    public String getEstadoBem() {
+        return estadoBem;
+    }
+
+    public void setEstadoBem(String estadoBem) {
+        this.estadoBem = estadoBem;
+    }
+
 }

@@ -11,9 +11,9 @@ import dao.ChipDao;
 import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.ImpressaoDao;
+import dao.LogDao;
 import dao.UsuarioDao;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Color;
 
 import java.text.SimpleDateFormat;
 
@@ -47,6 +47,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
     CelularDao celularDao = new CelularDao();
     ChipDao chipDao = new ChipDao();
     UsuarioDao usuarioDao = new UsuarioDao();
+    LogDao logDao = new LogDao();
 
     // lista de acessorias
     List<String> acessorios = new ArrayList<>();
@@ -88,7 +89,12 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         txtAparelho = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtMarca = new javax.swing.JTextField();
-        btnBuscFuncionario = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtSerie = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtPatrimonio = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtEmei = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -99,8 +105,9 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         txtDataEmprestimo = new javax.swing.JFormattedTextField();
         txtDataDevolucao = new javax.swing.JFormattedTextField();
-        jPanel5 = new javax.swing.JPanel();
-        txtComplementos = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtComplementos = new javax.swing.JTextArea();
+        jLabel18 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
@@ -110,23 +117,43 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         txtChip = new javax.swing.JTextField();
         radComChip = new javax.swing.JRadioButton();
         radSemChip = new javax.swing.JRadioButton();
-        txtLinha = new javax.swing.JFormattedTextField();
         jLabel17 = new javax.swing.JLabel();
         ckVoz = new javax.swing.JCheckBox();
         ckDados = new javax.swing.JCheckBox();
+        txtLinha = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
+        ckCaixa = new javax.swing.JCheckBox();
+        ckCarregador = new javax.swing.JCheckBox();
+        ckManual = new javax.swing.JCheckBox();
+        ckAdaptador = new javax.swing.JCheckBox();
+        ckFone = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        ckFoneD = new javax.swing.JCheckBox();
+        ckAdaptadorD = new javax.swing.JCheckBox();
+        ckManualD = new javax.swing.JCheckBox();
+        ckCarregadorD = new javax.swing.JCheckBox();
+        ckCaixaD = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
+        ckTodos = new javax.swing.JCheckBox();
+        ckConfirmaNaoDevolvido = new javax.swing.JCheckBox();
+        ckCapinha = new javax.swing.JCheckBox();
+        ckCapinhaD = new javax.swing.JCheckBox();
+        cboEstadoBem = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
 
         popupMenu1.setLabel("popupMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setBackground(new java.awt.Color(102, 0, 0));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -135,6 +162,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         lblTitulo.setText("Devolução de Equipamento");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 34));
 
         jPanel2.setBackground(new java.awt.Color(222, 231, 248));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -149,15 +177,20 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         txtMarca.setEditable(false);
         txtMarca.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
-        btnBuscFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa.png"))); // NOI18N
-        btnBuscFuncionario.setBorder(null);
-        btnBuscFuncionario.setBorderPainted(false);
-        btnBuscFuncionario.setContentAreaFilled(false);
-        btnBuscFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscFuncionarioActionPerformed(evt);
-            }
-        });
+        jLabel5.setText("Série:");
+
+        txtSerie.setEditable(false);
+        txtSerie.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+
+        jLabel8.setText("Patrimônio:");
+
+        txtPatrimonio.setEditable(false);
+        txtPatrimonio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+
+        jLabel9.setText("IMEI:");
+
+        txtEmei.setEditable(false);
+        txtEmei.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -165,16 +198,27 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAparelho)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBuscFuncionario))
+                        .addComponent(txtAparelho)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtEmei, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtMarca))
                 .addGap(13, 13, 13))
         );
@@ -187,10 +231,19 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                     .addComponent(txtAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscFuncionario)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel5)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtEmei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 770, 100));
 
         jPanel3.setBackground(new java.awt.Color(222, 231, 248));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Funcionário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -232,6 +285,8 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 770, -1));
+
         jPanel4.setBackground(new java.awt.Color(222, 231, 248));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
@@ -254,66 +309,72 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        txtComplementos.setEditable(false);
+        txtComplementos.setColumns(20);
+        txtComplementos.setLineWrap(true);
+        txtComplementos.setRows(5);
+        jScrollPane2.setViewportView(txtComplementos);
+
+        jLabel18.setText("Complementos:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
-        jPanel5.setBackground(new java.awt.Color(222, 231, 248));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Complementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
-
-        txtComplementos.setEditable(false);
-        txtComplementos.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtComplementos.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        txtComplementos.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtComplementos, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(txtComplementos, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 770, -1));
 
         jLabel14.setText("Observação:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, -1, -1));
 
         txtObservacao.setColumns(20);
+        txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);
 
-        btnSalvar.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 770, 70));
+
+        btnSalvar.setBackground(new java.awt.Color(255, 153, 153));
         btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/save.png"))); // NOI18N
         btnSalvar.setText("Confirmar Devolução");
@@ -323,6 +384,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 650, 264, 40));
 
         jPanel6.setBackground(new java.awt.Color(222, 231, 248));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -349,14 +411,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             }
         });
 
-        txtLinha.setEditable(false);
-        try {
-            txtLinha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtLinha.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-
         jLabel17.setText("Nª Linha:");
 
         ckVoz.setForeground(new java.awt.Color(0, 102, 0));
@@ -368,6 +422,8 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         ckDados.setText("Dados");
         ckDados.setEnabled(false);
         ckDados.setOpaque(false);
+
+        txtLinha.setEditable(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -382,14 +438,14 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 .addComponent(ckVoz, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ckDados)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLinha, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -408,6 +464,8 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 770, -1));
+
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/cancel.png"))); // NOI18N
@@ -418,70 +476,195 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 650, 110, 30));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 660, 65, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+        jPanel5.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Acessórios do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+
+        ckCaixa.setText("Caixa");
+        ckCaixa.setEnabled(false);
+        ckCaixa.setOpaque(false);
+
+        ckCarregador.setText("Carregador");
+        ckCarregador.setEnabled(false);
+        ckCarregador.setOpaque(false);
+
+        ckManual.setText("Manual");
+        ckManual.setEnabled(false);
+        ckManual.setOpaque(false);
+
+        ckAdaptador.setText("Adaptador USB");
+        ckAdaptador.setEnabled(false);
+        ckAdaptador.setOpaque(false);
+
+        ckFone.setText("Fone de Ouvido");
+        ckFone.setEnabled(false);
+        ckFone.setOpaque(false);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 51));
+        jLabel3.setText("Item Emprestados");
+
+        ckFoneD.setText("Fone de Ouvido");
+        ckFoneD.setOpaque(false);
+
+        ckAdaptadorD.setText("Adaptador USB");
+        ckAdaptadorD.setOpaque(false);
+
+        ckManualD.setText("Manual");
+        ckManualD.setOpaque(false);
+
+        ckCarregadorD.setText("Carregador");
+        ckCarregadorD.setOpaque(false);
+
+        ckCaixaD.setText("Caixa");
+        ckCaixaD.setOpaque(false);
+        ckCaixaD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                ckCaixaDMouseReleased(evt);
+            }
+        });
+        ckCaixaD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckCaixaDActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(153, 51, 0));
+        jLabel4.setText("Marque os devolvidos");
+
+        ckTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckTodos.setText("Devolveu tudo");
+        ckTodos.setOpaque(false);
+        ckTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckTodosActionPerformed(evt);
+            }
+        });
+
+        ckConfirmaNaoDevolvido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckConfirmaNaoDevolvido.setForeground(new java.awt.Color(0, 51, 153));
+        ckConfirmaNaoDevolvido.setText("Confirma que falta item.");
+        ckConfirmaNaoDevolvido.setOpaque(false);
+        ckConfirmaNaoDevolvido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckConfirmaNaoDevolvidoActionPerformed(evt);
+            }
+        });
+
+        ckCapinha.setText("Capinha TPU");
+        ckCapinha.setEnabled(false);
+        ckCapinha.setOpaque(false);
+        ckCapinha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckCapinhaActionPerformed(evt);
+            }
+        });
+
+        ckCapinhaD.setText("Capinha TPU");
+        ckCapinhaD.setOpaque(false);
+        ckCapinhaD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckCapinhaDActionPerformed(evt);
+            }
+        });
+
+        cboEstadoBem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "BOM ESTADO", "DEFEITO", "EXTRAVIADO", "QUEBRADO" }));
+
+        jLabel15.setText("Estado do bem:");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckCarregador)
+                            .addComponent(ckCaixa)
+                            .addComponent(ckManual))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckCapinha)
+                            .addComponent(ckFone)
+                            .addComponent(ckAdaptador))))
+                .addGap(86, 86, 86)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ckCarregadorD)
+                    .addComponent(ckCaixaD)
+                    .addComponent(jLabel4)
+                    .addComponent(ckManualD))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(ckCapinhaD)
+                            .addGap(14, 14, 14))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckAdaptadorD)
+                            .addComponent(ckFoneD)))
+                    .addComponent(ckTodos))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(ckConfirmaNaoDevolvido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(15, 15, 15))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(cboEstadoBem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(ckConfirmaNaoDevolvido)
+                    .addComponent(ckTodos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ckCaixa)
+                    .addComponent(ckAdaptador)
+                    .addComponent(ckCaixaD)
+                    .addComponent(ckCapinhaD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ckCarregador)
+                    .addComponent(ckFone)
+                    .addComponent(ckAdaptadorD)
+                    .addComponent(jLabel15)
+                    .addComponent(ckCarregadorD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ckFoneD)
+                    .addComponent(ckManual)
+                    .addComponent(ckCapinha)
+                    .addComponent(cboEstadoBem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckManualD))
+                .addGap(12, 12, 12))
         );
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 770, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -489,27 +672,18 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscFuncionarioActionPerformed
-        // TODO add your handling code here:
-        int codigo = 0;
-        FrmCelularConsultaRapida frm = new FrmCelularConsultaRapida(null, true);
-        frm.setVisible(true);
-        try {
-            codigo = frm.getCodigoCelular();
-            Celular c = celularDao.getPorID(codigo);
-            txtAparelho.setText(c.getMarca().getCategoria().getCategoria());
-            txtMarca.setText(c.getMarca().getMarca());
-
-            celular_id = c.getIdCelular();
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_btnBuscFuncionarioActionPerformed
-
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
 
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int resposta;
-        resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente Devolver ?", "", JOptionPane.YES_NO_OPTION);
+        String itensNaoDevolvido = "\n\n";
+
+        resposta = JOptionPane.showConfirmDialog(null, "Confirma a DEVOLUÇÃO ?", "", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
 
             if (txtDataEmprestimo.getText().replace("/", "").trim().length() < 8) {
@@ -518,24 +692,131 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 return;
             }
 
+            if (cboEstadoBem.getSelectedItem().equals("Selecione...")) {
+                JOptionPane.showMessageDialog(this, "Informe na estado do bem.", null, JOptionPane.ERROR_MESSAGE);
+                cboEstadoBem.setBackground(Color.yellow);
+                cboEstadoBem.requestFocus();
+                return;
+            }
+
+            if (cboEstadoBem.getSelectedItem().equals("QUEBRADO") || cboEstadoBem.getSelectedItem().equals("DEFEITO") || cboEstadoBem.getSelectedItem().equals("EXTRAVIADO") && txtObservacao.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Informe na observação, o motivo.", null, JOptionPane.ERROR_MESSAGE);
+                txtObservacao.setBackground(Color.yellow);
+                txtObservacao.requestFocus();
+                return;
+            }
+
+            if (ckConfirmaNaoDevolvido.isSelected() && txtObservacao.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Informe a falta de item na observação.", null, JOptionPane.ERROR_MESSAGE);
+                txtObservacao.setBackground(Color.yellow);
+                txtObservacao.requestFocus();
+                return;
+            }
+
+            if (!txtAparelho.getText().equalsIgnoreCase("")) {
+
+                if (!ckTodos.isSelected() && !ckConfirmaNaoDevolvido.isSelected()) {
+                    JOptionPane.showMessageDialog(this, "Confime se FALTA ITEM ou TODOS DEVOLVIDOS.", null, JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // ITEM DEVOVIDOS E NÃO DEVOLVIDOS
+                if (ckCaixa.isSelected() && !ckCaixaD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Caixa NÃO devolvida.\n";
+                }
+                if (ckCarregador.isSelected() && !ckCarregadorD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Carregador NÃO devolvido.\n";
+                }
+                if (ckManual.isSelected() && !ckManualD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Manual NÃO devolvido.\n";
+                }
+                if (ckAdaptador.isSelected() && !ckAdaptadorD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Adaptador USB NÃO devolvido.\n";
+                }
+                if (ckFone.isSelected() && !ckFoneD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Fone de Ouvido NÃO devolvido.\n";
+                }
+                if (ckCapinha.isSelected() && !ckCapinhaD.isSelected()) {
+                    itensNaoDevolvido = itensNaoDevolvido + "- Capa TPU NÃO devolvida.\n";
+                }
+                if (ckTodos.isSelected()) {
+                    itensNaoDevolvido = " OK - Todos acessórios devolvidos.\n";
+                }
+            }
             // FIM VALIDAÇÃO DOS CAMPOS NECESSARIOS 
             Emprestimo emprestimo = new Emprestimo(Integer.parseInt(txtCodigo.getText()));
             emprestimo.setSituacao("DEVOLVIDO"); // EMPRESTIMO DEVOLVIDO
             emprestimo.setDataDevolucao(txtDataDevolucao.getText());
             Celular celular = new Celular(celular_id);
+            celular.setEstadoBem(cboEstadoBem.getSelectedItem().toString());
             celular.setStatus("Disponível"); // CHIP FICA ATIVO
+            celular.setObservacao(txtObservacao.getText());
+
             Chip chip = new Chip(chip_id); // CHIP FICA ATIVO
+            chip.setEstadoBem(cboEstadoBem.getSelectedItem().toString());
             chip.setStatus("Disponível");
-            emprestimo.setObservacaoDevolucao(txtObservacao.getText());
-            listagemACessorios = txtComplementos.getText();
+
+            String estado = cboEstadoBem.getModel().getSelectedItem().toString();
+
+            itensNaoDevolvido = estado + ". \n" + txtObservacao.getText().toUpperCase() + ". \n" + itensNaoDevolvido;
+            txtObservacao.setText(itensNaoDevolvido);
+            emprestimo.setObservacaoDevolucao(itensNaoDevolvido);
+            // MUDA OS ITEM DO CELULAR CONFORME DEVOLUÇÃO //////////////////////
+
+            if (ckCaixaD.isSelected()) {
+
+                celular.setCaixa(true);
+            } else {
+                celular.setCaixa(false);
+            }
+
+            if (ckCarregadorD.isSelected()) {
+
+                celular.setCarregador(true);
+            } else {
+                celular.setCarregador(false);
+            }
+
+            if (ckManualD.isSelected()) {
+
+                celular.setManual(true);
+            } else {
+                celular.setManual(false);
+            }
+
+            if (ckAdaptadorD.isSelected()) {
+
+                celular.setAdaptador(true);
+            } else {
+                celular.setAdaptador(false);
+            }
+
+            if (ckFoneD.isSelected()) {
+
+                celular.setFoneOuvido(true);
+            } else {
+                celular.setFoneOuvido(false);
+            }
+
+            if (ckCapinhaD.isSelected()) {
+
+                celular.setCapinha(true);
+            } else {
+                celular.setCapinha(false);
+            }
 
             // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
             // situacao=?, dataDevolucao=?, observacaoDevolucao = ? where idEmprestimo = ?
             if (emprestimoDao.updateDevolver(emprestimo)) {
                 chipDao.updateStatus(chip);
                 celularDao.updateStatus(celular);
+                celularDao.alterarAcessoriosEmprestadoNoCadastro(celular); // MUDA OS ACESSÁRIOS DO CELULAR NO BANCO.
+                JOptionPane.showMessageDialog(this, "Devolvido com Sucesso.", null, JOptionPane.INFORMATION_MESSAGE);
+                // REGISTRANDO O LOGO NO BANCO /////////////////////////////////
+                logDao.insert("Receber Emprestimo, código: " + emprestimo.getIdEmprestimo() + " do funcionário: " + emprestimo.getFuncionario().getNome());
+                new FrmBarraProgresso(null, true).setVisible(true);
                 imprimirTermo();
-                //JOptionPane.showMessageDialog(this, "Devolvido com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Erro ao cadastrar.", null, JOptionPane.ERROR_MESSAGE);
@@ -548,7 +829,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
     // IMPRIMIR OS TERMOS /////////////////////////////////////////////////////
-
     private void imprimirTermo() {
         // SE DEU TUDO CERTO IMPRIMR O TERMO ///////////////////////////////////
         HashMap params = new HashMap<>();
@@ -568,7 +848,173 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+    private void radSemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radSemChipMouseClicked
+        // TODO add your handling code here:.
+        // TODO add your handling code here:
+        if (radSemChip.isSelected()) {
+            ckDados.setSelected(false);
+            ckVoz.setSelected(false);
+            ckDados.setEnabled(false);
+            ckVoz.setEnabled(false);
+            txtChip.setText("");
+            txtLinha.setText("");
+        } else {
+            ckDados.setSelected(false);
+            ckVoz.setSelected(false);
+        }
+    }//GEN-LAST:event_radSemChipMouseClicked
+
+    private void ckCaixaDMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ckCaixaDMouseReleased
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_ckCaixaDMouseReleased
+
+    private void ckCaixaDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckCaixaDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckCaixaDActionPerformed
+
+    private void ckTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckTodosActionPerformed
+        // TODO add your handling code here:
+        if (ckTodos.isSelected()) {
+            if (ckCaixa.isSelected()) {
+                ckCaixaD.setSelected(true);
+                ckCaixaD.setEnabled(false);
+            } else {
+                ckCaixaD.setSelected(false);
+                ckCaixaD.setEnabled(false);
+            }
+
+            if (ckFone.isSelected()) {
+                ckFoneD.setSelected(true);
+                ckFoneD.setEnabled(false);
+            } else {
+                ckFoneD.setSelected(false);
+                ckFoneD.setEnabled(false);
+            }
+
+            if (ckManual.isSelected()) {
+                ckManualD.setSelected(true);
+                ckManualD.setEnabled(false);
+            } else {
+                ckManualD.setSelected(false);
+                ckManualD.setEnabled(false);
+            }
+
+            if (ckCarregador.isSelected()) {
+                ckCarregadorD.setSelected(true);
+                ckCarregadorD.setEnabled(false);
+            } else {
+                ckCarregadorD.setSelected(false);
+                ckCarregadorD.setEnabled(false);
+            }
+
+            if (ckAdaptador.isSelected()) {
+                ckAdaptadorD.setSelected(true);
+                ckAdaptadorD.setEnabled(false);
+            } else {
+                ckAdaptadorD.setSelected(false);
+                ckAdaptadorD.setEnabled(false);
+            }
+            if (ckCapinha.isSelected()) {
+                ckCapinhaD.setSelected(true);
+                ckCapinhaD.setEnabled(false);
+            } else {
+                ckCapinhaD.setSelected(false);
+                ckCapinhaD.setEnabled(false);
+            }
+
+            ckConfirmaNaoDevolvido.setEnabled(false);
+
+        } else {
+
+            ckCaixaD.setSelected(false);
+            ckFoneD.setSelected(false);
+            ckManualD.setSelected(false);
+            ckCarregadorD.setSelected(false);
+            ckAdaptadorD.setSelected(false);
+            ckCapinhaD.setSelected(false);
+            ckConfirmaNaoDevolvido.setEnabled(true);
+            ckCapinhaD.setEnabled(true);
+            ckCaixaD.setEnabled(true);
+            ckFoneD.setEnabled(true);
+            ckManualD.setEnabled(true);
+            ckCarregadorD.setEnabled(true);
+            ckAdaptadorD.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_ckTodosActionPerformed
+
+    private void ckConfirmaNaoDevolvidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckConfirmaNaoDevolvidoActionPerformed
+        // TODO add your handling code here:
+        if (ckConfirmaNaoDevolvido.isSelected()) {
+            ckTodos.setEnabled(false);
+            ckTodos.setSelected(false);
+
+            if (ckCaixa.isSelected()) {
+                ckCaixaD.setSelected(true);
+
+            } else {
+                ckCaixaD.setSelected(false);
+                ckCaixaD.setEnabled(false);
+            }
+
+            if (ckFone.isSelected()) {
+                ckFoneD.setSelected(true);
+                //ckFoneD.setEnabled(true);
+            } else {
+                ckFoneD.setSelected(false);
+                ckFoneD.setEnabled(false);
+            }
+
+            if (ckManual.isSelected()) {
+                ckManualD.setSelected(true);
+                // ckManualD.setEnabled(true);
+            } else {
+                ckManualD.setSelected(false);
+                ckManualD.setEnabled(false);
+            }
+
+            if (ckCarregador.isSelected()) {
+                ckCarregadorD.setSelected(true);
+                //ckCarregadorD.setEnabled(true);
+            } else {
+                ckCarregadorD.setSelected(false);
+                ckCarregadorD.setEnabled(false);
+            }
+
+            if (ckAdaptador.isSelected()) {
+                ckAdaptadorD.setSelected(true);
+                //ckAdaptadorD.setEnabled(true);
+            } else {
+                ckAdaptadorD.setSelected(false);
+                ckAdaptadorD.setEnabled(false);
+            }
+            if (ckCapinha.isSelected()) {
+                ckCapinhaD.setSelected(true);
+                //ckCapinhaD.setEnabled(true);
+            } else {
+                ckCapinhaD.setSelected(false);
+                ckCapinhaD.setEnabled(false);
+            }
+
+        } else {
+
+            ckTodos.setEnabled(true);
+            ckTodos.setSelected(false);
+
+        }
+    }//GEN-LAST:event_ckConfirmaNaoDevolvidoActionPerformed
+
+    private void ckCapinhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckCapinhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckCapinhaActionPerformed
+
+    private void ckCapinhaDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckCapinhaDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckCapinhaDActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         if (!novo && emprestimo_id > 0) {
 
@@ -585,6 +1031,9 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 celular_id = emp.getCelular().getIdCelular();
                 txtAparelho.setText(emp.getCelular().getMarca().getCategoria().getCategoria());
                 txtMarca.setText(emp.getCelular().getMarca().getMarca());
+                txtSerie.setText(emp.getCelular().getSerie());
+                txtPatrimonio.setText(emp.getCelular().getPatrimonio());
+                txtEmei.setText(emp.getCelular().getImei1());
 
             } catch (Exception e) {
 
@@ -613,58 +1062,97 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 radComChip.setSelected(true);
             }
 
-//            // DADOS DO EMPRESTIMO
+            // DADOS DO EMPRESTIMO
             txtDataEmprestimo.setText("");
             txtDataDevolucao.setText(hoje());
             txtDataEmprestimo.setText(emp.getDataEmprestimo());
-            txtDataDevolucao.setText(emp.getDataDevolucao());
+            //txtDataDevolucao.setText(emp.getDataDevolucao());
             txtObservacao.setText(emp.getObservacao());
             // PREENCHO OS DADOS DA COMBO DE ACESSORIOS
+
+            txtComplementos.setText("");
+
+            listagemACessorios = "";
 
             for (Acessorio acessorio : lista) {
                 listagemACessorios = listagemACessorios + acessorio.getNomeAcessorio() + ", ";
             }
 
+            if (!listagemACessorios.equalsIgnoreCase("")) {
+                listagemACessorios = listagemACessorios.substring(0, listagemACessorios.length() - 2);
+                listagemACessorios = listagemACessorios + ".";
+            }
+
+            txtComplementos.setText("");
             txtComplementos.setText(listagemACessorios);
 
-        }
-    }//GEN-LAST:event_formWindowActivated
+            // BUSCAR OS ACESSORIOS EMPRESTADO NO OBJETO CELULAR
+            Celular celula = celularDao.getPorID(celular_id);
+            // VERIFICA O CADASTRO DOS ITENS
+            if (celula != null) {
+                if (celula.isCaixa()) {
+                    ckCaixa.setSelected(true);
+                } else {
+                    ckCaixa.setSelected(false);
+                }
 
-    private void radSemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radSemChipMouseClicked
-        // TODO add your handling code here:.
-        // TODO add your handling code here:
-        if (radSemChip.isSelected()) {
-            ckDados.setSelected(false);
-            ckVoz.setSelected(false);
-            ckDados.setEnabled(false);
-            ckVoz.setEnabled(false);
-            txtChip.setText("");
-            txtLinha.setText("");
-        } else {
-            ckDados.setSelected(false);
-            ckVoz.setSelected(false);
+                if (celula.isCarregador()) {
+                    ckCarregador.setSelected(true);
+                } else {
+                    ckCarregador.setSelected(false);
+                }
+                if (celula.isManual()) {
+                    ckManual.setSelected(true);
+                } else {
+                    ckManual.setSelected(false);
+                }
+                if (celula.isAdaptador()) {
+                    ckAdaptador.setSelected(true);
+                } else {
+                    ckAdaptador.setSelected(false);
+                }
+                if (celula.isFoneOuvido()) {
+                    ckFone.setSelected(true);
+                } else {
+                    ckFone.setSelected(false);
+                }
+                if (celula.isCapinha()) {
+                    ckCapinha.setSelected(true);
+                } else {
+                    ckCapinha.setSelected(false);
+                }
+                // FIM - VERIFICA O CADASTRO DOS ITENS
+            }
+
+            if (txtAparelho.getText().equalsIgnoreCase("")) {
+                ckCaixaD.setEnabled(false);
+                ckCarregadorD.setEnabled(false);
+                ckManualD.setEnabled(false);
+                ckAdaptadorD.setEnabled(false);
+                ckFoneD.setEnabled(false);
+                ckCapinhaD.setEnabled(false);
+                ckTodos.setEnabled(false);
+                ckConfirmaNaoDevolvido.setEnabled(false);
+            }
         }
-    }//GEN-LAST:event_radSemChipMouseClicked
+    }//GEN-LAST:event_formWindowOpened
 
     // FUNÇÃO LIMPAR TUDO /////////////////////////////////////////////////////
     private void limparTudo() {
         txtNome.setText("");
         txtSetor.setText("");
-
         txtAparelho.setText("");
         txtMarca.setText("");
-
         radComChip.setSelected(false);
         radSemChip.setSelected(false);
         ckVoz.setSelected(false);
         ckDados.setSelected(false);
         txtChip.setText("");
         txtLinha.setText("");
-
         txtComplementos.setText("");
-
         txtDataEmprestimo.setText(hoje());
         txtDataDevolucao.setText("");
+        cboEstadoBem.setSelectedIndex(0);
 
     }
 
@@ -684,15 +1172,12 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEmprestimoDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEmprestimoDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEmprestimoDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmEmprestimoDevolucao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
 
@@ -712,21 +1197,42 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscFuncionario;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cboEstadoBem;
+    private javax.swing.JCheckBox ckAdaptador;
+    private javax.swing.JCheckBox ckAdaptadorD;
+    private javax.swing.JCheckBox ckCaixa;
+    private javax.swing.JCheckBox ckCaixaD;
+    private javax.swing.JCheckBox ckCapinha;
+    private javax.swing.JCheckBox ckCapinhaD;
+    private javax.swing.JCheckBox ckCarregador;
+    private javax.swing.JCheckBox ckCarregadorD;
+    private javax.swing.JCheckBox ckConfirmaNaoDevolvido;
     private javax.swing.JCheckBox ckDados;
+    private javax.swing.JCheckBox ckFone;
+    private javax.swing.JCheckBox ckFoneD;
+    private javax.swing.JCheckBox ckManual;
+    private javax.swing.JCheckBox ckManualD;
+    private javax.swing.JCheckBox ckTodos;
     private javax.swing.JCheckBox ckVoz;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -734,6 +1240,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitulo;
     private java.awt.PopupMenu popupMenu1;
     private javax.swing.JRadioButton radComChip;
@@ -741,13 +1248,16 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
     private javax.swing.JTextField txtAparelho;
     private javax.swing.JTextField txtChip;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtComplementos;
+    private javax.swing.JTextArea txtComplementos;
     private javax.swing.JFormattedTextField txtDataDevolucao;
     private javax.swing.JFormattedTextField txtDataEmprestimo;
-    private javax.swing.JFormattedTextField txtLinha;
+    private javax.swing.JTextField txtEmei;
+    private javax.swing.JTextField txtLinha;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextArea txtObservacao;
+    private javax.swing.JTextField txtPatrimonio;
+    private javax.swing.JTextField txtSerie;
     private javax.swing.JTextField txtSetor;
     // End of variables declaration//GEN-END:variables
 }

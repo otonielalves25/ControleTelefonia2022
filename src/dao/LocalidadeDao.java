@@ -80,7 +80,7 @@ public class LocalidadeDao {
             stm.close();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e);
+            JOptionPane.showMessageDialog(null, "Localidade não pode ser excluído,  tem funcionário cadastrado. ");
             return false;
         }
 

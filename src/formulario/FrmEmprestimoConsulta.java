@@ -10,10 +10,14 @@ import dao.CelularDao;
 import dao.ChipDao;
 import dao.EmprestimoDao;
 import dao.ImpressaoDao;
+import dao.LogDao;
 import java.awt.Color;
 import java.awt.Component;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JLabel;
 
@@ -26,6 +30,7 @@ import modelo.Acessorio;
 import modelo.Celular;
 import modelo.Chip;
 import modelo.Emprestimo;
+import modelo.Session;
 
 /**
  *
@@ -34,8 +39,10 @@ import modelo.Emprestimo;
 public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     EmprestimoDao emprestimoDao = new EmprestimoDao();
+    LogDao logDao = new LogDao();
     DefaultTableModel modeloGrelha;
-    ImpressaoDao imprimir = new ImpressaoDao();
+    ImpressaoDao imprimir;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form FrmEmprestimoConsulta
@@ -44,6 +51,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         initComponents();
         modeloGrelha = (DefaultTableModel) grelhaEmprestimo.getModel();
         carregarGrelha();
+        txtPesquisa.requestFocus();
     }
 
     /**
@@ -56,6 +64,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -71,6 +80,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         btnDevolver = new javax.swing.JButton();
         ckDevolvidos = new javax.swing.JCheckBox();
         btnReemitir = new javax.swing.JButton();
+        radLocalidade = new javax.swing.JRadioButton();
+        radPatrimonio = new javax.swing.JRadioButton();
+        btnLimpar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        ckAtrazados = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,7 +102,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Consulta  de Emprestimos");
+        lblTitulo.setText("Consulta  de Empréstimos de CELULARES");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
@@ -111,17 +128,16 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        grelhaEmprestimo.setAutoCreateRowSorter(true);
         grelhaEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nª TERMO", "DATA", "SITUAÇÃO", "FUNCIONÁRIO", "SETOR", "APARELHO", "IMEI", "Nª TELEFONE", "DADOS", "VOZ", "PROTOCOLO", "DEVOLUÇÃO"
+                "Nª", "DATA", "SITUAÇÃO", "FUNCIONÁRIO", "FUNÇÃO", "SETOR", "APARELHO", "IMEI", "PATRIMONIO", "Nª TELEFONE", "DADOS", "VOZ", "PROTOCOLO", "DEVOLUÇÃO", "POR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -130,35 +146,54 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
         grelhaEmprestimo.setRowHeight(21);
         grelhaEmprestimo.getTableHeader().setReorderingAllowed(false);
+        grelhaEmprestimo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                grelhaEmprestimoMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(grelhaEmprestimo);
         if (grelhaEmprestimo.getColumnModel().getColumnCount() > 0) {
-            grelhaEmprestimo.getColumnModel().getColumn(0).setPreferredWidth(70);
-            grelhaEmprestimo.getColumnModel().getColumn(0).setMaxWidth(70);
-            grelhaEmprestimo.getColumnModel().getColumn(1).setPreferredWidth(80);
-            grelhaEmprestimo.getColumnModel().getColumn(1).setMaxWidth(80);
-            grelhaEmprestimo.getColumnModel().getColumn(2).setPreferredWidth(90);
-            grelhaEmprestimo.getColumnModel().getColumn(2).setMaxWidth(90);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(250);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setMaxWidth(250);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(180);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setMaxWidth(180);
-            grelhaEmprestimo.getColumnModel().getColumn(5).setPreferredWidth(180);
-            grelhaEmprestimo.getColumnModel().getColumn(5).setMaxWidth(180);
-            grelhaEmprestimo.getColumnModel().getColumn(8).setPreferredWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(8).setMaxWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(9).setPreferredWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(9).setMaxWidth(60);
+            grelhaEmprestimo.getColumnModel().getColumn(0).setPreferredWidth(50);
+            grelhaEmprestimo.getColumnModel().getColumn(0).setMaxWidth(50);
+            grelhaEmprestimo.getColumnModel().getColumn(1).setPreferredWidth(90);
+            grelhaEmprestimo.getColumnModel().getColumn(1).setMaxWidth(90);
+            grelhaEmprestimo.getColumnModel().getColumn(2).setPreferredWidth(120);
+            grelhaEmprestimo.getColumnModel().getColumn(2).setMaxWidth(120);
+            grelhaEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(280);
+            grelhaEmprestimo.getColumnModel().getColumn(3).setMaxWidth(280);
+            grelhaEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(150);
+            grelhaEmprestimo.getColumnModel().getColumn(4).setMaxWidth(150);
+            grelhaEmprestimo.getColumnModel().getColumn(5).setPreferredWidth(210);
+            grelhaEmprestimo.getColumnModel().getColumn(5).setMaxWidth(210);
+            grelhaEmprestimo.getColumnModel().getColumn(6).setPreferredWidth(210);
+            grelhaEmprestimo.getColumnModel().getColumn(6).setMaxWidth(210);
+            grelhaEmprestimo.getColumnModel().getColumn(7).setPreferredWidth(140);
+            grelhaEmprestimo.getColumnModel().getColumn(7).setMaxWidth(140);
+            grelhaEmprestimo.getColumnModel().getColumn(8).setPreferredWidth(110);
+            grelhaEmprestimo.getColumnModel().getColumn(8).setMaxWidth(110);
+            grelhaEmprestimo.getColumnModel().getColumn(9).setPreferredWidth(120);
+            grelhaEmprestimo.getColumnModel().getColumn(9).setMaxWidth(120);
+            grelhaEmprestimo.getColumnModel().getColumn(10).setPreferredWidth(60);
+            grelhaEmprestimo.getColumnModel().getColumn(10).setMaxWidth(60);
+            grelhaEmprestimo.getColumnModel().getColumn(11).setPreferredWidth(60);
+            grelhaEmprestimo.getColumnModel().getColumn(11).setMaxWidth(60);
+            grelhaEmprestimo.getColumnModel().getColumn(12).setPreferredWidth(110);
+            grelhaEmprestimo.getColumnModel().getColumn(12).setMaxWidth(110);
+            grelhaEmprestimo.getColumnModel().getColumn(13).setPreferredWidth(80);
+            grelhaEmprestimo.getColumnModel().getColumn(13).setMaxWidth(80);
         }
 
+        btnNovo.setBackground(new java.awt.Color(204, 255, 204));
         btnNovo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/new.png"))); // NOI18N
-        btnNovo.setText("Novo");
+        btnNovo.setText("NOVO EMPRESTIMO");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoActionPerformed(evt);
             }
         });
 
+        btnAlterar.setBackground(new java.awt.Color(153, 204, 255));
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/edit.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -170,17 +205,17 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/delete.png"))); // NOI18N
-        btnExcluir.setText("Excluir");
+        btnExcluir.setText("Excluir Devolvidos");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
             }
         });
 
-        btnDevolver.setBackground(new java.awt.Color(255, 204, 204));
+        btnDevolver.setBackground(new java.awt.Color(255, 153, 153));
         btnDevolver.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/devolver.png"))); // NOI18N
-        btnDevolver.setText("Devolução de Emprestimo");
+        btnDevolver.setText("Devolução de Empréstimo");
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDevolverActionPerformed(evt);
@@ -207,62 +242,130 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(radLocalidade);
+        radLocalidade.setText("Localidade ");
+        radLocalidade.setOpaque(false);
+
+        buttonGroup1.add(radPatrimonio);
+        radPatrimonio.setText("Patrimonio");
+        radPatrimonio.setOpaque(false);
+
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/clearResultado.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("* PRETO - Emprestados");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel3.setText("* VERMELHO - Devolvidos");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel4.setText("* AZUL - Devoluções Atrasadas");
+
+        ckAtrazados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckAtrazados.setForeground(new java.awt.Color(0, 0, 153));
+        ckAtrazados.setText("ATRASADOS");
+        ckAtrazados.setOpaque(false);
+        ckAtrazados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckAtrazadosActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/download-fourResultado.png"))); // NOI18N
+        jButton1.setText("Imprimir Pesquisa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(radNome)
+                        .addGap(18, 18, 18)
+                        .addComponent(radImei)
+                        .addGap(18, 18, 18)
+                        .addComponent(radLocalidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radLinha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radPatrimonio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckDevolvidos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckAtrazados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPesquisa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnReemitir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 846, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(15, 15, 15)
-                        .addComponent(radNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radImei)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radLinha)
-                        .addGap(18, 18, 18)
-                        .addComponent(ckDevolvidos)
-                        .addGap(33, 33, 33)
-                        .addComponent(txtPesquisa)))
+                        .addComponent(btnDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(radNome)
                     .addComponent(radImei)
+                    .addComponent(radLocalidade)
                     .addComponent(radLinha)
+                    .addComponent(ckDevolvidos)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckDevolvidos))
+                    .addComponent(radPatrimonio)
+                    .addComponent(btnLimpar)
+                    .addComponent(ckAtrazados)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNovo)
                     .addComponent(btnAlterar)
                     .addComponent(btnExcluir)
                     .addComponent(btnReemitir)
-                    .addComponent(btnDevolver))
-                .addContainerGap())
+                    .addComponent(btnDevolver)
+                    .addComponent(btnNovo)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,12 +400,20 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             tipoPesquisa = "nome";
         } else if (radImei.isSelected()) {
             tipoPesquisa = "imei";
+        } else if (radLocalidade.isSelected()) {
+            tipoPesquisa = "nomeLocalidade";
+        } else if (radPatrimonio.isSelected()) {
+            tipoPesquisa = "patrimonio";
         } else {
             tipoPesquisa = "linha";
         }
 
         if (!ckDevolvidos.isSelected()) {
             soEmprestados = "EMPRESTADO";
+        }
+
+        if (ckAtrazados.isSelected()) {
+
         }
 
         ArrayList<Emprestimo> lista = emprestimoDao.getListagemLike(txtPesquisa.getText(), soEmprestados, tipoPesquisa);
@@ -315,12 +426,12 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             String voz;
 
             if (emprestimo.getChip().isIsDado()) {
-                dados = "Internet";
+                dados = "Sim";
             } else {
                 dados = "";
             }
             if (emprestimo.getChip().isIsTelefonia()) {
-                voz = "Voz";
+                voz = "Sim";
             } else {
                 voz = "";
             }
@@ -330,19 +441,26 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 emprestimo.getDataEmprestimo(),
                 emprestimo.getSituacao(),
                 emprestimo.getFuncionario().getNome(),
+                emprestimo.getFuncionario().getCargo().getNomeCargo(),
                 emprestimo.getFuncionario().getLocalidade().getNomeLocalidade(),
                 emprestimo.getCelular().getMarca().getMarca(),
                 emprestimo.getCelular().getImei1(),
+                emprestimo.getCelular().getPatrimonio(),
                 emprestimo.getChip().getNumeroLinha(),
                 dados,
                 voz,
                 emprestimo.getProtocolo(),
-                emprestimo.getDataDevolucao(),}
+                emprestimo.getDataDevolucao(),
+                emprestimo.getUsuario().getNome()
+            }
             );
 
-            pinta();
-        });
+            if (ckAtrazados.isSelected()) {
+                mostraApenasAtrazados();
+            }
 
+        });
+        pinta();
     }
 
     // PINTANDO GRADE 
@@ -354,12 +472,33 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
                 //*******************************************
                 int coluna = 2;
+                int colunaDevolucao = 13;
+
                 Object procurado = grelhaEmprestimo.getValueAt(row, coluna);
+
+                String dataDelucao = (String) grelhaEmprestimo.getValueAt(row, colunaDevolucao);
+
+                Date dataDevolucaoDate = null;
 
                 if (procurado.equals("EMPRESTADO")) {
                     label.setForeground(Color.BLACK);
                 } else {
                     label.setForeground(Color.RED);
+                }
+
+                if (dataDelucao.replace("/", "").length() >= 8) {
+                    try {
+                        dataDevolucaoDate = sdf.parse(dataDelucao);
+
+                        if (dataDevolucaoDate.before(new Date()) && procurado.equals("EMPRESTADO")) {
+
+                            label.setForeground(Color.BLUE);
+                        }
+
+                    } catch (ParseException ex) {
+
+                    }
+
                 }
 
                 //*******************************************
@@ -369,9 +508,43 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
     }
 
+    //FUNÇÃO MOSTRAR APENAS ATRASADOS //////////////////////////////////////////
+    private void mostraApenasAtrazados() {
+
+        for (int i = 0; i < modeloGrelha.getRowCount(); i++) {
+
+            String dataDelucao = (String) grelhaEmprestimo.getValueAt(i, 13);
+            String emprestado = (String) grelhaEmprestimo.getValueAt(i, 2);
+            Date dataDevolucaoDate = null;
+
+            if (dataDelucao.replace("/", "").length() >= 8) {
+                try {
+                    dataDevolucaoDate = sdf.parse(dataDelucao);
+
+                    if (dataDevolucaoDate.after(new Date()) && emprestado.equals("EMPRESTADO")) {
+
+                        modeloGrelha.removeRow(i);
+                    }
+
+                } catch (ParseException ex) {
+
+                }
+
+            } else {
+                modeloGrelha.removeRow(i);
+            }
+
+        }
+    }
+
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (grelhaEmprestimo.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
@@ -401,6 +574,11 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
 
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (grelhaEmprestimo.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Excluír.", null, JOptionPane.ERROR_MESSAGE);
             return;
@@ -421,15 +599,17 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             Emprestimo emprestimo = emprestimoDao.retornaPorID(codigo);
             //DEVOLVE O CHIP
             Chip chip = new Chip(emprestimo.getChip().getIdChip());
-            chip.setStatus("Ativo");
+            chip.setStatus("Disponível");
             new ChipDao().updateStatus(chip);
             // DEVOLVE O CELULAR
             Celular celular = new Celular(emprestimo.getCelular().getIdCelular());
-            celular.setStatus("Ativo");
+            celular.setStatus("Disponível");
             new CelularDao().updateStatus(celular);
             // APAGUA O EMPRESTIMO
             new EmprestimoDao().deleteUmItem(emprestimo.getIdEmprestimo());
             JOptionPane.showMessageDialog(null, "Excluído com Sucesso.");
+            //log de devolução
+            logDao.insert("Excluído Emprestimo, código: " + emprestimo.getIdEmprestimo());
             carregarGrelha();
 
         } else if (resposta == JOptionPane.NO_OPTION) {
@@ -459,6 +639,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void ckDevolvidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckDevolvidosActionPerformed
         // TODO add your handling code here:
+        if (ckDevolvidos.isSelected()) {
+            ckAtrazados.setSelected(false);
+        }
         carregarGrelha();
     }//GEN-LAST:event_ckDevolvidosActionPerformed
 
@@ -468,7 +651,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void btnReemitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReemitirActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:    
+
+        imprimir = new ImpressaoDao();
 
         if (grelhaEmprestimo.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um termo pra Reemitir.", null, JOptionPane.ERROR_MESSAGE);
@@ -477,6 +662,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         // SE ALINHA´ESTÁ SELECIONADA CONTINUA ///////////////////////////////////
         String listagemACessorios = "";
+
+        new FrmBarraProgresso(this, true).setVisible(true);
 
         int emprestimo_id = (int) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
         String tipoTermo = (String) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
@@ -487,7 +674,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // CRIANDO OS DADOS DO TERMO ///////////////////////////////////////////        
         for (Acessorio acessorio : lista) {
             listagemACessorios = listagemACessorios + acessorio.getNomeAcessorio() + ", ";
+
         }
+
+        if (!listagemACessorios.equalsIgnoreCase("")) {
+            listagemACessorios = listagemACessorios.substring(0, listagemACessorios.length() - 2);
+            listagemACessorios = listagemACessorios + ".";
+        }
+
         HashMap params = new HashMap<>();
         params.put("acessorios", listagemACessorios);
         // caminho imagem
@@ -496,6 +690,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         if (tipoTermo.equalsIgnoreCase("EMPRESTADO")) {
             // IMPRIMIR APARELHO E CHIP
             if (emp.getCelular().getIdCelular() > 0 && emp.getChip().getIdChip() > 0) {
+
                 imprimir.imprimirEmprestimoCelularEChip(emprestimo_id, params);
                 // APENA O APARELHO    
             } else if (emp.getCelular().getIdCelular() > 0 && emp.getChip().getIdChip() <= 0) {
@@ -509,11 +704,53 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             params.put("observacao", emp.getObservacaoDevolucao());
             imprimir.imprimirTermoDevolucao(emprestimo_id, params);
         }
-
+        logDao.insert("Reemitir termo:" + emp.getIdEmprestimo() + " do funcionário: " + emp.getFuncionario().getNome());
         params.clear();
 
 
     }//GEN-LAST:event_btnReemitirActionPerformed
+
+    private void grelhaEmprestimoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaEmprestimoMouseReleased
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+
+            if (grelhaEmprestimo.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //String devolvido = (String) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
+            int codigo = (int) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
+            FrmEmprestimo frm = new FrmEmprestimo(this, false);
+            frm.novo = false;
+            frm.visualizar = true;
+            frm.emprestimo_id = codigo;
+            frm.setVisible(true);
+
+        }
+    }//GEN-LAST:event_grelhaEmprestimoMouseReleased
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // TODO add your handling code here:
+        txtPesquisa.setText("");
+        ckAtrazados.setSelected(false);
+        ckDevolvidos.setSelected(false);
+        carregarGrelha();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void ckAtrazadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckAtrazadosActionPerformed
+        // TODO add your handling code here:
+        if (ckAtrazados.isSelected()) {
+            ckDevolvidos.setSelected(false);
+        }
+        carregarGrelha();
+    }//GEN-LAST:event_ckAtrazadosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new FrmBarraProgresso(this, true).setVisible(true);
+        new ImpressaoDao().imprimirEmprestados();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -554,18 +791,27 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnDevolver;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnReemitir;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JCheckBox ckAtrazados;
     private javax.swing.JCheckBox ckDevolvidos;
     private javax.swing.JTable grelhaEmprestimo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JRadioButton radImei;
     private javax.swing.JRadioButton radLinha;
+    private javax.swing.JRadioButton radLocalidade;
     private javax.swing.JRadioButton radNome;
+    private javax.swing.JRadioButton radPatrimonio;
     private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

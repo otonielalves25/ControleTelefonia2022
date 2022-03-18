@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="1.0263162364614136"/>
+	<property name="ireport.zoom" value="1.366026910730142"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="458"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="acessorios" class="java.lang.String"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
+	<parameter name="logoDetran" class="java.lang.Object"/>
+	<parameter name="logoDot" class="java.lang.Object"/>
+	<parameter name="logoCoogi" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -31,7 +34,6 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	<field name="nome" class="java.lang.Object"/>
 	<field name="cpf" class="java.lang.Object"/>
 	<field name="rg" class="java.lang.Object"/>
-	<field name="cargo" class="java.lang.Object"/>
 	<field name="status" class="java.lang.Object"/>
 	<field name="localidade_id" class="java.lang.Object"/>
 	<field name="idLocalidade" class="java.lang.Object"/>
@@ -64,9 +66,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	</background>
 	<title>
 		<band height="68" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="3" y="0" width="544" height="57" uuid="7397cba0-c3b9-4de7-8882-69bc99400f9e"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte [])$P{LOGO})]]></imageExpression>
+			<image scaleImage="FillFrame" onErrorType="Icon">
+				<reportElement x="0" y="0" width="544" height="57" uuid="55b115d2-3824-471d-8003-6ef4ecd63cd0"/>
+				<imageExpression><![CDATA[$P{logoDetran}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -93,7 +95,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[NOME: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="49" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
+				<reportElement x="4" y="69" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -134,7 +136,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="49" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
+				<reportElement x="155" y="69" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -145,7 +147,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{rg}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="49" width="81" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
+				<reportElement x="306" y="69" width="81" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -158,7 +160,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[CPF: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="387" y="49" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
+				<reportElement x="387" y="69" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -169,7 +171,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="69" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
+				<reportElement x="4" y="49" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -179,10 +181,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[UNIDADE DE LOGAÇÃO: ]]></text>
+				<text><![CDATA[UNIDADE DE LOCAÇÃO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="69" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
+				<reportElement x="155" y="49" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -193,7 +195,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nomeLocalidade}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="69" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
+				<reportElement x="306" y="49" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="1.5"/>
 					<topPen lineWidth="1.5"/>
@@ -207,7 +209,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[APARELHO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="387" y="69" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
+				<reportElement x="387" y="49" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -267,7 +269,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[IMEI:  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="141" width="549" height="23" uuid="33ba041c-9252-4a2b-8831-2498dc4adbc0"/>
+				<reportElement x="10" y="137" width="534" height="27" uuid="33ba041c-9252-4a2b-8831-2498dc4adbc0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -293,14 +295,6 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Curitiba:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="306" y="663" width="226" height="20" uuid="2fc15e37-36d1-49c2-ae71-0dc4d8f8ba32"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
-			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="53" y="592" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
 				<textElement verticalAlignment="Bottom"/>
@@ -312,7 +306,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="1.5"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{acessorios}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -323,10 +317,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<bottomPen lineWidth="1.25"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ACESSORIOS: ]]></text>
+				<text><![CDATA[ACESSÓRIOS: ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="497" y="0" width="47" height="20" uuid="834e2212-2807-41c1-8b68-9f5025b4fef1"/>
@@ -335,6 +329,60 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				</textElement>
 				<textFieldExpression><![CDATA["Nº: "+$F{idEmprestimo}]]></textFieldExpression>
 			</textField>
+			<image onErrorType="Icon" evaluationTime="Report">
+				<reportElement x="0" y="705" width="119" height="29" uuid="d3ba8935-f83e-4d71-beae-aa9c3c299e08"/>
+				<imageExpression><![CDATA[$P{logoDot}]]></imageExpression>
+			</image>
+			<image isUsingCache="false" onErrorType="Icon" evaluationTime="Report">
+				<reportElement x="435" y="705" width="120" height="29" uuid="741fab38-ca1c-42cc-9624-d3438a3920ad"/>
+				<imageExpression><![CDATA[$P{logoCoogi}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="321" y="632" width="226" height="20" uuid="6bcf5ad1-75a6-47e6-af05-9a86e78b36da"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="643" width="223" height="20" forecolor="#CC3300" uuid="c54c3688-8102-4618-ac48-07a7888d50db"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="663" width="223" height="20" forecolor="#CC3300" uuid="23ce9978-0377-4154-9ad1-7c1a37a8cb8d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="612" width="223" height="20" forecolor="#CC3300" uuid="204f85fa-0cec-4c8d-acc7-a3613a778ca0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="683" width="223" height="20" uuid="e6e1ebab-c9dc-4221-882d-8258cc7074b6"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<text><![CDATA[CHEFE DA UNIDADE]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 </jasperReport>

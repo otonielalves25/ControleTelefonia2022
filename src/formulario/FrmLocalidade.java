@@ -6,6 +6,7 @@
 package formulario;
 
 import dao.LocalidadeDao;
+import dao.LogDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
 
     //Variaveis
     LocalidadeDao localidadeDao = new LocalidadeDao();
+    LogDao logDao = new LogDao();
 
     public FrmLocalidade() {
         initComponents();
@@ -337,6 +339,8 @@ public class FrmLocalidade extends javax.swing.JFrame {
 
                 localidadeDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                //log do sistema
+                logDao.insert("Excluir localidade: " + txtLocalidade.getText());
                 carregaGrelha();
 
             } else if (resposta == JOptionPane.NO_OPTION) {
@@ -398,11 +402,14 @@ public class FrmLocalidade extends javax.swing.JFrame {
             localidadeDao.insert(localidade);
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
+            // LOGS
+            logDao.insert("Cadatrado nova localidade: " + txtLocalidade.getText());
         } else {
 
             localidade.setIdLocalidade(Integer.parseInt(txtCodigo.getText()));
             localidadeDao.update(localidade);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            logDao.insert("Alterada localidade: " + txtLocalidade.getText());
         }
 
         botaoInicial();

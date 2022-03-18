@@ -7,12 +7,16 @@ package formulario;
 
 import dao.ChipDao;
 import dao.EmpresaDao;
+import dao.EmprestimoDao;
+import dao.ImpressaoDao;
+import dao.LogDao;
 
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Chip;
 import modelo.Empresa;
+import modelo.Emprestimo;
 import modelo.Session;
 
 /**
@@ -27,6 +31,7 @@ public class FrmChip extends javax.swing.JFrame {
 
     //Variaveis
     ChipDao chipDao = new ChipDao();
+    LogDao logDao = new LogDao();
 
     public FrmChip() {
         initComponents();
@@ -55,13 +60,20 @@ public class FrmChip extends javax.swing.JFrame {
         int contador = 0;
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
+        List<Chip> lista = null;
 
-        List<Chip> lista = chipDao.getListagemLike(txtPesquisa.getText());
+        if (radChip.isSelected()) {
+
+            lista = chipDao.getListagemLikePorChipOuCelular(txtPesquisa.getText().trim(), "buscarPorChip");
+        } else {
+            lista = chipDao.getListagemLikePorChipOuCelular(txtPesquisa.getText().trim(), "celular");
+        }
+        lista = chipDao.getListagemLike(txtPesquisa.getText().trim());
         modelo.setNumRows(0);
         for (Chip chip : lista) {
-            
-             String sim = chip.isIsDado()==true? "X": "";
-            String nao = chip.isIsTelefonia()==true? "X": "";
+
+            String sim = chip.isIsDado() == true ? "Sim" : "";
+            String nao = chip.isIsTelefonia() == true ? "Sim" : "";
 
             modelo.addRow(new Object[]{
                 chip.getIdChip(),
@@ -75,6 +87,14 @@ public class FrmChip extends javax.swing.JFrame {
             contador++;
         }
         lblQuantidade.setText("Quantidade: " + contador);
+    }
+    //LIMPAR******************************************************************
+
+    private void limparPouco() {
+
+        txtChip.setText("");
+        txtTelefone.setText("");
+
     }
 
     //LIMPAR******************************************************************
@@ -111,8 +131,8 @@ public class FrmChip extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         txtChip = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         grelha = new javax.swing.JTable();
@@ -130,20 +150,25 @@ public class FrmChip extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         ckVoz = new javax.swing.JCheckBox();
         ckDados = new javax.swing.JCheckBox();
-        txtObservacao = new javax.swing.JTextField();
         cboOperadora = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         lblQuantidade = new javax.swing.JLabel();
         cboSituacao = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtObservacao = new javax.swing.JTextArea();
+        ckVarios = new javax.swing.JCheckBox();
+        jLabel7 = new javax.swing.JLabel();
+        btnImprimir = new javax.swing.JButton();
+        txtVisao = new javax.swing.JLabel();
+        radChip = new javax.swing.JRadioButton();
+        radLinha = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
-
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Operadora:");
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtChip.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtChip.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -152,6 +177,7 @@ public class FrmChip extends javax.swing.JFrame {
                 txtChipKeyPressed(evt);
             }
         });
+        jPanel1.add(txtChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 89, 299, -1));
 
         grelha.setAutoCreateRowSorter(true);
         grelha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -160,7 +186,7 @@ public class FrmChip extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "CODIGO DO CHIP:", "NUMERO DA LINHA:", "VOZ", "DADOS", "OPERADORA", "STATUS:"
+                "CÓDIGO", "CODIGO DO CHIP", "NUMERO DA LINHA", "DADOS", "VOZ", "OPERADORA", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -183,6 +209,8 @@ public class FrmChip extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
             grelha.getColumnModel().getColumn(0).setPreferredWidth(70);
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
+            grelha.getColumnModel().getColumn(1).setPreferredWidth(170);
+            grelha.getColumnModel().getColumn(1).setMaxWidth(170);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(130);
             grelha.getColumnModel().getColumn(2).setMaxWidth(130);
             grelha.getColumnModel().getColumn(3).setPreferredWidth(60);
@@ -192,6 +220,8 @@ public class FrmChip extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(6).setPreferredWidth(100);
             grelha.getColumnModel().getColumn(6).setMaxWidth(100);
         }
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 317, 749, 283));
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
         btnNovo.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -205,6 +235,7 @@ public class FrmChip extends javax.swing.JFrame {
                 btnNovoActionPerformed(evt);
             }
         });
+        jPanel1.add(btnNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 251, 95, 33));
 
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -216,6 +247,7 @@ public class FrmChip extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 251, 102, 33));
 
         btnExcluir.setBackground(new java.awt.Color(204, 204, 204));
         btnExcluir.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -227,6 +259,7 @@ public class FrmChip extends javax.swing.JFrame {
                 btnExcluirActionPerformed(evt);
             }
         });
+        jPanel1.add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(127, 251, 99, 33));
 
         btnAlterar.setBackground(new java.awt.Color(204, 204, 204));
         btnAlterar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -238,6 +271,7 @@ public class FrmChip extends javax.swing.JFrame {
                 btnAlterarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 251, 94, 33));
 
         btnSalvar.setBackground(new java.awt.Color(204, 204, 204));
         btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -249,30 +283,36 @@ public class FrmChip extends javax.swing.JFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(656, 251, 119, 33));
 
         txtCodigo.setEnabled(false);
         txtCodigo.setOpaque(false);
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(728, 61, 47, -1));
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Cadastro de Chip");
+        lblTitulo.setText("Cadastro de Chip / Linhas");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 841, 43));
 
         try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
+            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txtTelefone.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jPanel1.add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 89, 200, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel3.setText("Telefone:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 63, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel5.setText("Observação:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
         txtPesquisa.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtPesquisa.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -280,31 +320,45 @@ public class FrmChip extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
         });
+        jPanel1.add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(356, 290, 420, -1));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel6.setText("Pesquisar Chip/Numero:");
+        jLabel6.setText("Pesquisa:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 293, -1, -1));
 
         ckVoz.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckVoz.setForeground(new java.awt.Color(153, 51, 0));
-        ckVoz.setText("Voz");
+        ckVoz.setText("Voz /Telefonia");
         ckVoz.setToolTipText("");
         ckVoz.setOpaque(false);
+        ckVoz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckVozActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ckVoz, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 88, -1, -1));
 
         ckDados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckDados.setForeground(new java.awt.Color(153, 51, 0));
-        ckDados.setText("Dados");
+        ckDados.setText("Dados/Internet");
         ckDados.setToolTipText("");
         ckDados.setOpaque(false);
+        jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 88, -1, -1));
 
-        txtObservacao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jPanel1.add(cboOperadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 141, 500, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel2.setText("Còdigo Chip:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 63, -1, -1));
 
         lblQuantidade.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblQuantidade.setText("quantidade 0");
+        jPanel1.add(lblQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 630, 100, -1));
 
         cboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Disponível", "Indisponível", "Excluído", "EMPRESTADO" }));
         cboSituacao.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
@@ -316,148 +370,63 @@ public class FrmChip extends javax.swing.JFrame {
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
             }
         });
+        jPanel1.add(cboSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 141, 241, -1));
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel4.setText("Situação:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 118, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(jLabel2)
-                            .addGap(100, 100, 100)
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(6, 6, 6)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(6, 6, 6)
-                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(6, 6, 6)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10, 10, 10)
-                                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(30, 30, 30)
-                                    .addComponent(ckDados))
-                                .addComponent(jLabel5))
-                            .addGap(9, 9, 9)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(21, 21, 21)
-                                    .addComponent(jLabel1))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(ckVoz)
-                                    .addGap(45, 45, 45)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(cboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(9, 9, 9)
-                                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(ckDados))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(ckVoz))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(cboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel1))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel6))
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblQuantidade)
-                .addContainerGap())
-        );
+        txtObservacao.setColumns(20);
+        txtObservacao.setLineWrap(true);
+        txtObservacao.setRows(5);
+        jScrollPane2.setViewportView(txtObservacao);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 750, 50));
+
+        ckVarios.setText("Varios iguais");
+        ckVarios.setOpaque(false);
+        jPanel1.add(ckVarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
+        jLabel7.setText("Operadora:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+
+        btnImprimir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
+        btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 610, -1, -1));
+
+        txtVisao.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        txtVisao.setForeground(new java.awt.Color(153, 0, 0));
+        jPanel1.add(txtVisao, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 610, 620, 20));
+
+        buttonGroup1.add(radChip);
+        radChip.setText("Código do Chip");
+        radChip.setOpaque(false);
+        jPanel1.add(radChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, -1, -1));
+
+        buttonGroup1.add(radLinha);
+        radLinha.setSelected(true);
+        radLinha.setText("Nª da Linha");
+        radLinha.setOpaque(false);
+        jPanel1.add(radLinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -495,11 +464,27 @@ public class FrmChip extends javax.swing.JFrame {
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
                 novo = false;
+
+                txtVisao.setText(verificaComQuemEsta(chip.getIdChip()));
             }
 
         } catch (Exception e) {
         }
     }//GEN-LAST:event_grelhaMouseClicked
+
+    // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
+    private String verificaComQuemEsta(int id) {
+        String resultado = "";
+        Emprestimo emprestimo = new EmprestimoDao().buscaPorChipEmprestado(id);
+        if (emprestimo != null) {
+            resultado = "Emprestado para: " + emprestimo.getFuncionario().getLocalidade().getNomeLocalidade() + " - Funcionario(a): " + emprestimo.getFuncionario().getNome()
+                    + " - Data: " + emprestimo.getDataEmprestimo();
+
+        }
+
+        return resultado;
+    }
+
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
@@ -517,7 +502,9 @@ public class FrmChip extends javax.swing.JFrame {
         // TODO add your handling code here:
         // TODO add your handling code here:
 
-        if (cboOperadora.getSelectedItem().equals("EMPRESTADO")) {
+        String linha, chip;
+
+        if (cboSituacao.getModel().getSelectedItem().equals("EMPRESTADO")) {
             JOptionPane.showMessageDialog(this, "Chip já EMPRESTADO, não permite exclusão.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -533,12 +520,17 @@ public class FrmChip extends javax.swing.JFrame {
         } else {
 
             int resposta;
-            resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Escolha um", JOptionPane.YES_NO_OPTION);
+            // pega os dados do telefone
+            chip = txtChip.getText();
+            linha = txtTelefone.getText();
+
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o chip: " + chip + ", linha: " + linha + " ?", "Escolha um", JOptionPane.YES_NO_OPTION);
 
             if (resposta == JOptionPane.YES_OPTION) {
 
                 chipDao.delete(Integer.parseInt(txtCodigo.getText()));
                 JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                logDao.insert("Excluído chip: " + txtChip.getText().trim());
                 carregaGrelha();
 
             } else if (resposta == JOptionPane.NO_OPTION) {
@@ -572,7 +564,7 @@ public class FrmChip extends javax.swing.JFrame {
         botaoNovo();
 
         String emprestado = cboSituacao.getSelectedItem().toString().trim();
-        if (emprestado.equalsIgnoreCase("EMPRESTADO")) {           
+        if (emprestado.equalsIgnoreCase("EMPRESTADO")) {
             cboSituacao.setEnabled(false);
         } else {
             cboSituacao.setEnabled(true);
@@ -608,7 +600,7 @@ public class FrmChip extends javax.swing.JFrame {
 
         // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
         Chip chip = new Chip();
-        chip.setCodigoChip(txtChip.getText());
+        chip.setCodigoChip(txtChip.getText().trim());
         chip.setNumeroLinha(txtTelefone.getText());
         chip.setObservacao(txtObservacao.getText());
         chip.setStatus(cboSituacao.getSelectedItem().toString());
@@ -628,27 +620,45 @@ public class FrmChip extends javax.swing.JFrame {
 
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {
-            Chip m = chipDao.retornaPorNome(txtChip.getText().toUpperCase());
-            if (m != null) {
-                JOptionPane.showMessageDialog(this, "Chip ou Número já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+            Chip xip = chipDao.retornaPorChip(txtChip.getText());
+            Chip linha = chipDao.retornaPorNumeroLinha(txtChip.getText());
+            // se o chip já tem cadastro
+            if (xip != null) {
+                JOptionPane.showMessageDialog(this, "Chip já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // se a linha tem cadastro
+            if (linha != null) {
+                JOptionPane.showMessageDialog(this, "Número da linha já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
             chipDao.insert(chip);
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////
+            logDao.insert("Cadatrado chip: " + txtChip.getText().trim());
         } else {
 
             chip.setIdChip(Integer.parseInt(txtCodigo.getText()));
             chipDao.update(chip);
-            JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            logDao.insert("Alterada chip: " + txtChip.getText().trim());
         }
 
-        botaoInicial();
-        novo = false;
-        habilitado(false);
-        limparTudo();
+        // VERIFICA QUE SÃO VARIOS IGUAIS //////////////////////////////////////
+        if (ckVarios.isSelected()) {
+            limparPouco();
+            botaoNovo();
+            novo = true;
+            habilitado(true);
+        } else {
+            limparTudo();
+            botaoInicial();
+            novo = false;
+            habilitado(false);
+        }
+
         carregaGrelha();
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtChipKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChipKeyPressed
@@ -659,16 +669,30 @@ public class FrmChip extends javax.swing.JFrame {
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
         // TODO add your handling code here:
         carregaGrelha();
-        
+
     }//GEN-LAST:event_txtPesquisaKeyPressed
 
     private void cboSituacaoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cboSituacaoPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-        
-               if(cboSituacao.getSelectedItem().equals("EMPRESTADO")){
-          cboSituacao.setSelectedItem(pegaSituacao);
+
+        if (cboSituacao.getSelectedItem().equals("EMPRESTADO")) {
+            cboSituacao.setSelectedItem(pegaSituacao);
         }
     }//GEN-LAST:event_cboSituacaoPopupMenuWillBecomeInvisible
+
+    private void ckVozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckVozActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckVozActionPerformed
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+        // TODO add your handling code here:3
+        carregaGrelha();
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        // TODO add your handling code here:
+        new ImpressaoDao().imprimirChipes();
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2777,27 +2801,34 @@ public class FrmChip extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Empresa> cboOperadora;
     private javax.swing.JComboBox<String> cboSituacao;
     private javax.swing.JCheckBox ckDados;
+    private javax.swing.JCheckBox ckVarios;
     private javax.swing.JCheckBox ckVoz;
     private javax.swing.JTable grelha;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JRadioButton radChip;
+    private javax.swing.JRadioButton radLinha;
     private javax.swing.JTextField txtChip;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtObservacao;
+    private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtPesquisa;
     private javax.swing.JFormattedTextField txtTelefone;
+    private javax.swing.JLabel txtVisao;
     // End of variables declaration//GEN-END:variables
 }

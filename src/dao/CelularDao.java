@@ -5,6 +5,7 @@
  */
 package dao;
 
+import utilidade.SqlGlobal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +30,8 @@ public class CelularDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Celular celular) {
 
-        String sql = "INSERT INTO celular (serie, imei1, imei2, marca_id, status, observacao, empresa_id) values(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO celular (serie, imei1, imei2, marca_id, status, observacao, empresa_id, estadoBem, caixa, carregador, manual, adaptador, foneOuvido, capinha, patrimonio) "
+                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -41,6 +43,14 @@ public class CelularDao {
             stm.setString(5, celular.getStatus());
             stm.setString(6, celular.getObservacao());
             stm.setInt(7, celular.getEmpresa().getIdEmpresa());
+            stm.setString(8, celular.getEstadoBem());
+            stm.setBoolean(9, celular.isCaixa());
+            stm.setBoolean(10, celular.isCarregador());
+            stm.setBoolean(11, celular.isManual());
+            stm.setBoolean(12, celular.isAdaptador());
+            stm.setBoolean(13, celular.isFoneOuvido());
+            stm.setBoolean(14, celular.isCapinha());
+            stm.setString(15, celular.getPatrimonio());
 
             stm.execute();
             //fechando as conexões
@@ -57,7 +67,8 @@ public class CelularDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Celular celular) {
 
-        String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=?, empresa_id=? where idCelular = ?";
+        String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=?, empresa_id=?, estadoBem=?, "
+                + "caixa=?, carregador=?, manual=?, adaptador=?, foneOuvido=?, capinha = ?, patrimonio=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -68,7 +79,15 @@ public class CelularDao {
             stm.setString(5, celular.getStatus());
             stm.setString(6, celular.getObservacao());
             stm.setInt(7, celular.getEmpresa().getIdEmpresa());
-            stm.setInt(8, celular.getIdCelular());
+            stm.setString(8, celular.getEstadoBem());
+            stm.setBoolean(9, celular.isCaixa());
+            stm.setBoolean(10, celular.isCarregador());
+            stm.setBoolean(11, celular.isManual());
+            stm.setBoolean(12, celular.isAdaptador());
+            stm.setBoolean(13, celular.isFoneOuvido());
+               stm.setBoolean(14, celular.isCapinha());
+                stm.setString(15, celular.getPatrimonio());
+            stm.setInt(16, celular.getIdCelular());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -83,12 +102,14 @@ public class CelularDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean updateStatus(Celular celular) {
 
-        String sql = "UPDATE celular set status=? where idCelular = ?";
+        String sql = "UPDATE celular set status=?, estadoBem=?, observacao=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, celular.getStatus());
-            stm.setInt(2, celular.getIdCelular());
+            stm.setString(2, celular.getEstadoBem());
+            stm.setString(3, celular.getObservacao());
+            stm.setInt(4, celular.getIdCelular());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -99,6 +120,32 @@ public class CelularDao {
             return false;
         }
     }
+    
+        // ------------ALTERAR CADASTRA  --------------------------------------    
+    public boolean alterarAcessoriosEmprestadoNoCadastro(Celular celular) {
+
+        String sql = "UPDATE celular set caixa=?, carregador=?, manual=?, adaptador=?, foneOuvido=?, capinha = ? where idCelular = ?";
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+             stm.setBoolean(1, celular.isCaixa());
+            stm.setBoolean(2, celular.isCarregador());
+            stm.setBoolean(3, celular.isManual());
+            stm.setBoolean(4, celular.isAdaptador());
+            stm.setBoolean(5, celular.isFoneOuvido());
+            stm.setBoolean(6, celular.isCapinha());
+            stm.setInt(7, celular.getIdCelular());
+            stm.execute();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Celular não pode ser excluído,  tem funcionário cadastrado. ");
+            return false;
+        }
+    }
+
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {
@@ -151,6 +198,15 @@ public class CelularDao {
                     celular.setSerie(rs.getString("serie"));
                     celular.setStatus(rs.getString("status"));
                     celular.setObservacao(rs.getString("observacao"));
+                    celular.setEstadoBem(rs.getString("estadoBem"));
+                    celular.setCaixa(rs.getBoolean("caixa"));
+                    celular.setCarregador(rs.getBoolean("carregador"));
+                    celular.setAdaptador(rs.getBoolean("adaptador"));
+                    celular.setManual(rs.getBoolean("manual"));
+                    celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                    celular.setCapinha(rs.getBoolean("capinha"));
+                    celular.setPatrimonio(rs.getString("patrimonio"));
+
                     //empresa
                     empresa.setIdEmpresa(rs.getInt("idEmpresa"));
                     empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
@@ -177,25 +233,26 @@ public class CelularDao {
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Celular> getListagemLike(String busca) {
+    public ArrayList<Celular> getListagemLike(String tipo, String busca) {
 
         ArrayList<Celular> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE serie LIKE ? OR imei1 LIKE ? OR marca.marca LIKE ?";
+                + "WHERE " + tipo + " LIKE '%" + busca + "%'";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
         Empresa empresa;
 
+        SqlGlobal.setSqlGlogalCelulares(sql);
+
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + busca + "%");
-            stm.setString(2, "%" + busca + "%");
-            stm.setString(3, "%" + busca + "%");
+            //stm.setString(1, "%" + busca + "%");
+
             rs = stm.executeQuery();
             while (rs.next()) {
 
@@ -209,6 +266,15 @@ public class CelularDao {
                 celular.setSerie(rs.getString("serie"));
                 celular.setStatus(rs.getString("status"));
                 celular.setObservacao(rs.getString("observacao"));
+                celular.setEstadoBem(rs.getString("estadoBem"));
+                celular.setCaixa(rs.getBoolean("caixa"));
+                celular.setCarregador(rs.getBoolean("carregador"));
+                celular.setAdaptador(rs.getBoolean("adaptador"));
+                celular.setManual(rs.getBoolean("manual"));
+                celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                celular.setCapinha(rs.getBoolean("capinha"));
+                celular.setPatrimonio(rs.getString("patrimonio"));
+
                 //empresa
                 empresa.setIdEmpresa(rs.getInt("idEmpresa"));
                 empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
@@ -234,14 +300,14 @@ public class CelularDao {
     }
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
 
-    public ArrayList<Celular> getListagemLikeAtivos(String busca) {
+    public ArrayList<Celular> getListagemLikeAtivos(String busca, String tipoPesquisa) {
 
         ArrayList<Celular> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE (serie LIKE ? OR imei1 LIKE ? OR imei2 LIKE ?) AND celular.status = 'Disponível'";
+                + "WHERE ("+ tipoPesquisa +" LIKE ?) AND celular.status = 'Disponível'";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
@@ -251,8 +317,7 @@ public class CelularDao {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
-            stm.setString(2, "%" + busca + "%");
-            stm.setString(3, "%" + busca + "%");
+ 
             rs = stm.executeQuery();
             while (rs.next()) {
 
@@ -267,6 +332,14 @@ public class CelularDao {
                 celular.setSerie(rs.getString("serie"));
                 celular.setStatus(rs.getString("status"));
                 celular.setObservacao(rs.getString("observacao"));
+                celular.setEstadoBem(rs.getString("estadoBem"));
+                celular.setCaixa(rs.getBoolean("caixa"));
+                celular.setCarregador(rs.getBoolean("carregador"));
+                celular.setAdaptador(rs.getBoolean("adaptador"));
+                celular.setManual(rs.getBoolean("manual"));
+                celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                celular.setCapinha(rs.getBoolean("capinha"));
+                celular.setPatrimonio(rs.getString("patrimonio"));
                 //empresa
                 empresa.setIdEmpresa(rs.getInt("idEmpresa"));
                 empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
@@ -292,13 +365,13 @@ public class CelularDao {
     }
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
-    public Celular verificarSeCadastrado(String serie, String imei) {
+    public Celular verificarSeCadastrado(String serie, String imei, String patrimonio) {
 
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE imei1 = ? OR serie = ?";
+                + "WHERE imei1 = ? OR serie = ? OR patrimonio = ?";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
@@ -308,6 +381,7 @@ public class CelularDao {
             stm = con.prepareStatement(sql);
             stm.setString(1, imei);
             stm.setString(2, serie);
+            stm.setString(3, patrimonio);
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -323,6 +397,14 @@ public class CelularDao {
                     celular.setSerie(rs.getString("serie"));
                     celular.setStatus(rs.getString("status"));
                     celular.setObservacao(rs.getString("observacao"));
+                    celular.setEstadoBem(rs.getString("estadoBem"));
+                    celular.setCaixa(rs.getBoolean("caixa"));
+                    celular.setCarregador(rs.getBoolean("carregador"));
+                    celular.setAdaptador(rs.getBoolean("adaptador"));
+                    celular.setManual(rs.getBoolean("manual"));
+                    celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                    celular.setCapinha(rs.getBoolean("capinha"));
+                    celular.setPatrimonio(rs.getString("patrimonio"));
                     //empresa
                     empresa.setIdEmpresa(rs.getInt("idEmpresa"));
                     empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));

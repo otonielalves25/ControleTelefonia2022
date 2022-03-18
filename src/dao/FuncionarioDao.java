@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.Cargo;
 import modelo.Funcionario;
 import modelo.Localidade;
 
@@ -27,7 +28,7 @@ public class FuncionarioDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Funcionario funcionario) {
 
-        String sql = "INSERT INTO funcionario (nome,cpf,rg,cargo,status,localidade_id ) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO funcionario (nome,cpf,rg,status,localidade_id, cargo_id) VALUES (?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -35,9 +36,9 @@ public class FuncionarioDao {
             stm.setString(1, funcionario.getNome());
             stm.setString(2, funcionario.getCpf());
             stm.setString(3, funcionario.getRg());
-            stm.setString(4, funcionario.getCargo());
-            stm.setString(5, funcionario.getStatus());
-            stm.setInt(6, funcionario.getLocalidade().getIdLocalidade());
+            stm.setString(4, funcionario.getStatus());
+            stm.setInt(5, funcionario.getLocalidade().getIdLocalidade());
+            stm.setInt(6, funcionario.getCargo().getIdCargo());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -53,16 +54,16 @@ public class FuncionarioDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Funcionario funcionario) {
 
-        String sql = "UPDATE funcionario set nome=?,cpf=?,rg=?,cargo=?,status=?,localidade_id=? where idFuncionario = ?";
+        String sql = "UPDATE funcionario set nome=?,cpf=?,rg=?,status=?,localidade_id=?, cargo_id=? where idFuncionario = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, funcionario.getNome());
             stm.setString(2, funcionario.getCpf());
             stm.setString(3, funcionario.getRg());
-            stm.setString(4, funcionario.getCargo());
-            stm.setString(5, funcionario.getStatus());
-            stm.setInt(6, funcionario.getLocalidade().getIdLocalidade());
+            stm.setString(4, funcionario.getStatus());
+            stm.setInt(5, funcionario.getLocalidade().getIdLocalidade());
+            stm.setInt(6, funcionario.getCargo().getIdCargo());
             stm.setInt(7, funcionario.getIdFuncionario());
             stm.execute();
             //fechando as conexões
@@ -94,9 +95,27 @@ public class FuncionarioDao {
         }
 
     }
-    
-    
-    
+
+    //-----------DELETAR USUARIO -----------------------------------------------
+    public boolean deleteDefinitivo(int codigo) {
+        String sql = "DELETE  FROM funcionario WHERE idFuncionario = ?";
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, codigo);
+            stm.executeUpdate();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e);
+            return false;
+        }
+
+    }
+
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean marcarExonerado(int codigo) {
         String sql = "UPDATE funcionario SET status = 'EXONERADO' where idFuncionario= ?";
@@ -120,9 +139,14 @@ public class FuncionarioDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Funcionario getPorID(int codigo) {
 
-        String sql = "SELECT * FROM funcionario WHERE idfuncionario = ?";
+        String sql = "SELECT * FROM funcionario "
+                + "JOIN localidade ON funcionario.localidade_id = localidade.idLocalidade "
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "WHERE idfuncionario = ?";
         Funcionario funcionario = null;
         Localidade localidade = null;
+        Cargo cargo = null;
+
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -135,10 +159,20 @@ public class FuncionarioDao {
                     funcionario.setNome(rs.getString("nome"));
                     funcionario.setCpf(rs.getString("cpf"));
                     funcionario.setRg(rs.getString("rg"));
-                    funcionario.setCargo(rs.getString("cargo"));
                     funcionario.setStatus(rs.getString("status"));
-                    localidade = new LocalidadeDao().retornaPorID(rs.getInt("localidade_id"));
+                    //LOCALIDADE ////////////////////////////
+                    localidade = new Localidade();
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                    localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+
+                    //CARGO
+                    cargo = new Cargo();
+                    cargo.setIdCargo(rs.getInt("idCargo"));
+                    cargo.setNomeCargo(rs.getString("nomeCargo"));
+
                     funcionario.setLocalidade(localidade);
+                    funcionario.setCargo(cargo);
                 }
             }
             //fechando as conexões
@@ -154,9 +188,12 @@ public class FuncionarioDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Funcionario retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM funcionario WHERE nome = ?";
+        String sql = "SELECT * FROM funcionario JOIN localidade ON funcionario.localidade_id = localidade.idLocalidade "
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "WHERE nome = ?";
         Funcionario funcionario = null;
         Localidade localidade = null;
+        Cargo cargo = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -169,10 +206,20 @@ public class FuncionarioDao {
                     funcionario.setNome(rs.getString("nome"));
                     funcionario.setCpf(rs.getString("cpf"));
                     funcionario.setRg(rs.getString("rg"));
-                    funcionario.setCargo(rs.getString("cargo"));
                     funcionario.setStatus(rs.getString("status"));
-                    localidade = new LocalidadeDao().retornaPorID(rs.getInt("localidade_id"));
+                    //LOCALIDADE ////////////////////////////
+                    localidade = new Localidade();
+                    localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                    localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                    localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+
+                    //CARGO
+                    cargo = new Cargo();
+                    cargo.setIdCargo(rs.getInt("idCargo"));
+                    cargo.setNomeCargo(rs.getString("nomeCargo"));
+
                     funcionario.setLocalidade(localidade);
+                    funcionario.setCargo(cargo);
                 }
             }
             //fechando as conexões
@@ -186,12 +233,15 @@ public class FuncionarioDao {
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Funcionario> getListagemLike(String busca) {
+    public ArrayList<Funcionario> getListagemLike(String tipoBusca, String busca) {
 
         ArrayList<Funcionario> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM funcionario WHERE nome LIKE ? ORDER BY nome";
+        String sql = "SELECT * FROM funcionario JOIN localidade ON funcionario.localidade_id = localidade.idLocalidade "
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "WHERE " + tipoBusca + " LIKE ? ORDER BY nome";
         Funcionario funcionario = null;
         Localidade localidade = null;
+        Cargo cargo = null;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -205,10 +255,21 @@ public class FuncionarioDao {
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setCpf(rs.getString("cpf"));
                 funcionario.setRg(rs.getString("rg"));
-                funcionario.setCargo(rs.getString("cargo"));
                 funcionario.setStatus(rs.getString("status"));
-                localidade = new LocalidadeDao().retornaPorID(rs.getInt("localidade_id"));
+                //LOCALIDADE ////////////////////////////
+                localidade = new Localidade();
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+
+                //CARGO
+                cargo = new Cargo();
+                cargo.setIdCargo(rs.getInt("idCargo"));
+                cargo.setNomeCargo(rs.getString("nomeCargo"));
+
                 funcionario.setLocalidade(localidade);
+                funcionario.setCargo(cargo);
+
                 Listagem.add(funcionario);
             }
             //fechando as conexõesfuncionariolocalidade
@@ -220,14 +281,17 @@ public class FuncionarioDao {
         }
         return Listagem;
     }
-    
-     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+
+    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
     public ArrayList<Funcionario> getListagemLikeAtivos(String busca) {
 
         ArrayList<Funcionario> Listagem = new ArrayList<>();
-        String sql = "SELECT * FROM funcionario WHERE nome LIKE ? AND status = 'Ativo' ORDER BY nome";
+        String sql = "SELECT * FROM funcionario JOIN localidade ON funcionario.localidade_id = localidade.idLocalidade "
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "WHERE nome LIKE ? AND status = 'Ativo' ORDER BY nome";
         Funcionario funcionario = null;
         Localidade localidade = null;
+        Cargo cargo = null;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -241,10 +305,22 @@ public class FuncionarioDao {
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setCpf(rs.getString("cpf"));
                 funcionario.setRg(rs.getString("rg"));
-                funcionario.setCargo(rs.getString("cargo"));
                 funcionario.setStatus(rs.getString("status"));
-                localidade = new LocalidadeDao().retornaPorID(rs.getInt("localidade_id"));
+
+                //LOCALIDADE ////////////////////////////
+                localidade = new Localidade();
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+
+                //CARGO
+                cargo = new Cargo();
+                cargo.setIdCargo(rs.getInt("idCargo"));
+                cargo.setNomeCargo(rs.getString("nomeCargo"));
+
                 funcionario.setLocalidade(localidade);
+                funcionario.setCargo(cargo);
+
                 Listagem.add(funcionario);
             }
             //fechando as conexõesfuncionariolocalidade

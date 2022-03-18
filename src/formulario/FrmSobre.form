@@ -61,7 +61,7 @@
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Vers&#xe3;o 1.0&#xa;Desenvolvido em Java e SQlite;&#xa;&#xa;&#xa;Sistema desenvolvido por:&#xa;Otoniel Amancio Alves;&#xa;Contato: (41) 98439-3096&#xa;"/>
+            <Property name="text" type="java.lang.String" value="Vers&#xe3;o 3.0  04/03/2022&#xa;Desenvolvido em Java e SQlite;&#xa;&#xa;Migrado servidor Mysql http://10.50.0.19/phpmyadmin/&#xa;&#xa;Dados de acesso com a Celepar-COOGI  &#xa;Andr&#xe9; de Paula&#xa;Marcelo Annemmam&#xa;&#xa;Sistema desenvolvido por:&#xa;Otoniel Amancio Alves;&#xa;Contato: (41) 98439-3096&#xa;"/>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>

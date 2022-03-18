@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="1.366026910730144"/>
-	<property name="ireport.x" value="95"/>
+	<property name="ireport.zoom" value="1.6528925619834751"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="acessorios" class="java.lang.String"/>
 	<parameter name="observacao" class="java.lang.String"/>
 	<parameter name="recebidoPor" class="java.lang.String"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
+	<parameter name="logoDetran" class="java.lang.Object"/>
+	<parameter name="logoDot" class="java.lang.Object"/>
+	<parameter name="logoCoogi" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
 JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario
@@ -33,7 +36,6 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	<field name="nome" class="java.lang.Object"/>
 	<field name="cpf" class="java.lang.Object"/>
 	<field name="rg" class="java.lang.Object"/>
-	<field name="cargo" class="java.lang.Object"/>
 	<field name="status" class="java.lang.Object"/>
 	<field name="localidade_id" class="java.lang.Object"/>
 	<field name="idLocalidade" class="java.lang.Object"/>
@@ -66,9 +68,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 	</background>
 	<title>
 		<band height="67" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="0" y="10" width="544" height="57" uuid="7b458926-5c66-48fb-bb7e-15e75f2437c3"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte [])$P{LOGO})]]></imageExpression>
+			<image scaleImage="FillFrame" isUsingCache="false" onErrorType="Blank" evaluationTime="Report">
+				<reportElement x="0" y="0" width="544" height="50" uuid="966686b7-3471-44b1-b480-b2888921fafc"/>
+				<imageExpression><![CDATA[$P{logoDetran}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -95,7 +97,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[NOME: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="61" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
+				<reportElement x="4" y="81" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -119,7 +121,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="61" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
+				<reportElement x="155" y="81" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -140,7 +142,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[CFP: ]]></text>
+				<text><![CDATA[CPF:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="387" y="61" width="157" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
@@ -154,7 +156,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="81" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
+				<reportElement x="4" y="61" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -167,7 +169,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[UNIDADE DE LOGAÇÃO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="81" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
+				<reportElement x="155" y="61" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -259,12 +261,12 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA["     Devolvo na presente data, ao Departamento de Trânsito – DETRAN/PR, os itens mencionados, pertencentes ao Contrato de Comodato com a Operadora: " +  $F{nomeEmpresa} + " em perfeitas condições de uso, conforme descrito no Termo por mim assinado anteriormente."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="8" y="411" width="40" height="20" uuid="5e186892-5c23-435c-b565-e521cc716051"/>
+				<reportElement x="19" y="514" width="40" height="20" uuid="5e186892-5c23-435c-b565-e521cc716051"/>
 				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Curitiba:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="48" y="411" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
+				<reportElement x="59" y="514" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -276,10 +278,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<bottomPen lineWidth="1.25"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Top">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ACESSORIOS: ]]></text>
+				<text><![CDATA[ACESSÒRIOS: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="155" y="141" width="389" height="28" uuid="481885da-bf6b-42cf-817a-1b24a22e5369"/>
@@ -287,7 +289,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="1.5"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{acessorios}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -340,14 +342,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{codigoChip} != null ? $F{codigoChip} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="7" y="315" width="541" height="70" uuid="ff848808-4ff9-443b-9cd5-89754aa5f6c9"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{observacao} != null ? "Observação:  "+$P{observacao} : "Observação:  "]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="246" y="514" width="298" height="20" uuid="8fc50f6a-0c95-4fac-b89a-0eb4efe8820f"/>
+				<reportElement x="18" y="599" width="298" height="20" uuid="8fc50f6a-0c95-4fac-b89a-0eb4efe8820f"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 				</box>
@@ -361,14 +356,21 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				</textElement>
 				<textFieldExpression><![CDATA["Nº "+$F{idEmprestimo}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement x="0" y="701" width="138" height="33" uuid="aae55ce4-00d8-48ea-a2c5-b6c62ed9b300"/>
-				<imageExpression><![CDATA["dot-icone.png"]]></imageExpression>
+			<image isUsingCache="false" onErrorType="Blank" evaluationTime="Report">
+				<reportElement x="18" y="705" width="119" height="29" uuid="1a33b395-d862-446d-ba98-cc14015cb755"/>
+				<imageExpression><![CDATA[$P{logoDot}]]></imageExpression>
 			</image>
-			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement x="410" y="691" width="134" height="43" uuid="2158e203-251d-4dbc-a420-b48743a1785e"/>
-				<imageExpression><![CDATA["logo-coogi.png"]]></imageExpression>
+			<image isUsingCache="false" onErrorType="Blank" evaluationTime="Report">
+				<reportElement isPrintRepeatedValues="false" x="424" y="705" width="120" height="29" uuid="a6c637df-d4cd-4cb5-82b7-0d57d8b30b07"/>
+				<imageExpression><![CDATA[$P{logoCoogi}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="7" y="280" width="537" height="215" uuid="2ce2ce28-f7e7-454e-9f23-58be247f94e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacaoDevolucao} != null ? "Observação:  "+$F{observacaoDevolucao} : "Observação:  "]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 </jasperReport>

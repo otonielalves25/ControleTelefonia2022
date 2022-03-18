@@ -138,7 +138,7 @@ public class CategoriaDao {
         return categoria;
     }
 
-    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    //----------- RETORNA TODOS ------------------------------------------------------------
     public ArrayList<Categoria> getListagemLike(String busca) {
 
         ArrayList<Categoria> Listagem = new ArrayList<>();

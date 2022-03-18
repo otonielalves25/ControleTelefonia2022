@@ -68,7 +68,7 @@ public class UsuarioDao {
             stm.close();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Dao. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Dao. " + ex);
             return false;
         }
     }
@@ -109,6 +109,7 @@ public class UsuarioDao {
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNome(rs.getString("nome"));
                     usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
 
@@ -140,6 +141,7 @@ public class UsuarioDao {
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNome(rs.getString("nome"));
                     usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
                 }
@@ -157,7 +159,7 @@ public class UsuarioDao {
         //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagem() {
 
-        String sql = "SELECT * FROM usuario";
+        String sql = "SELECT * FROM usuario ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         Usuario usuario = null;
         try {
@@ -171,6 +173,41 @@ public class UsuarioDao {
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNome(rs.getString("nome"));
                     usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setStatus(rs.getString("status"));
+                    usuario.setPrevilegio(rs.getString("previlegio"));
+                    lista.add(usuario);
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao DAO. " + ex);
+        }
+
+        return lista;
+    }
+    
+        
+        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    public List<Usuario> getListagemAtivos() {
+
+        String sql = "SELECT * FROM usuario WHERE status = 'Ativo' ORDER BY nome";
+        List<Usuario> lista = new ArrayList<>();
+        Usuario usuario = null;
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+  
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
                     lista.add(usuario);
@@ -203,6 +240,7 @@ public class UsuarioDao {
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNome(rs.getString("nome"));
                     usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
                 }
@@ -217,6 +255,25 @@ public class UsuarioDao {
         return usuario;
     }
     
+    // ------------ALTERAR CADASTRA  --------------------------------------    
+    public boolean trocarSenha(String senha, int idUsuario) {
+
+        String sql = "UPDATE usuario set senha=? where idUsuario = ?";
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);        
+            stm.setString(1, senha);         
+            stm.setInt(2, idUsuario);
+            stm.execute();
+            //fechando as conexões
+            con.close();
+            stm.close();
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Dao. " + ex);
+            return false;
+        }
+    }
 
 
 }

@@ -17,8 +17,48 @@ public class Celular {
     private String status;
     private String observacao;
     private String serie;
+    private String estadoBem;
     private Marca marca;
     private Empresa empresa;
+    private boolean caixa;
+    private boolean carregador;
+    private boolean adaptador;
+    private boolean manual;
+    private boolean foneOuvido;
+    private boolean capinha;
+    private String patrimonio;
+
+    public boolean isCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(boolean caixa) {
+        this.caixa = caixa;
+    }
+
+    public boolean isCarregador() {
+        return carregador;
+    }
+
+    public void setCarregador(boolean carregador) {
+        this.carregador = carregador;
+    }
+
+    public boolean isAdaptador() {
+        return adaptador;
+    }
+
+    public void setAdaptador(boolean adaptador) {
+        this.adaptador = adaptador;
+    }
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
+    }
 
     public Celular() {
     }
@@ -140,5 +180,36 @@ public class Celular {
         this.empresa = empresa;
     }
 
-  
+    public String getEstadoBem() {
+        return estadoBem;
+    }
+
+    public void setEstadoBem(String estadoBem) {
+        this.estadoBem = estadoBem;
+    }
+
+    public boolean isFoneOuvido() {
+        return foneOuvido;
+    }
+
+    public void setFoneOuvido(boolean foneOuvido) {
+        this.foneOuvido = foneOuvido;
+    }
+
+    public boolean isCapinha() {
+        return capinha;
+    }
+
+    public void setCapinha(boolean capinha) {
+        this.capinha = capinha;
+    }
+
+    public String getPatrimonio() {
+        return patrimonio;
+    }
+
+    public void setPatrimonio(String patrimonio) {
+        this.patrimonio = patrimonio;
+    }
+
 }

@@ -7,6 +7,7 @@ package formulario;
 
 import dao.EmprestimoDao;
 import dao.FuncionarioDao;
+import dao.LogDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +18,8 @@ import modelo.Funcionario;
  * @author Tony
  */
 public class FrmFuncionarioExonerado extends javax.swing.JDialog {
+
+    LogDao logDao = new LogDao();
 
     /**
      * @return the codigoFuncionario
@@ -56,6 +59,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
             modeloTabela.addRow(new Object[]{
                 funcionario.getIdFuncionario(),
                 funcionario.getNome(),
+                funcionario.getCargo(),
                 funcionario.getLocalidade().getNomeLocalidade(),});
         }
     }
@@ -100,7 +104,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Funcionário - EXONERADO");
+        lblTitulo.setText("Exclusão de Funcionário");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
@@ -117,11 +121,11 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "NOME", "SETOR"
+                "ID", "NOME", "FUNÇÃO", "SETOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -141,17 +145,19 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(grelha);
         if (grelha.getColumnModel().getColumnCount() > 0) {
-            grelha.getColumnModel().getColumn(0).setPreferredWidth(30);
-            grelha.getColumnModel().getColumn(0).setMaxWidth(30);
+            grelha.getColumnModel().getColumn(0).setPreferredWidth(60);
+            grelha.getColumnModel().getColumn(0).setMaxWidth(60);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
             grelha.getColumnModel().getColumn(2).setMaxWidth(180);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(180);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(180);
         }
 
         btnAlterar.setBackground(new java.awt.Color(153, 204, 255));
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAlterar.setForeground(new java.awt.Color(51, 51, 51));
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/funDelete.png"))); // NOI18N
-        btnAlterar.setText("Marcar como exonerado");
+        btnAlterar.setText("Marcar como excluído");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlterarActionPerformed(evt);
@@ -166,7 +172,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,9 +191,9 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAlterar)
                 .addContainerGap())
         );
 
@@ -195,13 +201,13 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -243,6 +249,7 @@ public class FrmFuncionarioExonerado extends javax.swing.JDialog {
 
                 if (funcionarioDao.marcarExonerado(codigo)) {
                     JOptionPane.showMessageDialog(this, "Funcionario Exonerado.", null, JOptionPane.ERROR_MESSAGE);
+                    logDao.insert("Excluir Funcionario: " + (String) modeloTabela.getValueAt(grelha.getSelectedRow(), 1));
                 }
                 carregaPesquisa();
 
