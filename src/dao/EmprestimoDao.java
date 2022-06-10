@@ -310,6 +310,8 @@ public class EmprestimoDao {
             modoPesquisa = "localidade.nomeLocalidade";
         } else if (tipoPesquisa.equals("patrimonio")) {
             modoPesquisa = "patrimonio";
+        } else if (tipoPesquisa.equals("modelo")) {
+            modoPesquisa = "marca.marca";
         } else {
             modoPesquisa = "chip.numeroLinha";
         }
@@ -326,7 +328,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY emprestimo.idEmprestimo";
+                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY " + modoPesquisa + ", funcionario.nome";
         } else {
             sql = "SELECT * FROM emprestimo "
                     + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
@@ -338,7 +340,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' ORDER BY emprestimo.idEmprestimo";
+                    + "LIKE '%" + procura + "%' ORDER BY " + modoPesquisa + ", funcionario.nome";
         }
 
         // PASSANDO OS VALORES NAS VARIÁVEL GLOBAL ////////////////////////////
@@ -813,7 +815,6 @@ public class EmprestimoDao {
     }
 
     // RETORNA OBSERVAÇÃO DE DEVOLUÇÃO/////////////////////////////////////////
-    
     public Emprestimo retornaObservacaoDevolucao(String imei) {
 
         String sql = "SELECT * FROM emprestimo "
@@ -863,7 +864,7 @@ public class EmprestimoDao {
                     emprestimo.setProtocolo(rs.getString("protocolo"));
                     emprestimo.setObservacao(rs.getString("observacao"));
                     emprestimo.setObservacaoDevolucao(rs.getString("observacaoDevolucao"));
-                    
+
                     // localidade 
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                     localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));

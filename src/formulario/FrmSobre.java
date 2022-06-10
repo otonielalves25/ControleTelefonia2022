@@ -37,7 +37,7 @@ public class FrmSobre extends javax.swing.JDialog {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Versão 3.0  04/03/2022\nDesenvolvido em Java e SQlite;\n\nMigrado servidor Mysql http://10.50.0.19/phpmyadmin/\n\nDados de acesso com a Celepar-COOGI  \nAndré de Paula\nMarcelo Annemmam\n\nSistema desenvolvido por:\nOtoniel Amancio Alves;\nContato: (41) 98439-3096\n");
+        jTextArea1.setText("Versão 3.0  04/03/2022\nDesenvolvido em Java e SQlite;\n\nMigrado servidor Mysql http://10.50.0.19/phpmyadmin/\n\nDados de acesso com a Celepar-COOGI  \nAndré de Paula\nMarcelo Annemann\n\n\n-----------------------------------\nDesenvolvedor do Sistema\nOtoniel Amancio Alves (Tony)\nContato: (41) 98439-3096\n");
         jTextArea1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(jTextArea1);
 

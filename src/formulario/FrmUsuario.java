@@ -422,7 +422,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             if (resposta == JOptionPane.YES_OPTION) {
 
                 usuarioDao.delete(Integer.parseInt(txtCodigo.getText()));
-                JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+                JOptionPane.showMessageDialog(this, "Usuário não pode ser excluído, está INATIVO.");
                 // PEGANDO LOGS DO SISTEMA // REGISTRO DE LOGS
                 logDao.insert("Alterada usuario: " + txtNome.getText().toUpperCase());
                 carregaGrelha();
@@ -458,8 +458,8 @@ public class FrmUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
 
+        // TODO add your handling code here:
         if (txtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Marca modelo não informada", null, JOptionPane.ERROR_MESSAGE);
             txtNome.requestFocus();

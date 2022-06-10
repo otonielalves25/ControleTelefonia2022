@@ -28,6 +28,14 @@ public class Celular {
     private boolean capinha;
     private String patrimonio;
 
+    public Celular() {
+    }
+
+    public Celular(int idCelular) {
+        this.idCelular = idCelular;
+
+    }
+
     public boolean isCaixa() {
         return caixa;
     }
@@ -58,14 +66,6 @@ public class Celular {
 
     public void setManual(boolean manual) {
         this.manual = manual;
-    }
-
-    public Celular() {
-    }
-
-    public Celular(int idCelular) {
-        this.idCelular = idCelular;
-
     }
 
     /**

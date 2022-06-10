@@ -14,17 +14,20 @@ public class LogsSistema {
     private int idLog;
     private String data;
     private String atividade;
-    private String usuario;
+    private Usuario usuario;
 
     public LogsSistema() {
     }
 
-    public LogsSistema(String atividade, String usuario) {
-
+    public LogsSistema(String data, String atividade, Usuario usuario) {
+    
+        this.data = data;
         this.atividade = atividade;
         this.usuario = usuario;
     }
 
+
+    
     public int getIdLog() {
         return idLog;
     }
@@ -49,12 +52,14 @@ public class LogsSistema {
         this.atividade = atividade;
     }
 
-    public String getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+
 
 }

@@ -23,6 +23,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
     // variavel controla novo ou alteração
     boolean novo;
     int localidade_id;
+    String localidadeAntiga = "";
 
     //Variaveis
     LocalidadeDao localidadeDao = new LocalidadeDao();
@@ -367,6 +368,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
+        localidadeAntiga = txtLocalidade.getText();
         novo = false;
         habilitado(true);
         botaoNovo();
@@ -409,7 +411,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
             localidade.setIdLocalidade(Integer.parseInt(txtCodigo.getText()));
             localidadeDao.update(localidade);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-            logDao.insert("Alterada localidade: " + txtLocalidade.getText());
+            logDao.insert("Alterada localidade: " + localidadeAntiga + " para -> " + txtLocalidade.getText());
         }
 
         botaoInicial();

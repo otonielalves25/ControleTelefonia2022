@@ -250,7 +250,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="100" minWidth="-1" prefWidth="100" resizable="true">
+                    <Column maxWidth="80" minWidth="-1" prefWidth="80" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -526,7 +526,7 @@
         <Component class="javax.swing.JLabel" name="lblQuantidade">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
+            <Property name="text" type="java.lang.String" value="quantidade 0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">

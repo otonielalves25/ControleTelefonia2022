@@ -102,12 +102,17 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         txtSetor = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         txtDataEmprestimo = new javax.swing.JFormattedTextField();
-        txtDataDevolucao = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtComplementos = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ckCaixa = new javax.swing.JCheckBox();
+        ckCarregador = new javax.swing.JCheckBox();
+        ckManual = new javax.swing.JCheckBox();
+        ckAdaptador = new javax.swing.JCheckBox();
+        ckFone = new javax.swing.JCheckBox();
+        ckCapinha = new javax.swing.JCheckBox();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtObservacao = new javax.swing.JTextArea();
@@ -124,12 +129,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        ckCaixa = new javax.swing.JCheckBox();
-        ckCarregador = new javax.swing.JCheckBox();
-        ckManual = new javax.swing.JCheckBox();
-        ckAdaptador = new javax.swing.JCheckBox();
-        ckFone = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
         ckFoneD = new javax.swing.JCheckBox();
         ckAdaptadorD = new javax.swing.JCheckBox();
         ckManualD = new javax.swing.JCheckBox();
@@ -138,10 +137,11 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         ckTodos = new javax.swing.JCheckBox();
         ckConfirmaNaoDevolvido = new javax.swing.JCheckBox();
-        ckCapinha = new javax.swing.JCheckBox();
         ckCapinhaD = new javax.swing.JCheckBox();
         cboEstadoBem = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtDataDevolucao = new javax.swing.JFormattedTextField();
 
         popupMenu1.setLabel("popupMenu1");
 
@@ -288,23 +288,14 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 770, -1));
 
         jPanel4.setBackground(new java.awt.Color(222, 231, 248));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Empréstimo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel12.setText("Data Empréstimo:");
-
-        jLabel13.setText("Data Devolução:");
 
         txtDataEmprestimo.setEditable(false);
         txtDataEmprestimo.setBackground(new java.awt.Color(204, 255, 204));
         try {
             txtDataEmprestimo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        txtDataDevolucao.setBackground(new java.awt.Color(255, 204, 204));
-        try {
-            txtDataDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -317,6 +308,39 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
         jLabel18.setText("Complementos:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 51));
+        jLabel3.setText("Item Emprestados");
+
+        ckCaixa.setText("Caixa");
+        ckCaixa.setEnabled(false);
+        ckCaixa.setOpaque(false);
+
+        ckCarregador.setText("Carregador");
+        ckCarregador.setEnabled(false);
+        ckCarregador.setOpaque(false);
+
+        ckManual.setText("Manual");
+        ckManual.setEnabled(false);
+        ckManual.setOpaque(false);
+
+        ckAdaptador.setText("Adaptador USB");
+        ckAdaptador.setEnabled(false);
+        ckAdaptador.setOpaque(false);
+
+        ckFone.setText("Fone de Ouvido");
+        ckFone.setEnabled(false);
+        ckFone.setOpaque(false);
+
+        ckCapinha.setText("Capinha TPU");
+        ckCapinha.setEnabled(false);
+        ckCapinha.setOpaque(false);
+        ckCapinha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckCapinhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -324,55 +348,63 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel18))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckFone)
+                            .addComponent(ckCaixa))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckCapinha)
+                            .addComponent(ckManual))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ckCarregador)
+                            .addComponent(ckAdaptador)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
+                    .addComponent(ckCaixa)
                     .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel3)
+                    .addComponent(ckManual)
+                    .addComponent(ckAdaptador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ckCapinha)
+                    .addComponent(ckFone)
+                    .addComponent(ckCarregador))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13))
-                        .addContainerGap(22, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 770, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 770, 130));
 
         jLabel14.setText("Observação:");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, -1, -1));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 572, -1, -1));
 
         txtObservacao.setColumns(20);
         txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 770, 70));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, 770, 50));
 
         btnSalvar.setBackground(new java.awt.Color(255, 153, 153));
         btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
@@ -480,43 +512,24 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 660, 65, -1));
 
         jPanel5.setBackground(new java.awt.Color(222, 231, 248));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Acessórios do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
-
-        ckCaixa.setText("Caixa");
-        ckCaixa.setEnabled(false);
-        ckCaixa.setOpaque(false);
-
-        ckCarregador.setText("Carregador");
-        ckCarregador.setEnabled(false);
-        ckCarregador.setOpaque(false);
-
-        ckManual.setText("Manual");
-        ckManual.setEnabled(false);
-        ckManual.setOpaque(false);
-
-        ckAdaptador.setText("Adaptador USB");
-        ckAdaptador.setEnabled(false);
-        ckAdaptador.setOpaque(false);
-
-        ckFone.setText("Fone de Ouvido");
-        ckFone.setEnabled(false);
-        ckFone.setOpaque(false);
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 51));
-        jLabel3.setText("Item Emprestados");
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados da Devolução", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ckFoneD.setText("Fone de Ouvido");
         ckFoneD.setOpaque(false);
+        jPanel5.add(ckFoneD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 97, -1, -1));
 
         ckAdaptadorD.setText("Adaptador USB");
         ckAdaptadorD.setOpaque(false);
+        jPanel5.add(ckAdaptadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 74, -1, -1));
 
         ckManualD.setText("Manual");
         ckManualD.setOpaque(false);
+        jPanel5.add(ckManualD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 97, -1, -1));
 
         ckCarregadorD.setText("Carregador");
         ckCarregadorD.setOpaque(false);
+        jPanel5.add(ckCarregadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 74, -1, -1));
 
         ckCaixaD.setText("Caixa");
         ckCaixaD.setOpaque(false);
@@ -530,38 +543,33 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckCaixaDActionPerformed(evt);
             }
         });
+        jPanel5.add(ckCaixaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 49, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 51, 0));
-        jLabel4.setText("Marque os devolvidos");
+        jLabel4.setText("Marque os itens devolvidos");
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 27, -1, -1));
 
         ckTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        ckTodos.setText("Devolveu tudo");
+        ckTodos.setText("Devolveu tudo.");
         ckTodos.setOpaque(false);
         ckTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckTodosActionPerformed(evt);
             }
         });
+        jPanel5.add(ckTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
         ckConfirmaNaoDevolvido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckConfirmaNaoDevolvido.setForeground(new java.awt.Color(0, 51, 153));
-        ckConfirmaNaoDevolvido.setText("Confirma que falta item.");
+        ckConfirmaNaoDevolvido.setText("Faltando item.");
         ckConfirmaNaoDevolvido.setOpaque(false);
         ckConfirmaNaoDevolvido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckConfirmaNaoDevolvidoActionPerformed(evt);
             }
         });
-
-        ckCapinha.setText("Capinha TPU");
-        ckCapinha.setEnabled(false);
-        ckCapinha.setOpaque(false);
-        ckCapinha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ckCapinhaActionPerformed(evt);
-            }
-        });
+        jPanel5.add(ckConfirmaNaoDevolvido, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 55, 162, -1));
 
         ckCapinhaD.setText("Capinha TPU");
         ckCapinhaD.setOpaque(false);
@@ -570,90 +578,26 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckCapinhaDActionPerformed(evt);
             }
         });
+        jPanel5.add(ckCapinhaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
 
         cboEstadoBem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "BOM ESTADO", "DEFEITO", "EXTRAVIADO", "QUEBRADO" }));
+        jPanel5.add(cboEstadoBem, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 80, 230, -1));
 
         jLabel15.setText("Estado do bem:");
+        jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 84, -1, -1));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckCarregador)
-                            .addComponent(ckCaixa)
-                            .addComponent(ckManual))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckCapinha)
-                            .addComponent(ckFone)
-                            .addComponent(ckAdaptador))))
-                .addGap(86, 86, 86)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ckCarregadorD)
-                    .addComponent(ckCaixaD)
-                    .addComponent(jLabel4)
-                    .addComponent(ckManualD))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(ckCapinhaD)
-                            .addGap(14, 14, 14))
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckAdaptadorD)
-                            .addComponent(ckFoneD)))
-                    .addComponent(ckTodos))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(ckConfirmaNaoDevolvido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(cboEstadoBem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(ckConfirmaNaoDevolvido)
-                    .addComponent(ckTodos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(ckCaixa)
-                    .addComponent(ckAdaptador)
-                    .addComponent(ckCaixaD)
-                    .addComponent(ckCapinhaD))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(ckCarregador)
-                    .addComponent(ckFone)
-                    .addComponent(ckAdaptadorD)
-                    .addComponent(jLabel15)
-                    .addComponent(ckCarregadorD))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(ckFoneD)
-                    .addComponent(ckManual)
-                    .addComponent(ckCapinha)
-                    .addComponent(cboEstadoBem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckManualD))
-                .addGap(12, 12, 12))
-        );
+        jLabel13.setText("Data Devolução:");
+        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 43, -1, -1));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 770, 130));
+        txtDataDevolucao.setBackground(new java.awt.Color(255, 204, 204));
+        try {
+            txtDataDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel5.add(txtDataDevolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 40, 108, -1));
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 770, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -699,15 +643,8 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 return;
             }
 
-            if (cboEstadoBem.getSelectedItem().equals("QUEBRADO") || cboEstadoBem.getSelectedItem().equals("DEFEITO") || cboEstadoBem.getSelectedItem().equals("EXTRAVIADO") && txtObservacao.getText().equals("")) {
+            if ((cboEstadoBem.getSelectedItem().equals("QUEBRADO") || cboEstadoBem.getSelectedItem().equals("DEFEITO") || cboEstadoBem.getSelectedItem().equals("EXTRAVIADO")) && txtObservacao.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Informe na observação, o motivo.", null, JOptionPane.ERROR_MESSAGE);
-                txtObservacao.setBackground(Color.yellow);
-                txtObservacao.requestFocus();
-                return;
-            }
-
-            if (ckConfirmaNaoDevolvido.isSelected() && txtObservacao.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Informe a falta de item na observação.", null, JOptionPane.ERROR_MESSAGE);
                 txtObservacao.setBackground(Color.yellow);
                 txtObservacao.requestFocus();
                 return;
@@ -758,7 +695,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
             String estado = cboEstadoBem.getModel().getSelectedItem().toString();
 
-            itensNaoDevolvido = estado + ". \n" + txtObservacao.getText().toUpperCase() + ". \n" + itensNaoDevolvido;
+            itensNaoDevolvido = estado + ". \n" + itensNaoDevolvido.toUpperCase();
             txtObservacao.setText(itensNaoDevolvido);
             emprestimo.setObservacaoDevolucao(itensNaoDevolvido);
             // MUDA OS ITEM DO CELULAR CONFORME DEVOLUÇÃO //////////////////////
@@ -813,7 +750,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 celularDao.alterarAcessoriosEmprestadoNoCadastro(celular); // MUDA OS ACESSÁRIOS DO CELULAR NO BANCO.
                 JOptionPane.showMessageDialog(this, "Devolvido com Sucesso.", null, JOptionPane.INFORMATION_MESSAGE);
                 // REGISTRANDO O LOGO NO BANCO /////////////////////////////////
-                logDao.insert("Receber Emprestimo, código: " + emprestimo.getIdEmprestimo() + " do funcionário: " + emprestimo.getFuncionario().getNome());
+                logDao.insert("Receber Emprestimo do funcionário: " + emprestimo.getFuncionario().getNome());
                 new FrmBarraProgresso(null, true).setVisible(true);
                 imprimirTermo();
 
@@ -1177,7 +1114,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
 

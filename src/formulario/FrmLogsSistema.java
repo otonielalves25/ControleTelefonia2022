@@ -50,7 +50,7 @@ public class FrmLogsSistema extends javax.swing.JDialog {
         modeloTabela.setNumRows(0);
         for (LogsSistema logo : listagem) {
             modeloTabela.addRow(new Object[]{
-                logo.getIdLog(),logo.getData(),logo.getAtividade(),logo.getUsuario(),                
+                logo.getIdLog(),logo.getData(),logo.getAtividade(),logo.getUsuario().getNome(),                
             
             });
         }

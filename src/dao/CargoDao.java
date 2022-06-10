@@ -20,9 +20,9 @@ import modelo.Cargo;
  */
 public class CargoDao {
 
-    Connection con;
-    PreparedStatement stm = null;
-    ResultSet rs;
+    private Connection con;
+    private PreparedStatement stm = null;
+    private ResultSet rs;
 
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Cargo cargo) {

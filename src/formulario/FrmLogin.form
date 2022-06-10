@@ -189,7 +189,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Vers&#xe3;o 3.0.3 - 10/03/2022 - Coogi - Detran - PR"/>
+            <Property name="text" type="java.lang.String" value="Vers&#xe3;o 4.0.4 - 11/05/2022 - Coogi - Detran - PR"/>
           </Properties>
         </Component>
       </SubComponents>

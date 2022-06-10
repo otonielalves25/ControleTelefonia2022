@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="1.6528925619834751"/>
+	<property name="ireport.zoom" value="1.5026296018031613"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="247"/>
 	<parameter name="acessorios" class="java.lang.String"/>
 	<parameter name="observacao" class="java.lang.String"/>
 	<parameter name="recebidoPor" class="java.lang.String"/>
@@ -19,50 +19,161 @@ LEFT JOIN celular on emprestimo.celular_id = celular.idCelular
 LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa
 LEFT JOIN chip on emprestimo.chip_id = chip.idChip
 LEFT JOIN marca on celular.marca_id = marca.idMarca
-LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = 45]]>
+LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 	</queryString>
-	<field name="idEmprestimo" class="java.lang.Object"/>
-	<field name="situacao" class="java.lang.Object"/>
-	<field name="dataEmprestimo" class="java.lang.Object"/>
-	<field name="dataDevolucao" class="java.lang.Object"/>
-	<field name="funcionario_id" class="java.lang.Object"/>
-	<field name="usuario_id" class="java.lang.Object"/>
-	<field name="observacao" class="java.lang.Object"/>
-	<field name="celular_id" class="java.lang.Object"/>
-	<field name="chip_id" class="java.lang.Object"/>
-	<field name="observacaoDevolucao" class="java.lang.Object"/>
-	<field name="protocolo" class="java.lang.Object"/>
-	<field name="idFuncionario" class="java.lang.Object"/>
-	<field name="nome" class="java.lang.Object"/>
-	<field name="cpf" class="java.lang.Object"/>
-	<field name="rg" class="java.lang.Object"/>
-	<field name="status" class="java.lang.Object"/>
-	<field name="localidade_id" class="java.lang.Object"/>
-	<field name="idLocalidade" class="java.lang.Object"/>
-	<field name="nomeLocalidade" class="java.lang.Object"/>
-	<field name="tipoLocalidade" class="java.lang.Object"/>
-	<field name="idUsuario" class="java.lang.Object"/>
-	<field name="login" class="java.lang.Object"/>
-	<field name="senha" class="java.lang.Object"/>
-	<field name="previlegio" class="java.lang.Object"/>
-	<field name="idCelular" class="java.lang.Object"/>
-	<field name="serie" class="java.lang.Object"/>
-	<field name="imei1" class="java.lang.Object"/>
-	<field name="imei2" class="java.lang.Object"/>
-	<field name="marca_id" class="java.lang.Object"/>
-	<field name="empresa_id" class="java.lang.Object"/>
-	<field name="idEmpresa" class="java.lang.Object"/>
-	<field name="nomeEmpresa" class="java.lang.Object"/>
-	<field name="idChip" class="java.lang.Object"/>
-	<field name="codigoChip" class="java.lang.Object"/>
-	<field name="numeroLinha" class="java.lang.Object"/>
-	<field name="telefonia" class="java.lang.Object"/>
-	<field name="dados" class="java.lang.Object"/>
-	<field name="idMarca" class="java.lang.Object"/>
-	<field name="marca" class="java.lang.Object"/>
-	<field name="categoria_id" class="java.lang.Object"/>
-	<field name="idCategoria" class="java.lang.Object"/>
-	<field name="categoria" class="java.lang.Object"/>
+	<field name="idEmprestimo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="situacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataEmprestimo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dataDevolucao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="funcionario_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="celular_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="chip_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacaoDevolucao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="protocolo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idFuncionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="localidade_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cargo_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idLocalidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeLocalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoLocalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idUsuario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="login" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="senha" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="previlegio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idCelular" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serie" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="imei1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="imei2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="empresa_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estadoBem" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="caixa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="carregador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="manual" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adaptador" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="foneOuvido" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="capinha" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="patrimonio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idEmpresa" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeEmpresa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idChip" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoChip" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroLinha" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefonia" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dados" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idMarca" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="categoria_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idCategoria" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="categoria" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -84,7 +195,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[TERMO DE DEVOLUÇÃO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="40" width="151" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
+				<reportElement x="4" y="40" width="133" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -97,7 +208,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[NOME: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="81" width="151" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
+				<reportElement x="306" y="101" width="81" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -107,10 +218,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[RG: ]]></text>
+				<text><![CDATA[PATRIMÔNIO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="40" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
+				<reportElement x="137" y="40" width="407" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -121,7 +232,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="81" width="151" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
+				<reportElement x="387" y="101" width="157" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -129,7 +240,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 					<rightPen lineWidth="1.25"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{rg}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{patrimonio} !=null && $F{patrimonio}.length() == 12)? $F{patrimonio}.substring(0, 3) +"."+ $F{patrimonio}.substring(3, 6)+"."+$F{patrimonio}.substring(6, 9)+"."+$F{patrimonio}.substring(9, 12): "Sem Patrimônio"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="306" y="61" width="81" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
@@ -156,7 +267,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="61" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
+				<reportElement x="4" y="61" width="133" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -169,7 +280,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[UNIDADE DE LOGAÇÃO: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="155" y="61" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
+				<reportElement x="137" y="61" width="169" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -180,12 +291,12 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[""+$F{nomeLocalidade}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="81" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
+				<reportElement x="4" y="81" width="133" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -194,7 +305,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[APARELHO: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="387" y="81" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
+				<reportElement x="137" y="81" width="169" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -205,7 +316,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{categoria} != null ? $F{categoria} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="101" width="151" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
+				<reportElement x="387" y="81" width="157" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -216,7 +327,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{marca} != null ? $F{marca} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="101" width="151" height="20" uuid="2a423cf5-a74c-4354-8b0f-19b714247b76"/>
+				<reportElement x="306" y="81" width="81" height="20" uuid="2a423cf5-a74c-4354-8b0f-19b714247b76"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -229,7 +340,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[MODELO: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="387" y="101" width="157" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
+				<reportElement x="137" y="101" width="169" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -240,12 +351,12 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{imei1} != null ? $F{imei1} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="306" y="101" width="81" height="20" uuid="1a35b4e9-c6b7-42c8-99c4-65121b3dd03e"/>
+				<reportElement x="4" y="101" width="133" height="20" uuid="1a35b4e9-c6b7-42c8-99c4-65121b3dd03e"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -271,7 +382,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="141" width="151" height="28" uuid="bf4e53d3-8d6e-4798-b069-217e581adfde"/>
+				<reportElement x="4" y="141" width="133" height="28" uuid="bf4e53d3-8d6e-4798-b069-217e581adfde"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -284,16 +395,16 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<text><![CDATA[ACESSÒRIOS: ]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="141" width="389" height="28" uuid="481885da-bf6b-42cf-817a-1b24a22e5369"/>
+				<reportElement x="137" y="141" width="407" height="28" uuid="481885da-bf6b-42cf-817a-1b24a22e5369"/>
 				<box>
-					<bottomPen lineWidth="1.5"/>
-					<rightPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
 				</box>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{acessorios}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="4" y="121" width="151" height="20" uuid="14b1c5b0-8f78-4bae-b114-7e1ada6706b9"/>
+				<reportElement x="4" y="121" width="133" height="20" uuid="14b1c5b0-8f78-4bae-b114-7e1ada6706b9"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -309,9 +420,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<reportElement x="306" y="121" width="81" height="20" uuid="7cbfc7f8-6053-45ce-9d5a-28fd23d0fdcc"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -331,7 +442,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{numeroLinha} != null ? $F{numeroLinha} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="155" y="121" width="151" height="20" uuid="a9c3cca4-d41d-40c8-aa42-8b25bc3cb908"/>
+				<reportElement x="137" y="121" width="169" height="20" uuid="a9c3cca4-d41d-40c8-aa42-8b25bc3cb908"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
@@ -342,7 +453,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textFieldExpression><![CDATA[$F{codigoChip} != null ? $F{codigoChip} : "-- não emprestado --"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="18" y="599" width="298" height="20" uuid="8fc50f6a-0c95-4fac-b89a-0eb4efe8820f"/>
+				<reportElement x="7" y="599" width="238" height="20" uuid="8fc50f6a-0c95-4fac-b89a-0eb4efe8820f"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 				</box>
@@ -369,8 +480,36 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where empresti
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{observacaoDevolucao} != null ? "Observação:  "+$F{observacaoDevolucao} : "Observação:  "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{observacaoDevolucao} != null ? "Observação:  "+$F{observacaoDevolucao} : "Observação:  Sem"]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="306" y="599" width="238" height="20" uuid="0efcf35f-4a85-47f2-8545-0ece8ab17ff2"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="306" y="579" width="238" height="20" forecolor="#CC3300" uuid="61ef1d3e-1c4f-418f-9bf1-d9b60df07089"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="579" width="238" height="20" forecolor="#CC3300" uuid="c813c75f-2914-4af7-9587-adfbae05c6d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 </jasperReport>

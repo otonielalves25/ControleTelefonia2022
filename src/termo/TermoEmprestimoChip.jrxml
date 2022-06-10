@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
 	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="381"/>
+	<property name="ireport.y" value="93"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
 	<parameter name="logoDetran" class="java.lang.Object"/>
 	<parameter name="logoDot" class="java.lang.Object"/>
@@ -158,19 +158,6 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[NOME: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="106" width="52" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[RG: ]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="7" y="270" width="540" height="261" uuid="358adf7c-7f62-4976-aac6-6f2a4c7be75b"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font size="11"/>
@@ -196,19 +183,8 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="59" y="106" width="99" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[""+$F{rg}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="158" y="106" width="34" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
+				<reportElement x="7" y="106" width="151" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="1.25"/>
@@ -221,7 +197,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[CPF: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="192" y="106" width="117" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
+				<reportElement x="158" y="106" width="151" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>

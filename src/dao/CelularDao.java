@@ -371,7 +371,7 @@ public class CelularDao {
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE imei1 = ? OR serie = ? OR patrimonio = ?";
+                + "WHERE imei1 = ? OR serie = ?";
         Celular celular = null;
         Marca marca = null;
         Categoria categoria = null;
@@ -380,8 +380,7 @@ public class CelularDao {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, imei);
-            stm.setString(2, serie);
-            stm.setString(3, patrimonio);
+            stm.setString(2, serie);           
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -429,4 +428,38 @@ public class CelularDao {
 
         return celular;
     }
+    
+    //GERADOR DE CÓDIGO AUTOMÁTICO /////////////////////////////////////////////
+     public String geradorCodigoDePatrimonios() {
+
+        String stg = "SELECT patrimonio FROM celular  ORDER BY patrimonio DESC LIMIT 1";
+        Long patrimonioEncontrado;
+        String patrimonioNovo = "";
+
+        try {
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(stg);        
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                patrimonioEncontrado = rs.getLong(1);
+                patrimonioEncontrado++;
+                patrimonioNovo = String.valueOf(patrimonioEncontrado);
+                patrimonioNovo = patrimonioNovo.substring(0, 3) + "." + patrimonioNovo.substring(3, 6) + "." + patrimonioNovo.substring(6, 9) + "." + patrimonioNovo.substring(9, 12);
+
+            } else {
+                patrimonioNovo = "200.200.200.001";
+            }
+
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar Equipamento DAO. " + ex);
+        }
+
+        return patrimonioNovo;
+    }
+    
 }

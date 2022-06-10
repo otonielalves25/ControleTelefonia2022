@@ -263,7 +263,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{estadoBem}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement mode="Opaque" x="393" y="0" width="100" height="20" backcolor="#FFFFCC" uuid="6179d87e-4c35-4000-a353-350006934d18"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
@@ -272,11 +272,11 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{patrimonio} != null ? $F{patrimonio} : " ---- "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{patrimonio} !=null && $F{patrimonio}.length() == 12)? $F{patrimonio}.substring(0, 3) +"."+ $F{patrimonio}.substring(3, 6)+"."+$F{patrimonio}.substring(6, 9)+"."+$F{patrimonio}.substring(9, 12): "Sem Patrimônio"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

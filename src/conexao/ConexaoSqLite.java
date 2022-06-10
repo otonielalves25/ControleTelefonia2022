@@ -48,7 +48,7 @@ public class ConexaoSqLite {
             conexaoMysql = DriverManager.getConnection(URL, ROOT, SENHA);
 
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de Dados " + ex);
+            JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de Dados: Erro -> " + ex);
         }
         //Retorna uma conexão
         return conexaoMysql;

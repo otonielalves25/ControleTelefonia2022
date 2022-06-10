@@ -25,11 +25,14 @@ public class FrmMarca extends javax.swing.JFrame {
     // variavel controla novo ou alteração
     boolean novo;
     int categoria_id;
+    // alteração de tipos
+    String marcaAntiga = "";
+        
 
     //Variaveis
     CategoriaDao categoriaDao = new CategoriaDao();
     MarcaDao marcaDao = new MarcaDao();
-     LogDao logDao = new LogDao();
+    LogDao logDao = new LogDao();
 
     public FrmMarca() {
         initComponents();
@@ -336,8 +339,8 @@ public class FrmMarca extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
-        
-               if (Session.getPrevilegio().equals("Consulta")) {
+
+        if (Session.getPrevilegio().equals("Consulta")) {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -377,11 +380,12 @@ public class FrmMarca extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-               if (Session.getPrevilegio().equals("Consulta")) {
+        if (Session.getPrevilegio().equals("Consulta")) {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
         novo = false;
+        marcaAntiga = txtTexto.getText();
         habilitado(true);
         botaoNovo();
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -423,7 +427,7 @@ public class FrmMarca extends javax.swing.JFrame {
             marca.setIdMarca(Integer.parseInt(txtCodigo.getText()));
             marcaDao.update(marca);
             JOptionPane.showMessageDialog(this, "Alterada com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-            logDao.insert("Alterada marca: " + txtTexto.getText());
+            logDao.insert("Alterada marca: " + marcaAntiga + " para -> " + txtTexto.getText());
         }
 
         botaoInicial();

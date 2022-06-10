@@ -15,6 +15,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.LogsSistema;
 import modelo.Session;
+import modelo.Usuario;
 
 /**
  *
@@ -31,14 +32,14 @@ public class LogDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public void insert(String atividade) {
 
-        String sql = "INSERT INTO logsistema (data, atividade, usuario) VALUES (?,?,?)";
+        String sql = "INSERT INTO logsistema (data, atividade, usuario_id) VALUES (?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, sdf.format(new Date()));
             stm.setString(2, atividade);
-            stm.setString(3, Session.getNome());
+            stm.setInt(3, Session.getIdUsuario());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -54,7 +55,8 @@ public class LogDao {
     public ArrayList<LogsSistema> listagemLogs(String atividade, int  limite) {
         ArrayList<LogsSistema> listagem = new ArrayList<>();
 
-        String sql = "SELECT * FROM logsistema WHERE atividade LIKE ? LIMIT " + limite;
+        String sql = "SELECT * FROM logsistema INNER JOIN usuario ON logsistema.usuario_id = usuario.idUsuario "
+                + "WHERE logsistema.atividade LIKE ? LIMIT " + limite;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -65,10 +67,13 @@ public class LogDao {
             if (rs != null) {
                 while (rs.next()) {
                     LogsSistema logo = new LogsSistema();
+                    Usuario usuario = new Usuario();
                     logo.setIdLog(rs.getInt("idLog"));
                     logo.setData(rs.getString("data"));
                     logo.setAtividade(rs.getString("atividade"));
-                    logo.setUsuario(rs.getString("usuario"));
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNome(rs.getString("nome"));
+                    logo.setUsuario(usuario);
 
                     listagem.add(logo);
                 }
@@ -85,24 +90,28 @@ public class LogDao {
     
     
     // LISTA POR USUARIO //////////////////////////////////////////////////////////////
-    public ArrayList<LogsSistema> listagemLogsPorUsuario(String usuario, int  limite){
+    public ArrayList<LogsSistema> listagemLogsPorUsuario(String usuarioProcurado, int  limite){
         ArrayList<LogsSistema> listagem = new ArrayList<>();
 
-        String sql = "SELECT * FROM logsistema WHERE usuario LIKE ? LIMIT " + limite;
+        String sql = "SELECT * FROM logsistema INNER JOIN usuario ON logsistema.usuario_id = usuario.idUsuario "
+                + "WHERE usuario.nome LIKE ? LIMIT " + limite;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + usuario + "%");
+            stm.setString(1, "%" + usuarioProcurado + "%");
 
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
                     LogsSistema logo = new LogsSistema();
+                    Usuario usuario = new Usuario();
                     logo.setIdLog(rs.getInt("idLog"));
                     logo.setData(rs.getString("data"));
                     logo.setAtividade(rs.getString("atividade"));
-                    logo.setUsuario(rs.getString("usuario"));
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNome(rs.getString("nome"));
+                    logo.setUsuario(usuario);
 
                     listagem.add(logo);
                 }
@@ -122,7 +131,8 @@ public class LogDao {
     public ArrayList<LogsSistema> listagemLogsPorData(String data, int  limite){
         ArrayList<LogsSistema> listagem = new ArrayList<>();
 
-        String sql = "SELECT * FROM logsistema WHERE data LIKE ? LIMIT " + limite;
+        String sql = "SELECT * FROM logsistema INNER JOIN usuario ON logsistema.usuario_id = usuario.idUsuario "
+                + "WHERE logsistema.data LIKE ? LIMIT " + limite;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -133,10 +143,13 @@ public class LogDao {
             if (rs != null) {
                 while (rs.next()) {
                     LogsSistema logo = new LogsSistema();
+                    Usuario usuario = new Usuario();
                     logo.setIdLog(rs.getInt("idLog"));
                     logo.setData(rs.getString("data"));
                     logo.setAtividade(rs.getString("atividade"));
-                    logo.setUsuario(rs.getString("usuario"));
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNome(rs.getString("nome"));
+                    logo.setUsuario(usuario);
 
                     listagem.add(logo);
                 }

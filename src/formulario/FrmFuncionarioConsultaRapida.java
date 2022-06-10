@@ -7,6 +7,7 @@ package formulario;
 
 import dao.FuncionarioDao;
 import dao.LogDao;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -97,7 +98,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
 
         lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -111,6 +112,9 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         jLabel1.setText("Nome do Funcionário:");
 
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyReleased(evt);
             }
@@ -145,8 +149,8 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(grelha);
         if (grelha.getColumnModel().getColumnCount() > 0) {
-            grelha.getColumnModel().getColumn(0).setPreferredWidth(30);
-            grelha.getColumnModel().getColumn(0).setMaxWidth(30);
+            grelha.getColumnModel().getColumn(0).setPreferredWidth(50);
+            grelha.getColumnModel().getColumn(0).setMaxWidth(50);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
             grelha.getColumnModel().getColumn(2).setMaxWidth(180);
             grelha.getColumnModel().getColumn(3).setPreferredWidth(90);
@@ -241,6 +245,23 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
         }
     }//GEN-LAST:event_btnOk1ActionPerformed
+
+    private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {          
+            if (grelha.getRowCount() == 1) {
+                int codigo = (int) modeloTabela.getValueAt(0, 0);
+                this.setCodigoFuncionario(codigo);
+                this.dispose();
+            }
+        }
+
+
+    }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void pegaSelecao() {
+
+    }
 
     /**
      * @param args the command line arguments

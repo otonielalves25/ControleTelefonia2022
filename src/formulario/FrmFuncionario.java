@@ -10,7 +10,6 @@ import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.LocalidadeDao;
 import dao.LogDao;
-import java.awt.Color;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -54,7 +53,10 @@ public class FrmFuncionario extends javax.swing.JFrame {
         cboLocalidade.addItem("Selecione...");
         for (Localidade localidade : listagem) {
             cboLocalidade.addItem(localidade);
+
         }
+        
+         
 
     }
 
@@ -214,8 +216,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(2).setMaxWidth(160);
             grelha.getColumnModel().getColumn(3).setPreferredWidth(190);
             grelha.getColumnModel().getColumn(3).setMaxWidth(190);
-            grelha.getColumnModel().getColumn(4).setPreferredWidth(100);
-            grelha.getColumnModel().getColumn(4).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(80);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 204, 204));
@@ -349,7 +351,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
         });
 
         lblQuantidade.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblQuantidade.setText("jLabel7");
+        lblQuantidade.setText("quantidade 0");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(204, 0, 0));
@@ -522,7 +524,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
         if (contadorCelular > 0 || contadorChip > 0) {
             mensagem = "Funcionário tem: " + contadorCelular + " celular e " + contadorChip + " chip cadastrado com emprétimo.";
             txtMensagemErro.setText(mensagem);
-           
+
         }
 
     }
@@ -630,12 +632,11 @@ public class FrmFuncionario extends javax.swing.JFrame {
         // CRIA A CLASSE MARCA MODELO //////////////////////////////////////////
         Funcionario funcionario = new Funcionario();
         Localidade localidade = null;
-        funcionario.setNome(txtNome.getText().toUpperCase());
+        funcionario.setNome(txtNome.getText().toUpperCase().trim());
         funcionario.setCpf(txtCPF.getText());
-        funcionario.setRg(txtRg.getText());
+        funcionario.setRg(txtRg.getText().trim());
 
         Cargo cargo = (Cargo) cboCargo.getSelectedItem();
-
 
         funcionario.setCargo(cargo);
 
@@ -727,8 +728,8 @@ public class FrmFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
     private void grelhaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseReleased
-           // TODO add your handling code here:
-            try {
+        // TODO add your handling code here:
+        try {
             if (grelha.getRowCount() > 0) {
 
                 int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
@@ -741,7 +742,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
                 txtRg.setText(f.getRg());
                 cboLocalidade.getModel().setSelectedItem(f.getLocalidade());
                 cboCargo.getModel().setSelectedItem(f.getCargo());
-                
+
                 if (f.getStatus().equalsIgnoreCase("Ativo")) {
                     ckAtivo.setSelected(true);
                 } else {

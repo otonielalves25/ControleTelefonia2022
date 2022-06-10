@@ -109,7 +109,7 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Versão 3.0.3 - 10/03/2022 - Coogi - Detran - PR");
+        jLabel4.setText("Versão 4.0.4 - 11/05/2022 - Coogi - Detran - PR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

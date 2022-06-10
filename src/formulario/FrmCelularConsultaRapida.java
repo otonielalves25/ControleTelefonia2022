@@ -6,6 +6,7 @@
 package formulario;
 
 import dao.CelularDao;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -106,7 +107,7 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
 
         lblTitulo.setBackground(new java.awt.Color(0, 102, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -120,6 +121,9 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
         jLabel1.setText("Pesquisar:");
 
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyReleased(evt);
             }
@@ -212,13 +216,14 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(radSerie)
                         .addComponent(radImei)
-                        .addComponent(radPatrimonio)))
+                        .addComponent(radPatrimonio))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -270,6 +275,17 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
 
         }
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
+         // TODO add your handling code here:
+           if (evt.getKeyCode() == KeyEvent.VK_ENTER) {          
+            if (grelha.getRowCount() == 1) {
+                int codigo = (int) modeloTabela.getValueAt(0, 0);
+                this.setCodigoCelular(codigo);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_txtPesquisaKeyPressed
 
     /**
      * @param args the command line arguments

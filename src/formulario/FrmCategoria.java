@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Session;
+import utilidade.ValidarCampos;
 
 /**
  *
@@ -22,6 +23,7 @@ public class FrmCategoria extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    String categoriaAntiga = "";
 
     //Variaveis
     CategoriaDao categoriaDao = new CategoriaDao();
@@ -309,6 +311,7 @@ public class FrmCategoria extends javax.swing.JFrame {
             return;
         }
 
+        categoriaAntiga = txtTexto.getText();
         novo = false;
         habilitado(true);
         botaoNovo();
@@ -317,39 +320,40 @@ public class FrmCategoria extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
 
-        if (txtTexto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
-        } else {
-            Categoria categoria = new Categoria();
-            categoria.setCategoria(txtTexto.getText().toUpperCase());
-            // CADATRAO NOVO NO BANCO //////////////////////////////////////////
-            if (novo) {
-                Categoria teste = categoriaDao.retornaPorNome(txtTexto.getText().toUpperCase());
-                if (teste != null) {
-                    JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                categoriaDao.insert(categoria);
-
-                JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
-                // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
-
-                logDao.insert("Cadatrado categoria: " + txtTexto.getText().trim());
-            } else {
-
-                categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText()));
-                categoriaDao.update(categoria);
-                JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-                //log do sistema
-                logDao.insert("Alterado categoria: " + txtTexto.getText().trim());
-            }
-            carregaGrelha();
-            botaoInicial();
-            novo = false;
-            habilitado(false);
-            limparTudo();
-
+        if (ValidarCampos.validarCampo(txtTexto, "CATEGORIA")) {
+            return;
         }
+
+        Categoria categoria = new Categoria();
+        categoria.setCategoria(txtTexto.getText().toUpperCase());
+        // CADATRAO NOVO NO BANCO //////////////////////////////////////////
+        if (novo) {
+            Categoria teste = categoriaDao.retornaPorNome(txtTexto.getText().toUpperCase());
+            if (teste != null) {
+                JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            categoriaDao.insert(categoria);
+
+            JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+            // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
+
+            logDao.insert("Cadatrado categoria: " + txtTexto.getText().trim());
+        } else {
+
+            categoria.setIdCategoria(Integer.parseInt(txtCodigo.getText()));
+            categoriaDao.update(categoria);
+            JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            //log do sistema
+            logDao.insert("Alterado categoria: " + categoriaAntiga + " para ->" + txtTexto.getText().trim());
+        }
+        carregaGrelha();
+        botaoInicial();
+        novo = false;
+        habilitado(false);
+        limparTudo();
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed

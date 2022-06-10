@@ -8,12 +8,24 @@ package formulario;
 import dao.CargoDao;
 
 import dao.LogDao;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cargo;
 import modelo.Session;
+import utilidade.ValidarCampos;
 
 /**
  *
@@ -23,6 +35,7 @@ public class FrmCargo extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    String cargoAntigo = "";
 
     //Variaveis
     CargoDao cargoDao = new CargoDao();
@@ -273,11 +286,17 @@ public class FrmCargo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Operação Cancelada.");
             }
         }
+
+        // REGISTA LOGOUF /////////////////////////////////////////////////////
+        logDao.insert("Excluir o cargo: " + txtTexto.getText().trim());
+        // REGISTA LOGOUF /////////////////////////////////////////////////////
+
         botaoInicial();
         novo = false;
         habilitado(false);
         limparTudo();
         carregaGrelha();
+
 
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -297,47 +316,51 @@ public class FrmCargo extends javax.swing.JFrame {
         }
 
         novo = false;
+        cargoAntigo = txtTexto.getText();
         habilitado(true);
         botaoNovo();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-
-        if (txtTexto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Categoria não informada", null, JOptionPane.ERROR_MESSAGE);
-        } else {
-            Cargo cargo = new Cargo();
-            cargo.setNomeCargo(txtTexto.getText().toUpperCase());
-            // CADATRAO NOVO NO BANCO //////////////////////////////////////////
-            if (novo) {
-//                Cargo teste = cargoDao.retornaPorNome(txtTexto.getText().toUpperCase());
-//                if (teste != null) {
-//                    JOptionPane.showMessageDialog(this, "Categoria já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
-//                    return;
-//                }
-                cargoDao.insert(cargo);
-
-                JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
-                // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
-
-                logDao.insert("Cadatrado cargo: " + txtTexto.getText().trim());
-            } else {
-
-                cargo.setIdCargo(Integer.parseInt(txtCodigo.getText()));
-                cargoDao.update(cargo);
-                JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
-                //log do sistema
-                logDao.insert("Alterado cargo: " + txtTexto.getText().trim());
-            }
-            carregaGrelha();
-            botaoInicial();
-            novo = false;
-            habilitado(false);
-            limparTudo();
-
+        // Validando os campos obrigatórios
+        if (ValidarCampos.validarCampo(txtTexto, "cargo")) {
+            return;
         }
+
+        //  Fim - Validando os campos obrigatórios
+        Cargo cargo = new Cargo();
+        cargo.setNomeCargo(txtTexto.getText().toUpperCase());
+        // CADATRAO NOVO NO BANCO //////////////////////////////////////////
+        if (novo) {
+
+            cargoDao.insert(cargo);
+
+            JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
+
+            // ALTERAR CADASTRO NO BANCO ///////////////////////////////////
+            // Registrando os logs no banco
+            logDao.insert("Cadatrado cargo: " + txtTexto.getText().trim());
+        } else {
+
+            cargo.setIdCargo(Integer.parseInt(txtCodigo.getText()));
+            cargoDao.update(cargo);
+            JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
+            //log do sistema
+            logDao.insert("Alterado cargo: " + cargoAntigo + " para -> " + txtTexto.getText().trim());
+           
+            
+        }
+        carregaGrelha();
+        botaoInicial();
+        novo = false;
+        habilitado(false);
+        limparTudo();
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+
 
     private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
         // TODO add your handling code here:
@@ -345,9 +368,9 @@ public class FrmCargo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTextoKeyPressed
 
     private void grelhaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseReleased
-         // TODO add your handling code here:
-         
-          try {
+        // TODO add your handling code here:
+
+        try {
             if (grelha.getRowCount() > 0) {
                 txtCodigo.setText(grelha.getValueAt(grelha.getSelectedRow(), 0).toString());
                 txtTexto.setText((String) grelha.getValueAt(grelha.getSelectedRow(), 1));

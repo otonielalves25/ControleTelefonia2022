@@ -88,6 +88,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         ckAtrazados = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
+        radModelo = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -133,7 +134,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nª", "DATA", "SITUAÇÃO", "FUNCIONÁRIO", "FUNÇÃO", "SETOR", "APARELHO", "IMEI", "PATRIMONIO", "Nª TELEFONE", "DADOS", "VOZ", "PROTOCOLO", "DEVOLUÇÃO", "POR"
+                "Nª", "DATA", "SITUAÇÃO", "FUNCIONÁRIO", "FUNÇÃO", "SETOR", "APARELHO", "IMEI", "PATRIMONIO", "Nª TELEFONE", "DADOS", "VOZ", "PROTOCOLO", "DEVOLVER", "POR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -145,6 +146,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
         grelhaEmprestimo.setRowHeight(21);
+        grelhaEmprestimo.setSelectionBackground(new java.awt.Color(255, 204, 51));
+        grelhaEmprestimo.setSelectionForeground(new java.awt.Color(0, 0, 0));
         grelhaEmprestimo.getTableHeader().setReorderingAllowed(false);
         grelhaEmprestimo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -179,8 +182,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             grelhaEmprestimo.getColumnModel().getColumn(11).setMaxWidth(60);
             grelhaEmprestimo.getColumnModel().getColumn(12).setPreferredWidth(110);
             grelhaEmprestimo.getColumnModel().getColumn(12).setMaxWidth(110);
-            grelhaEmprestimo.getColumnModel().getColumn(13).setPreferredWidth(80);
-            grelhaEmprestimo.getColumnModel().getColumn(13).setMaxWidth(80);
+            grelhaEmprestimo.getColumnModel().getColumn(13).setPreferredWidth(90);
+            grelhaEmprestimo.getColumnModel().getColumn(13).setMaxWidth(90);
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 255, 204));
@@ -279,13 +282,17 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/download-fourResultado.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
         jButton1.setText("Imprimir Pesquisa");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        buttonGroup1.add(radModelo);
+        radModelo.setText("Marca Modelo");
+        radModelo.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -309,6 +316,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radPatrimonio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radModelo)
+                        .addGap(27, 27, 27)
                         .addComponent(ckDevolvidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ckAtrazados)
@@ -352,7 +361,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(radPatrimonio)
                     .addComponent(btnLimpar)
                     .addComponent(ckAtrazados)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radModelo))
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -391,6 +401,21 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private String patrimonioComPonto(String patrimonio) {
+
+        String novoPatrimonio = "";
+        try {
+            if (!patrimonio.equals("") && patrimonio.length() == 12 && !patrimonio.isEmpty()) {
+                novoPatrimonio = patrimonio.substring(0, 3) + "." + patrimonio.substring(3, 6) + "." + patrimonio.substring(6, 9) + "." + patrimonio.substring(9, 12);
+            }
+
+        } catch (Exception e) {
+        }
+
+        return novoPatrimonio;
+
+    }
+
     // CARREGA GRELHA CONFORME PESQUISA ////////////////////////////////////////
     private void carregarGrelha() {
         // pesquisa somente emprestados
@@ -404,7 +429,12 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             tipoPesquisa = "nomeLocalidade";
         } else if (radPatrimonio.isSelected()) {
             tipoPesquisa = "patrimonio";
-        } else {
+        }  else if (radModelo.isSelected()) {
+            tipoPesquisa = "modelo";
+        } 
+        
+        
+        else {
             tipoPesquisa = "linha";
         }
 
@@ -424,6 +454,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
             String dados;
             String voz;
+            String patrimonioCorrigido = "";
 
             if (emprestimo.getChip().isIsDado()) {
                 dados = "Sim";
@@ -436,6 +467,10 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 voz = "";
             }
 
+            if (emprestimo.getCelular().getPatrimonio() != null) {
+                patrimonioCorrigido = patrimonioComPonto(emprestimo.getCelular().getPatrimonio());
+            }
+
             modeloGrelha.addRow(new Object[]{
                 emprestimo.getIdEmprestimo(),
                 emprestimo.getDataEmprestimo(),
@@ -445,7 +480,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 emprestimo.getFuncionario().getLocalidade().getNomeLocalidade(),
                 emprestimo.getCelular().getMarca().getMarca(),
                 emprestimo.getCelular().getImei1(),
-                emprestimo.getCelular().getPatrimonio(),
+                patrimonioCorrigido,
                 emprestimo.getChip().getNumeroLinha(),
                 dados,
                 voz,
@@ -567,7 +602,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         carregarGrelha();
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
@@ -810,6 +845,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.JRadioButton radImei;
     private javax.swing.JRadioButton radLinha;
     private javax.swing.JRadioButton radLocalidade;
+    private javax.swing.JRadioButton radModelo;
     private javax.swing.JRadioButton radNome;
     private javax.swing.JRadioButton radPatrimonio;
     private javax.swing.JTextField txtPesquisa;

@@ -10,10 +10,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.Session;
@@ -63,6 +59,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         lblUsuario2 = new javax.swing.JLabel();
         lblPrevilegio = new javax.swing.JLabel();
         lblPrevilegio1 = new javax.swing.JLabel();
+        lblPrevilegio2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuTrocaUsuario1 = new javax.swing.JMenuItem();
@@ -227,19 +224,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         lblUsuario1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblUsuario1.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario1.setForeground(new java.awt.Color(255, 255, 204));
         lblUsuario1.setText("Usuário Logado:");
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 204));
         lblUsuario.setText("usuario");
 
         lblUsuario2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblUsuario2.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario2.setForeground(new java.awt.Color(255, 255, 204));
         lblUsuario2.setText("Previlégio:");
 
         lblPrevilegio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblPrevilegio.setForeground(new java.awt.Color(255, 255, 255));
+        lblPrevilegio.setForeground(new java.awt.Color(255, 255, 204));
         lblPrevilegio.setText("previlegio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -294,29 +291,38 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
 
         lblPrevilegio1.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
-        lblPrevilegio1.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrevilegio1.setText("Desenvolvidor por Tony/COOGI/2021");
+        lblPrevilegio1.setForeground(new java.awt.Color(255, 255, 204));
+        lblPrevilegio1.setText("Desenvolvido por Tony/COOGI/2021");
+
+        lblPrevilegio2.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
+        lblPrevilegio2.setForeground(new java.awt.Color(255, 255, 204));
+        lblPrevilegio2.setText("Versão 4.0.4 - 13/05/2022");
 
         jDesktopPanel.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPanel.setLayer(lblPrevilegio1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPanel.setLayer(lblPrevilegio2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPanelLayout = new javax.swing.GroupLayout(jDesktopPanel);
         jDesktopPanel.setLayout(jDesktopPanelLayout);
         jDesktopPanelLayout.setHorizontalGroup(
             jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jDesktopPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblPrevilegio1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPrevilegio2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPrevilegio1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(57, 57, 57))
         );
         jDesktopPanelLayout.setVerticalGroup(
             jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 506, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
                 .addComponent(lblPrevilegio1)
-                .addGap(61, 61, 61))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrevilegio2)
+                .addGap(44, 44, 44))
         );
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(442, 30));
@@ -743,7 +749,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         codigoUsuarioLogado = Session.getIdUsuario();
         lblUsuario.setText(Session.getNome());
-        lblPrevilegio.setText(Session.getPrevilegio());
+        if(Session.getPrevilegio().equalsIgnoreCase("admin")){
+        lblPrevilegio.setText("Administrador");
+        }
+         if(Session.getPrevilegio().equalsIgnoreCase("consulta")){
+        lblPrevilegio.setText("Consulta");
+        }
+        
+        
 
         this.setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowOpened
@@ -1096,6 +1109,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JLabel lblPrevilegio;
     private javax.swing.JLabel lblPrevilegio1;
+    private javax.swing.JLabel lblPrevilegio2;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JLabel lblUsuario1;
     private javax.swing.JLabel lblUsuario2;
