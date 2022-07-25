@@ -96,6 +96,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jSeparator14 = new javax.swing.JPopupMenu.Separator();
         jMenu14 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator17 = new javax.swing.JPopupMenu.Separator();
         jMenu15 = new javax.swing.JMenu();
         jMenu17 = new javax.swing.JMenu();
@@ -121,6 +123,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jSeparator30 = new javax.swing.JPopupMenu.Separator();
         jMenu22 = new javax.swing.JMenu();
         jMenuItem29 = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jSeparator31 = new javax.swing.JPopupMenu.Separator();
         jMenu13 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
@@ -510,6 +514,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu14.add(jMenuItem12);
+        jMenu14.add(jSeparator10);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/motivoEmpre.png"))); // NOI18N
+        jMenuItem1.setText("Motivo do Empréstimo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem1);
 
         jMenu2.add(jMenu14);
         jMenu2.add(jSeparator17);
@@ -638,6 +652,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu22.add(jMenuItem29);
+        jMenu22.add(jSeparator12);
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/motivoEmpre.png"))); // NOI18N
+        jMenuItem3.setText("Motivo do Empréstimo");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu22.add(jMenuItem3);
 
         jMenu15.add(jMenu22);
         jMenu15.add(jSeparator31);
@@ -749,14 +773,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         codigoUsuarioLogado = Session.getIdUsuario();
         lblUsuario.setText(Session.getNome());
-        if(Session.getPrevilegio().equalsIgnoreCase("admin")){
-        lblPrevilegio.setText("Administrador");
+        if (Session.getPrevilegio().equalsIgnoreCase("admin")) {
+            lblPrevilegio.setText("Administrador");
         }
-         if(Session.getPrevilegio().equalsIgnoreCase("consulta")){
-        lblPrevilegio.setText("Consulta");
+        if (Session.getPrevilegio().equalsIgnoreCase("consulta")) {
+            lblPrevilegio.setText("Consulta");
         }
-        
-        
 
         this.setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowOpened
@@ -974,11 +996,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
             // TODO add your handling code here:
-            logDao.insert("Deslogou do sistema: " + Session.getNome() +", maquina:" +  InetAddress.getLocalHost().getHostName());
+            logDao.insert("Deslogou do sistema: " + Session.getNome() + ", maquina:" + InetAddress.getLocalHost().getHostName());
         } catch (UnknownHostException ex) {
-            
+
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        FrmMotivoEmprestimo frm = new FrmMotivoEmprestimo();
+        frm.novo = true;
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        FrmMotivoEmprestimo frm = new FrmMotivoEmprestimo();
+        frm.novo = true;
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1056,6 +1092,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -1074,6 +1111,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem29;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -1082,7 +1120,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator16;

@@ -12,6 +12,7 @@ import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.ImpressaoDao;
 import dao.LogDao;
+import dao.MotivoEmprestimoDao;
 import dao.UsuarioDao;
 import java.awt.Color;
 import java.awt.Component;
@@ -27,6 +28,7 @@ import modelo.Celular;
 import modelo.Chip;
 import modelo.Emprestimo;
 import modelo.Funcionario;
+import modelo.MotivoEmprestimo;
 import modelo.Session;
 import modelo.Usuario;
 import utilidade.ValidarCampos;
@@ -52,6 +54,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     ChipDao chipDao = new ChipDao();
     UsuarioDao usuarioDao = new UsuarioDao();
     LogDao logDao = new LogDao();
+    MotivoEmprestimoDao motivoEmprestimoDao = new MotivoEmprestimoDao();
 
     // lista de acessorias
     List<String> acessorios = new ArrayList<>();
@@ -66,6 +69,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         initComponents();
         txtDataEmprestimo.setText(hoje());
         carregaCombobox();
+        carregaComboboxMotivo();
         txtCodigo.setVisible(false);
         ckAparelho.setSelected(true);
         ckChip.setSelected(true);
@@ -83,7 +87,18 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 cboResponsavel.setSelectedItem(usuario);
             }
         }
-        //cboResponsavel.setSelectedItem(Session.getNome());
+
+    }
+
+    // CARREGA COMBOBOX MOTIVO EMPRESTIMO ////////////////////////////////////
+    private void carregaComboboxMotivo() {
+        List<MotivoEmprestimo> lista = motivoEmprestimoDao.getListagem();
+        cboMotivoEmprestimo.addItem("Selecione...");
+        for (MotivoEmprestimo motivo : lista) {
+            cboMotivoEmprestimo.addItem(motivo);
+
+        }
+
     }
 
     // FUNCÃO DATA HOJE ////////////////////////////////////////////////////////F
@@ -157,6 +172,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtProtocolo = new javax.swing.JFormattedTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        cboMotivoEmprestimo = new javax.swing.JComboBox();
+        jLabel25 = new javax.swing.JLabel();
+        txtChamado = new javax.swing.JTextField();
         paneComplemento = new javax.swing.JPanel();
         ckCaixa = new javax.swing.JCheckBox();
         ckManual = new javax.swing.JCheckBox();
@@ -462,31 +481,49 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jLabel22.setForeground(new java.awt.Color(204, 0, 51));
         jLabel22.setText("*");
 
+        jLabel24.setText("Motivo Empréstimo:");
+
+        cboMotivoEmprestimo.setMaximumRowCount(15);
+
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel25.setText("Chamado:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cboMotivoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtChamado))
+                    .addComponent(cboResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -498,12 +535,18 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                     .addComponent(jLabel13)
                     .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
-                    .addComponent(cboResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
                     .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25)
+                    .addComponent(txtChamado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cboMotivoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel18)
+                    .addComponent(cboResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         paneComplemento.setBackground(new java.awt.Color(222, 231, 248));
@@ -778,23 +821,23 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMensagemErro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jLabel4)
                         .addComponent(ckAparelho)
                         .addComponent(ckChip)))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(paneFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -815,7 +858,9 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1093,8 +1138,16 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             cboResponsavel.setBackground(Color.yellow);
             cboResponsavel.requestFocus();
             return;
-        }else{
+        } else {
             cboResponsavel.setBackground(Color.WHITE);
+        }
+        if (cboMotivoEmprestimo.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Informe o motivo do empréstimo.", null, JOptionPane.ERROR_MESSAGE);
+            cboMotivoEmprestimo.setBackground(Color.yellow);
+            cboMotivoEmprestimo.requestFocus();
+            return;
+        } else {
+            cboMotivoEmprestimo.setBackground(Color.WHITE);
         }
 
         if (ValidarCampos.validarCampo(txtObservacao, "Observação")) {
@@ -1117,6 +1170,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         emprestimo.setUsuario(u);
         emprestimo.setObservacao(txtObservacao.getText());
         Celular c = new Celular(celular_id);
+        MotivoEmprestimo motivoEmprestimo = (MotivoEmprestimo) cboMotivoEmprestimo.getSelectedItem();
+        emprestimo.setMotivoEmprestimo(motivoEmprestimo);
+
+        emprestimo.setChamado(txtChamado.getText());
 
         c.setStatus("EMPRESTADO");
         c.setEstadoBem("BOM ESTADO");
@@ -1370,12 +1427,14 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
             //System.out.println(emp.getUsuario().getNome());
             cboResponsavel.getModel().setSelectedItem(emp.getUsuario());
+            cboMotivoEmprestimo.getModel().setSelectedItem(emp.getMotivoEmprestimo());
             usuario_id = emp.getUsuario().getIdUsuario();
 //            // DADOS DO EMPRESTIMO
             txtDataEmprestimo.setText("");
             txtDataDevolucao.setText("");
             txtDataEmprestimo.setText(emp.getDataEmprestimo());
             txtDataDevolucao.setText(emp.getDataDevolucao());
+            txtChamado.setText(emp.getChamado());
             txtProtocolo.setText(emp.getProtocolo());
             txtObservacao.setText(emp.getObservacao());
             // PREENCHO OS DADOS DA COMBO DE ACESSORIOS
@@ -1715,6 +1774,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cboMotivoEmprestimo;
     private javax.swing.JComboBox cboResponsavel;
     private javax.swing.JCheckBox ckAdaptador;
     private javax.swing.JCheckBox ckAparelho;
@@ -1743,6 +1803,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -1761,6 +1823,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private javax.swing.JRadioButton radComChip;
     private javax.swing.JRadioButton radSemChip;
     private javax.swing.JTextField txtAparelho;
+    private javax.swing.JTextField txtChamado;
     private javax.swing.JTextField txtChip;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtComplementos;

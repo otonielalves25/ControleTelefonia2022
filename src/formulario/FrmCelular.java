@@ -112,7 +112,7 @@ public class FrmCelular extends javax.swing.JFrame {
                 celular.getMarca().getMarca(),
                 celular.getSerie(),
                 celular.getImei1(),
-                celular.getPatrimonio(),
+                patrimonioComPonto(celular.getPatrimonio()),
                 celular.getEmpresa().getNomeEmpresa(),
                 celular.getStatus(),
                 celular.getEstadoBem(),});
@@ -120,6 +120,22 @@ public class FrmCelular extends javax.swing.JFrame {
         }
 
         lblQuantidade.setText("Quantidade: " + contador);
+    }
+
+    /**
+     * FUNÇÃO CORRIGO OS PONTOS
+     *
+     * @param patrimonio
+     * @return
+     */
+    private String patrimonioComPonto(String patrimonio) {
+
+        String novoPatrimonio = "Sem";
+        if (!patrimonio.equals("") && patrimonio.length() == 12) {
+            novoPatrimonio = patrimonio.substring(0, 3) + "." + patrimonio.substring(3, 6) + "." + patrimonio.substring(6, 9) + "." + patrimonio.substring(9, 12);
+        }
+        return novoPatrimonio;
+
     }
 
     //LIMPAR******************************************************************
@@ -276,6 +292,11 @@ public class FrmCelular extends javax.swing.JFrame {
                 grelhaMouseReleased(evt);
             }
         });
+        grelha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                grelhaKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(grelha);
         if (grelha.getColumnModel().getColumnCount() > 0) {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
@@ -285,8 +306,8 @@ public class FrmCelular extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(2).setMaxWidth(120);
             grelha.getColumnModel().getColumn(3).setPreferredWidth(120);
             grelha.getColumnModel().getColumn(3).setMaxWidth(120);
-            grelha.getColumnModel().getColumn(4).setPreferredWidth(100);
-            grelha.getColumnModel().getColumn(4).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(120);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(120);
             grelha.getColumnModel().getColumn(5).setPreferredWidth(160);
             grelha.getColumnModel().getColumn(5).setMaxWidth(160);
             grelha.getColumnModel().getColumn(6).setPreferredWidth(90);
@@ -830,7 +851,7 @@ public class FrmCelular extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         botaoInicial();
-         limparTudo();
+        limparTudo();
         novo = false;
         habilitado(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -1062,6 +1083,15 @@ public class FrmCelular extends javax.swing.JFrame {
 
     private void grelhaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseReleased
         // TODO add your handling code here:
+        buscar();
+    }//GEN-LAST:event_grelhaMouseReleased
+    /**
+     * FUNÇÃO BUSCA OS DADOS
+     *
+     * @param evt
+     */
+    private void buscar() {
+
         try {
             if (grelha.getSelectedRowCount() > 0) {
 
@@ -1069,7 +1099,7 @@ public class FrmCelular extends javax.swing.JFrame {
                 Celular c = celularDao.getPorID(codigo);
 
                 txtCodigo.setText(c.getIdCelular() + "");
-                txtPatrimonio.setText(c.getPatrimonio());
+                txtPatrimonio.setText(patrimonioComPonto(c.getPatrimonio()));
                 txtSerie.setText(c.getSerie());
                 txtEmei1.setText(c.getImei1());
                 txtEmei2.setText(c.getImei2());
@@ -1125,8 +1155,8 @@ public class FrmCelular extends javax.swing.JFrame {
 
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_grelhaMouseReleased
 
+    }
     private void txtSerieFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSerieFocusLost
         // TODO add your handling code here:
         if (novo && !txtSerie.getText().isEmpty()) {
@@ -1146,14 +1176,19 @@ public class FrmCelular extends javax.swing.JFrame {
         } else {
             txtPatrimonio.setEnabled(true);
         }
-        
-       txtSerie.requestFocus();
+
+        txtSerie.requestFocus();
     }//GEN-LAST:event_btnCodigoDotActionPerformed
 
     private void btnCodigoDotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCodigoDotMouseClicked
         // TODO add your handling code here:
 
     }//GEN-LAST:event_btnCodigoDotMouseClicked
+
+    private void grelhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_grelhaKeyReleased
+         // TODO add your handling code here:
+         buscar();
+    }//GEN-LAST:event_grelhaKeyReleased
 
     // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
     private String verificaComQuemEsta(String id) {

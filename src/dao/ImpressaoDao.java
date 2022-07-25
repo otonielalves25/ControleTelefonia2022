@@ -5,9 +5,6 @@
  */
 package dao;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,12 +15,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.view.JasperViewer;
 import utilidade.SqlGlobal;
 
@@ -134,7 +128,7 @@ public class ImpressaoDao {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, paramatros, result);
             JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
+            view.setSize(1200, 1000);  // TAMANHO DA JANELA TELA 
             view.setLocationRelativeTo(null);
 
             view.setVisible(true);

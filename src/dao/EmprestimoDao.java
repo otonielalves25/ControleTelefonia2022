@@ -21,6 +21,7 @@ import modelo.Emprestimo;
 import modelo.Funcionario;
 import modelo.Localidade;
 import modelo.Marca;
+import modelo.MotivoEmprestimo;
 import modelo.Usuario;
 import utilidade.SqlGlobal;
 
@@ -38,7 +39,7 @@ public class EmprestimoDao {
     public boolean insert(Emprestimo emprestimo) {
 
         String sql = "INSERT INTO emprestimo (situacao, dataEmprestimo, dataDevolucao, funcionario_id, usuario_id, "
-                + "observacao, celular_id, chip_id, protocolo) VALUES (?,?,?,?,?,?,?,?,?)";
+                + "observacao, celular_id, chip_id, protocolo, motivoEmprestimo_id, chamado) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -63,6 +64,8 @@ public class EmprestimoDao {
 
             }
             stm.setString(9, emprestimo.getProtocolo());
+            stm.setInt(10, emprestimo.getMotivoEmprestimo().getIdMotivoEmprestimo());
+            stm.setString(11, emprestimo.getChamado());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -79,7 +82,7 @@ public class EmprestimoDao {
     public boolean update(Emprestimo emprestimo) {
 
         String sql = "UPDATE emprestimo SET situacao=?, dataEmprestimo=?, dataDevolucao=?, funcionario_id=?, usuario_id=?, "
-                + "observacao=?, celular_id=?, chip_id=?, protocolo = ? where idEmprestimo = ?";
+                + "observacao=?, celular_id=?, chip_id=?, protocolo = ?, motivoEmprestimo_id = ?, chamado =? where idEmprestimo = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
@@ -104,7 +107,9 @@ public class EmprestimoDao {
             }
 
             stm.setString(9, emprestimo.getProtocolo());
-            stm.setInt(10, emprestimo.getIdEmprestimo());
+            stm.setInt(10, emprestimo.getMotivoEmprestimo().getIdMotivoEmprestimo());
+            stm.setString(11, emprestimo.getChamado());
+            stm.setInt(12, emprestimo.getIdEmprestimo());
 
             stm.execute();
             //fechando as conexões
@@ -198,6 +203,7 @@ public class EmprestimoDao {
                 + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = ?";
 
         Emprestimo emprestimo = null;
@@ -210,6 +216,7 @@ public class EmprestimoDao {
         Marca marca;
         Empresa empresa;
         Cargo cargo;
+        MotivoEmprestimo motivo;
 
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -228,6 +235,7 @@ public class EmprestimoDao {
                     chip = new Chip();
                     empresa = new Empresa();
                     cargo = new Cargo();
+                    motivo = new MotivoEmprestimo();
                     //----------------------------------------------------------
                     emprestimo.setIdEmprestimo(rs.getInt("idEmprestimo"));
                     emprestimo.setSituacao(rs.getString("situacao"));
@@ -235,6 +243,7 @@ public class EmprestimoDao {
                     emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
                     emprestimo.setProtocolo(rs.getString("protocolo"));
                     emprestimo.setObservacao(rs.getString("observacao"));
+                    emprestimo.setChamado(rs.getString("chamado"));
                     // localidade 
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                     localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
@@ -281,6 +290,10 @@ public class EmprestimoDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setIsTelefonia(rs.getBoolean("telefonia"));
                     emprestimo.setChip(chip);
+                    // MOTIVO 
+                    motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                    motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                    emprestimo.setMotivoEmprestimo(motivo);
 
                 }
             }
@@ -327,6 +340,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                     + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                    + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
                     + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY " + modoPesquisa + ", funcionario.nome";
         } else {
@@ -339,6 +353,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                     + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                    + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
                     + "LIKE '%" + procura + "%' ORDER BY " + modoPesquisa + ", funcionario.nome";
         }
@@ -383,6 +398,7 @@ public class EmprestimoDao {
                 emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
                 emprestimo.setProtocolo(rs.getString("protocolo"));
                 emprestimo.setObservacao(rs.getString("observacao"));
+                emprestimo.setChamado(rs.getString("chamado"));
 
                 // localidade 
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
@@ -432,6 +448,11 @@ public class EmprestimoDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
                 emprestimo.setChip(chip);
+                // MOTIVO 
+                MotivoEmprestimo motivo = new MotivoEmprestimo();
+                motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                emprestimo.setMotivoEmprestimo(motivo);
 
                 Listagem.add(emprestimo);
             }
@@ -486,6 +507,7 @@ public class EmprestimoDao {
                 + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE celular.imei1 "
                 + "= ? AND emprestimo.situacao = 'EMPRESTADO'";
 
@@ -525,6 +547,7 @@ public class EmprestimoDao {
                 emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
                 emprestimo.setProtocolo(rs.getString("protocolo"));
                 emprestimo.setObservacao(rs.getString("observacao"));
+                emprestimo.setChamado(rs.getString("chamado"));
 
                 // localidade 
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
@@ -573,6 +596,11 @@ public class EmprestimoDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
                 emprestimo.setChip(chip);
+                // MOTIVO 
+                MotivoEmprestimo motivo = new MotivoEmprestimo();
+                motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                emprestimo.setMotivoEmprestimo(motivo);
 
             }
             //fechando as conexões
@@ -599,6 +627,7 @@ public class EmprestimoDao {
                 + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idChip "
                 + "= ? AND emprestimo.situacao = 'EMPRESTADO'";
 
@@ -638,7 +667,7 @@ public class EmprestimoDao {
                 emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
                 emprestimo.setProtocolo(rs.getString("protocolo"));
                 emprestimo.setObservacao(rs.getString("observacao"));
-
+                emprestimo.setChamado(rs.getString("chamado"));
                 // localidade 
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
                 localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
@@ -686,6 +715,11 @@ public class EmprestimoDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
                 emprestimo.setChip(chip);
+                // MOTIVO 
+                MotivoEmprestimo motivo = new MotivoEmprestimo();
+                motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                emprestimo.setMotivoEmprestimo(motivo);
 
             }
             //fechando as conexões
@@ -713,6 +747,7 @@ public class EmprestimoDao {
                 + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE funcionario.nome "
                 + "= ? AND emprestimo.situacao = 'EMPRESTADO'";
 
@@ -753,6 +788,7 @@ public class EmprestimoDao {
                 emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
                 emprestimo.setProtocolo(rs.getString("protocolo"));
                 emprestimo.setObservacao(rs.getString("observacao"));
+                emprestimo.setChamado(rs.getString("chamado"));
 
                 // localidade 
                 localidade.setIdLocalidade(rs.getInt("idLocalidade"));
@@ -801,6 +837,11 @@ public class EmprestimoDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
                 emprestimo.setChip(chip);
+                // MOTIVO 
+                MotivoEmprestimo motivo = new MotivoEmprestimo();
+                motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                emprestimo.setMotivoEmprestimo(motivo);
 
                 Listagem.add(emprestimo);
             }
@@ -826,6 +867,7 @@ public class EmprestimoDao {
                 + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
                 + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
                 + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where celular.imei1 = ?";
 
         Emprestimo emprestimo = null;
@@ -864,6 +906,7 @@ public class EmprestimoDao {
                     emprestimo.setProtocolo(rs.getString("protocolo"));
                     emprestimo.setObservacao(rs.getString("observacao"));
                     emprestimo.setObservacaoDevolucao(rs.getString("observacaoDevolucao"));
+                    emprestimo.setChamado(rs.getString("chamado"));
 
                     // localidade 
                     localidade.setIdLocalidade(rs.getInt("idLocalidade"));
@@ -911,6 +954,11 @@ public class EmprestimoDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setIsTelefonia(rs.getBoolean("telefonia"));
                     emprestimo.setChip(chip);
+                    // MOTIVO 
+                    MotivoEmprestimo motivo = new MotivoEmprestimo();
+                    motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                    motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                    emprestimo.setMotivoEmprestimo(motivo);
 
                 }
             }

@@ -96,11 +96,6 @@ public class Usuario {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return nome; //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * @return the previlegio
      */
@@ -113,6 +108,11 @@ public class Usuario {
      */
     public void setPrevilegio(String previlegio) {
         this.previlegio = previlegio;
+    }
+
+    @Override
+    public String toString() {
+        return nome; //To change body of generated methods, choose Tools | Templates.
     }
 
 }

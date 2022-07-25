@@ -22,6 +22,9 @@ public class Emprestimo {
     private Chip chip;
     private String observacaoDevolucao;
     private String protocolo;
+    private MotivoEmprestimo motivoEmprestimo;
+    private String chamado;
+    
 
     public Emprestimo() {
     }
@@ -184,5 +187,24 @@ public class Emprestimo {
     public void setProtocolo(String protocolo) {
         this.protocolo = protocolo;
     }
+
+    public MotivoEmprestimo getMotivoEmprestimo() {
+        return motivoEmprestimo;
+    }
+
+    public void setMotivoEmprestimo(MotivoEmprestimo motivoEmprestimo) {
+        this.motivoEmprestimo = motivoEmprestimo;
+    }
+
+    public String getChamado() {
+        return chamado;
+    }
+
+    public void setChamado(String chamado) {
+        this.chamado = chamado;
+    }
+    
+    
+    
 
 }
