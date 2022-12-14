@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82c01ce5-c7e1-4e0f-93e2-48b49b7d7224">
 	<property name="ireport.zoom" value="1.6105100000000014"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="57"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT * FROM chip INNER JOIN empresa ON chip.empresa_id = empresa.idEmpresa]]>
@@ -39,7 +39,7 @@
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="102" y="1" width="131" height="20" backcolor="#FFCCCC" uuid="eeac6beb-35dc-45ad-8f4c-333882084b71"/>
+				<reportElement mode="Opaque" x="130" y="1" width="131" height="20" backcolor="#FFCC99" uuid="eeac6beb-35dc-45ad-8f4c-333882084b71"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -54,7 +54,7 @@
 				<text><![CDATA[Código do Chip]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="1" width="102" height="20" backcolor="#FFCCCC" uuid="82f584b7-002e-4b64-a293-cf6ee2f5a7b4"/>
+				<reportElement mode="Opaque" x="28" y="1" width="102" height="20" backcolor="#FFCC99" uuid="82f584b7-002e-4b64-a293-cf6ee2f5a7b4"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -84,7 +84,7 @@
 				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="477" y="1" width="104" height="20" backcolor="#FFCCCC" uuid="48fc817a-d04a-404e-b061-572be3976be4"/>
+				<reportElement mode="Opaque" x="477" y="1" width="104" height="20" backcolor="#FFCC99" uuid="48fc817a-d04a-404e-b061-572be3976be4"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -99,7 +99,7 @@
 				<text><![CDATA[Com Internet]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="233" y="1" width="244" height="20" backcolor="#FFCCCC" uuid="5a2d5227-8b60-41ee-a216-0969b229af25"/>
+				<reportElement mode="Opaque" x="261" y="1" width="216" height="20" backcolor="#FFCC99" uuid="5a2d5227-8b60-41ee-a216-0969b229af25"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -114,7 +114,7 @@
 				<text><![CDATA[Operadora]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="581" y="1" width="111" height="20" backcolor="#FFCCCC" uuid="69784d86-cefa-4466-a630-c970988c42c2"/>
+				<reportElement mode="Opaque" x="581" y="1" width="111" height="20" backcolor="#FFCC99" uuid="69784d86-cefa-4466-a630-c970988c42c2"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -128,12 +128,26 @@
 				</textElement>
 				<text><![CDATA[Com Créditos]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="28" height="20" backcolor="#FFCC99" uuid="3758987f-f9e5-4502-a3dd-9f4f8603983a"/>
+				<box topPadding="0" leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Qtde]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="102" y="0" width="131" height="20" uuid="04fee8e3-f438-4f6c-b9bb-4d514bb60cc5"/>
+				<reportElement x="130" y="0" width="131" height="20" uuid="04fee8e3-f438-4f6c-b9bb-4d514bb60cc5"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -148,7 +162,7 @@
 				<textFieldExpression><![CDATA[""+$F{codigoChip}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="102" height="20" uuid="b09474c2-053f-4722-877c-31dcb638fb7a"/>
+				<reportElement x="28" y="0" width="102" height="20" uuid="b09474c2-053f-4722-877c-31dcb638fb7a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -193,7 +207,7 @@
 				<textFieldExpression><![CDATA[$F{telefonia}.booleanValue() == true ? "Sim": "Não"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="233" y="0" width="244" height="20" uuid="2e2c23fe-a495-422d-93dc-9cc505047980"/>
+				<reportElement x="261" y="0" width="216" height="20" uuid="2e2c23fe-a495-422d-93dc-9cc505047980"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -221,6 +235,20 @@
 					<paragraph leftIndent="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{telefonia} == Boolean.TRUE ? "Sim":"Não"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="28" height="20" backcolor="#FFFFFF" uuid="511805d5-4866-4e16-bd81-1a106c7b5545"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

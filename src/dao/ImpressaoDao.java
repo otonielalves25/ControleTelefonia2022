@@ -185,27 +185,6 @@ public class ImpressaoDao {
 
             view.setVisible(true);
 
-////            // TESTAR CONVERSÃO PDF ////////////////////////////////////////////
-//            JRPdfExporter exporter = new JRPdfExporter(); /// PDF
-//            JRXlsExporter exporterPdf = new JRXlsExporter(); /// PDF
-//
-//            String caminhoPdfGerado = "c:/temp/TEST.xls";
-//
-//            exporterPdf.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
-//            exporterPdf.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoPdfGerado);
-//
-//            exporterPdf.exportReport();
-//
-//            Desktop desktop = Desktop.getDesktop();
-//            File file = new File(caminhoPdfGerado);
-//
-//            try {
-//                desktop.open(file);
-//
-//                //  FIM TESTAR CONVERSÃO PDF ///////////////////////////////////////
-//            } catch (IOException ex) {
-//                Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         } catch (JRException e) {
         }
         try {
@@ -359,16 +338,6 @@ public class ImpressaoDao {
 
         String sql = SqlGlobal.getSqlGlogalEmprestimos();
 
-//        sql = "SELECT * FROM emprestimo "
-//                + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
-//                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
-//                + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
-//                + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
-//                + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
-//                + "LEFT JOIN empresa on celular.empresa_id = empresa.idEmpresa "
-//                + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
-//                + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
-//                + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE emprestimo.situacao = 'EMPRESTADO'";
         try {
 
             con = conexao.ConexaoSqLite.getConnection();
@@ -402,6 +371,57 @@ public class ImpressaoDao {
             Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+        // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
+    public void imprimirEmprestimoGenerico(String nomeFuncionario) {
+        Map parametro = new HashMap();
+
+        String sql = "SELECT * FROM funcionario "           
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
+                + "where funcionario.nome = '" + nomeFuncionario + "'";
+
+        try {
+
+            con = conexao.ConexaoSqLite.getConnection();
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
+            //* coloca fotos nos relatorios *//
+
+            parametro.put("logoDetran", logoDetran);
+            parametro.put("logoDot", logoDot);
+            parametro.put("logoCoogi", logoCoogi);
+            // FECHA O BANCO DE DADOS //////////////////////////////////////////
+
+        } catch (SQLException ex) {
+
+        }
+
+        InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/TermoEmprestimoGenerico.jasper");
+
+        JRResultSetDataSource resultado = new JRResultSetDataSource(rs);
+
+        try {
+
+            JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, parametro, resultado);
+            JasperViewer view = new JasperViewer(impressao, false);
+            view.setSize(1200, 1000);
+            view.setLocationRelativeTo(null);
+       
+            view.toFront();     
+            view.setVisible(true);
+
+        } catch (JRException e) {
+           e.printStackTrace();
+        }
+
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

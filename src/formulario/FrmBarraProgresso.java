@@ -20,17 +20,6 @@ public class FrmBarraProgresso extends javax.swing.JDialog {
      */
     public FrmBarraProgresso(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(FrmBarraProgresso.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            Logger.getLogger(FrmBarraProgresso.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            Logger.getLogger(FrmBarraProgresso.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (UnsupportedLookAndFeelException ex) {
-//            Logger.getLogger(FrmBarraProgresso.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         initComponents();
         funcaoBarraProgresso();
     }

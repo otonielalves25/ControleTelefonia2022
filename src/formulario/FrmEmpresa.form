@@ -103,7 +103,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Empresa:"/>
+            <Property name="text" type="java.lang.String" value="Operadora:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTexto">
@@ -287,7 +287,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Cadastro de Empresa Telefonia"/>
+            <Property name="text" type="java.lang.String" value="Cadastro de Operadoras "/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>

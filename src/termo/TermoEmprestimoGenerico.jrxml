@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="669"/>
+	<subDataset name="Table Dataset 1" uuid="df9fd294-9311-4892-867d-99d61dfa4692"/>
+	<parameter name="LOGO" class="java.lang.Object"/>
+	<parameter name="logoDetran" class="java.lang.Object"/>
+	<parameter name="logoDot" class="java.lang.Object"/>
+	<parameter name="logoCoogi" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[SELECT * FROM funcionario           
+JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo
+JOIN localidade on funcionario.localidade_id = localidade.idLocalidade
+where funcionario.nome = 'Otoniel Amancio Alves']]>
+	</queryString>
+	<field name="idFuncionario" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="localidade_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cargo_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idCargo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeCargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idLocalidade" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomeLocalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoLocalidade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<image scaleImage="FillFrame" onErrorType="Blank" evaluationTime="Report">
+				<reportElement x="3" y="0" width="552" height="48" uuid="0f732871-e02d-4c40-88e5-f8b540a2e86f"/>
+				<imageExpression><![CDATA[$P{logoDetran}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="561" splitType="Stretch">
+			<staticText>
+				<reportElement x="47" y="22" width="478" height="20" uuid="fe7ea37c-3ceb-499c-8e4b-0170abe34866"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERMO DE RESPONSABILIDADE PARA COMODATO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="65" width="151" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="228" width="540" height="230" uuid="358adf7c-7f62-4976-aac6-6f2a4c7be75b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[    1.  É inteiramente responsável pelas boas condições de uso e conservação.
+    2.  Fará o uso exclusivamente para fins profissionais e dentro da necessidade funcional.
+    3.  Devolverá no prazo máximo de 2 (dois) dias úteis quando solicitado formalmente, ou quando desligar-se do quadro de funcionários do Detran/PR;
+    4.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
+    5.  Assumirá conhecimento dos termos da Instrução Normativa n.º 001/2015 e da Portaria n.º 083/2019 – DG subsidiariamente.
+    6.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
+    7.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
+                                                                                                                                                                                                                                                  Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="158" y="65" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="106" width="151" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="158" y="106" width="151" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="86" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDADE: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="158" y="86" width="389" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeLocalidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="309" y="106" width="81" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGO: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="106" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.25"/>
+					<rightPen lineWidth="1.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeCargo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-2" y="140" width="549" height="23" uuid="33ba041c-9252-4a2b-8831-2498dc4adbc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVAÇÕES GERAIS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="6" y="163" width="541" height="65" uuid="2655faca-a71e-4a09-96f6-df6957da2ba6"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["      Os itens em questão é de propriedade do DETRAN - PR. De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="173" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="47" y="10" width="145" height="20" uuid="ea44645b-1511-4c4f-9088-57ef43d56bbb"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="87" width="229" height="1" uuid="bbe4a95f-a7e7-4439-81d1-73bfe792384c"/>
+			</line>
+			<staticText>
+				<reportElement x="7" y="10" width="40" height="20" uuid="09be560e-9cb9-434a-b8f7-a73a7df97052"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Curitiba:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="328" y="29" width="208" height="1" uuid="dc736187-c094-4539-9958-59ad7c65c213"/>
+			</line>
+			<staticText>
+				<reportElement x="21" y="90" width="208" height="20" uuid="79e84799-4a1a-43a4-9c4f-6398776804ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<text><![CDATA[COOGI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="340" y="30" width="196" height="20" uuid="dde97f6a-4eba-4f0b-9461-834503be6da5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank" evaluationTime="Report">
+				<reportElement x="435" y="144" width="120" height="29" uuid="b2129a37-db5a-426e-a910-3618c8a3167f"/>
+				<imageExpression><![CDATA[$P{logoCoogi}]]></imageExpression>
+			</image>
+			<image onErrorType="Blank" evaluationTime="Report">
+				<reportElement x="3" y="144" width="119" height="29" uuid="702b51ae-7dfc-46a2-a16f-f9ef605aa118"/>
+				<imageExpression><![CDATA[$P{logoDot}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="21" y="68" width="208" height="20" forecolor="#CC0000" uuid="a9376092-5c09-483d-bb3c-5de8239f0440"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<line>
+				<reportElement x="325" y="86" width="208" height="1" uuid="37219520-6064-4fda-ae84-8ebbbd5fabad"/>
+			</line>
+			<staticText>
+				<reportElement x="328" y="67" width="208" height="20" forecolor="#CC0000" uuid="b447584d-aea1-4a51-8974-31adbd603eea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="10" width="208" height="20" forecolor="#CC0000" uuid="a5f73a58-e5bc-4ace-bf36-a4d2f49bfc50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura e data eletrônica no rodapé]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="90" width="208" height="20" uuid="322a6f38-c48e-4945-8850-2fb35a292845"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<text><![CDATA[CHEFE DA UNIDADE]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

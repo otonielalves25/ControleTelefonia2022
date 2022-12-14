@@ -109,6 +109,11 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
         jLabel1.setText("Nª Linha ou Código:");
 
+        txtPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesquisaActionPerformed(evt);
+            }
+        });
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyPressed(evt);
@@ -252,6 +257,10 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void txtPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesquisaActionPerformed
 
     /**
      * @param args the command line arguments

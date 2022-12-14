@@ -66,7 +66,7 @@ public class FrmEmpresa extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Empresa:");
+        jLabel1.setText("Operadora:");
 
         txtTexto.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtTexto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
@@ -172,7 +172,7 @@ public class FrmEmpresa extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Cadastro de Empresa Telefonia");
+        lblTitulo.setText("Cadastro de Operadoras ");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 

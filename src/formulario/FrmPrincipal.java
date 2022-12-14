@@ -128,6 +128,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jSeparator31 = new javax.swing.JPopupMenu.Separator();
         jMenu13 = new javax.swing.JMenu();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu21 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
@@ -149,7 +151,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnEmp.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEmp.setForeground(new java.awt.Color(51, 51, 51));
         btnEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/newEmp.png"))); // NOI18N
-        btnEmp.setText("NOVO EMPRÉSTIMO");
+        btnEmp.setText("Novo Empréstimo");
         btnEmp.setToolTipText("NOVO EMPRÉSTIMO");
         btnEmp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEmp.setMinimumSize(new java.awt.Dimension(139, 41));
@@ -165,7 +167,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa 32x32.jpg"))); // NOI18N
         btnConsulta.setText("Consulta");
         btnConsulta.setToolTipText("Consulta");
-        btnConsulta.setMaximumSize(null);
         btnConsulta.setMinimumSize(new java.awt.Dimension(139, 41));
         btnConsulta.setPreferredSize(new java.awt.Dimension(175, 41));
         btnConsulta.addActionListener(new java.awt.event.ActionListener() {
@@ -217,7 +218,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setForeground(new java.awt.Color(51, 51, 51));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/chip.png"))); // NOI18N
-        jButton4.setText("Chip/Linhas");
+        jButton4.setText("Chip / Linhas");
         jButton4.setToolTipText("Chip/Linhas");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton4.setMinimumSize(new java.awt.Dimension(139, 41));
@@ -272,26 +273,28 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUsuario1)
-                    .addComponent(lblUsuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblUsuario2)
-                    .addComponent(lblPrevilegio))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUsuario1)
+                            .addComponent(lblUsuario))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblUsuario2)
+                            .addComponent(lblPrevilegio))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnConsulta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         lblPrevilegio1.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
@@ -453,10 +456,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu2.add(jSeparator8);
 
         jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/empresa.png"))); // NOI18N
-        jMenu7.setText("Empresas");
+        jMenu7.setText("Operadora");
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/empresa.png"))); // NOI18N
-        jMenuItem6.setText("Empresa - Comodato");
+        jMenuItem6.setText("Operadora");
         jMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuItem6MouseClicked(evt);
@@ -477,7 +480,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu16.setText("Localidade");
 
         jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/localidade.png"))); // NOI18N
-        jMenuItem24.setText("Localidades/Setores");
+        jMenuItem24.setText("Localidades / Setores");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem24ActionPerformed(evt);
@@ -606,10 +609,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu15.add(jSeparator26);
 
         jMenu19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/empresa.png"))); // NOI18N
-        jMenu19.setText("Empresas");
+        jMenu19.setText("Operadora");
 
         jMenuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/empresa.png"))); // NOI18N
-        jMenuItem26.setText("Empresa - Comodato");
+        jMenuItem26.setText("Operadora");
         jMenuItem26.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuItem26MouseClicked(evt);
@@ -630,7 +633,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu20.setText("Localidade");
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/localidade.png"))); // NOI18N
-        jMenuItem27.setText("Localidades/Setores");
+        jMenuItem27.setText("Localidades / Setores");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem27ActionPerformed(evt);
@@ -684,6 +687,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu13.add(jMenuItem17);
 
         jMenuBar1.add(jMenu13);
+
+        jMenu21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/donwload.png"))); // NOI18N
+        jMenu21.setText("Impressão");
+        jMenu21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenu21.setMinimumSize(new java.awt.Dimension(200, 0));
+        jMenu21.setPreferredSize(new java.awt.Dimension(100, 19));
+
+        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
+        jMenuItem18.setText("Termo Empréstimo Genérico");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu21.add(jMenuItem18);
+
+        jMenuBar1.add(jMenu21);
 
         jMenu12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ajuda.png"))); // NOI18N
         jMenu12.setText("Logs   ");
@@ -1016,6 +1036,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+        FrmTermoGenerico termo = new FrmTermoGenerico(this, rootPaneCheckingEnabled);
+        termo.setVisible(true);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1086,6 +1112,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu19;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu20;
+    private javax.swing.JMenu jMenu21;
     private javax.swing.JMenu jMenu22;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -1100,6 +1127,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;

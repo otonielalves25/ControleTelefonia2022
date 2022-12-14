@@ -77,6 +77,8 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="txtCodigo" min="-2" pref="65" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="ckVarios" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnSalvar" min="-2" pref="159" max="-2" attributes="0"/>
                               </Group>
                               <Component id="paneFuncionario" alignment="0" max="32767" attributes="0"/>
@@ -88,12 +90,12 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtMensagemErro" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtMensagemErro" min="-2" pref="518" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="ckAparelho" min="-2" pref="81" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="ckChip" min="-2" pref="51" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -133,7 +135,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnCancelar" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="txtCodigo" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ckVarios" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="btnSalvar" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -551,8 +556,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="txtDataEmprestimo" min="-2" pref="109" max="-2" attributes="0"/>
@@ -562,14 +567,17 @@
                               <Component id="jLabel22" min="-2" pref="15" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtDataDevolucao" min="-2" pref="104" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="cboMotivoEmprestimo" min="-2" pref="332" max="-2" attributes="0"/>
+                              <Component id="cboMotivoEmprestimo" min="-2" pref="309" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnBuscFuncionario2" min="-2" pref="22" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel15" min="-2" pref="75" max="-2" attributes="0"/>
@@ -583,7 +591,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel25" min="-2" pref="75" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtChamado" max="32767" attributes="0"/>
+                              <Component id="txtChamado" pref="71" max="32767" attributes="0"/>
                           </Group>
                           <Component id="cboResponsavel" max="32767" attributes="0"/>
                       </Group>
@@ -612,6 +620,7 @@
                           <Component id="jLabel24" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="cboResponsavel" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnBuscFuncionario2" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="12" max="32767" attributes="0"/>
                   </Group>
@@ -712,6 +721,9 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboMotivoEmprestimoActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
               </AuxValues>
@@ -723,6 +735,25 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtChamado">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtChamadoActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtChamadoKeyPressed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBuscFuncionario2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagem/addnovo.png"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="contentAreaFilled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscFuncionario2ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1072,7 +1103,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="33" green="0" red="cc" type="rgb"/>
             </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[10, 10]"/>
             </Property>
@@ -1116,6 +1147,12 @@
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="EMPR&#xc9;STIMO:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="ckVarios">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Emprestar v&#xe1;rios itens para este funcion&#xe1;rio"/>
+            <Property name="opaque" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

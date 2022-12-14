@@ -64,6 +64,7 @@ public class EmprestimoDao {
 
             }
             stm.setString(9, emprestimo.getProtocolo());
+            System.out.println(emprestimo.getMotivoEmprestimo().getIdMotivoEmprestimo()+"toni");
             stm.setInt(10, emprestimo.getMotivoEmprestimo().getIdMotivoEmprestimo());
             stm.setString(11, emprestimo.getChamado());
             stm.execute();
@@ -191,7 +192,7 @@ public class EmprestimoDao {
 
     }
 
-//    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    //    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Emprestimo retornaPorID(int codigo) {
 
         String sql = "SELECT * FROM emprestimo "
@@ -325,7 +326,11 @@ public class EmprestimoDao {
             modoPesquisa = "patrimonio";
         } else if (tipoPesquisa.equals("modelo")) {
             modoPesquisa = "marca.marca";
-        } else {
+        } else if (tipoPesquisa.equals("dataEmprestimo")) {
+            modoPesquisa = "emprestimo.dataEmprestimo";
+        }       
+        
+        else {
             modoPesquisa = "chip.numeroLinha";
         }
 
@@ -342,7 +347,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY " + modoPesquisa + ", funcionario.nome";
+                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY funcionario.nome";
         } else {
             sql = "SELECT * FROM emprestimo "
                     + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
@@ -355,7 +360,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' ORDER BY " + modoPesquisa + ", funcionario.nome";
+                    + "LIKE '%" + procura + "%' ORDER BY funcionario.nome";
         }
 
         // PASSANDO OS VALORES NAS VARIÁVEL GLOBAL ////////////////////////////
