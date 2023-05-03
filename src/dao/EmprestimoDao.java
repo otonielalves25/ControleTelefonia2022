@@ -309,7 +309,7 @@ public class EmprestimoDao {
     }
 
 //    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Emprestimo> getListagemLike(String procura, String soEmprestados, String tipoPesquisa) {
+    public ArrayList<Emprestimo> getListagemLike(String procura, String soEmprestados, String tipoPesquisa, int quantidade) {
 
         ArrayList<Emprestimo> Listagem = new ArrayList<>();
         String sql;
@@ -347,7 +347,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY funcionario.nome";
+                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY funcionario.nome LIMIT " + quantidade;
         } else {
             sql = "SELECT * FROM emprestimo "
                     + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
@@ -360,7 +360,7 @@ public class EmprestimoDao {
                     + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
                     + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
-                    + "LIKE '%" + procura + "%' ORDER BY funcionario.nome";
+                    + "LIKE '%" + procura + "%' ORDER BY funcionario.nome LIMIT " + quantidade;
         }
 
         // PASSANDO OS VALORES NAS VARIÁVEL GLOBAL ////////////////////////////

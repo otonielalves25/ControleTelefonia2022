@@ -5,19 +5,20 @@
  */
 package formulario;
 
-import utilidade.ConvertendoSenhaMD5;
 import dao.EmprestimoDao;
 import dao.LogDao;
-
 import dao.UsuarioDao;
-
+import java.awt.Color;
+import java.awt.Component;
 import java.util.List;
-
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Session;
-
 import modelo.Usuario;
+import utilidade.ConvertendoSenhaMD5;
 
 /**
  *
@@ -60,6 +61,32 @@ public class FrmUsuario extends javax.swing.JFrame {
                 usuario.getPrevilegio(),
                 usuario.getStatus(),});
         }
+
+        pintaInativos();
+    }
+
+    // PINTANDO GRADE 
+    private void pintaInativos() {
+        grelha.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                //*******************************************
+                int coluna = 4;
+
+                String procurado = (String) grelha.getValueAt(row, coluna);
+
+                if (procurado.equalsIgnoreCase("ATIVO")) {
+                    label.setForeground(Color.BLACK);
+                } else {
+                    label.setForeground(Color.RED);
+                }
+
+                //*******************************************
+                return label;
+
+            }
+        });
     }
 
     //LIMPAR******************************************************************
@@ -326,7 +353,7 @@ public class FrmUsuario extends javax.swing.JFrame {
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboPrevilegio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,7 +372,9 @@ public class FrmUsuario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

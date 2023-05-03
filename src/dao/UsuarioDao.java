@@ -96,7 +96,7 @@ public class UsuarioDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Usuario getPorID(int codigo) {
 
-        String sql = "SELECT * FROM usuario WHERE idUsuario = ?";
+        String sql = "SELECT * FROM usuario WHERE idUsuario = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -128,7 +128,7 @@ public class UsuarioDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Usuario retornaPorNome(String procura) {
 
-        String sql = "SELECT * FROM usuario WHERE nome = ?";
+        String sql = "SELECT * FROM usuario WHERE nome = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();
@@ -159,7 +159,7 @@ public class UsuarioDao {
         //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagem() {
 
-        String sql = "SELECT * FROM usuario ORDER BY nome";
+        String sql = "SELECT * FROM usuario WHERE status = 'Ativo' ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         Usuario usuario = null;
         try {
@@ -226,7 +226,7 @@ public class UsuarioDao {
         //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Usuario validarLogin(String login, String senha) {
 
-        String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?";
+        String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
             con = conexao.ConexaoSqLite.getConnection();

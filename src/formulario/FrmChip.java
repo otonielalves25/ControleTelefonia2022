@@ -10,9 +10,14 @@ import dao.EmpresaDao;
 import dao.EmprestimoDao;
 import dao.ImpressaoDao;
 import dao.LogDao;
+import java.awt.Color;
+import java.awt.Component;
 
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Chip;
 import modelo.Empresa;
@@ -87,13 +92,52 @@ public class FrmChip extends javax.swing.JFrame {
             contador++;
         }
         lblQuantidade.setText("Quantidade: " + contador);
+        
+        pintaInativos();
     }
+    
+        // PINTANDO GRADE 
+    private void pintaInativos() {
+        grelha.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                //*******************************************
+                int coluna = 6;
+
+                String procurado = (String) grelha.getValueAt(row, coluna);
+
+                if (procurado.equalsIgnoreCase("EMPRESTADO")) {
+                    label.setForeground(Color.BLUE);
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+
+                //*******************************************
+                return label;
+
+            }
+        });
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //LIMPAR******************************************************************
 
     private void limparPouco() {
 
         txtChip.setText("");
         txtTelefone.setText("");
+        cboSituacao.setEnabled(false);
 
     }
 
@@ -391,6 +435,7 @@ public class FrmChip extends javax.swing.JFrame {
         jLabel7.setText("Operadora:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
+        btnImprimir.setBackground(new java.awt.Color(255, 204, 153));
         btnImprimir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
         btnImprimir.setText("Imprimir");
@@ -624,11 +669,16 @@ public class FrmChip extends javax.swing.JFrame {
             Chip linha = chipDao.retornaPorNumeroLinha(txtChip.getText());
             // se o chip já tem cadastro
             if (xip != null) {
+                limparPouco();
+                txtChip.requestFocus();
                 JOptionPane.showMessageDialog(this, "Chip já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
+
                 return;
             }
             // se a linha tem cadastro
             if (linha != null) {
+                limparPouco();
+                txtChip.requestFocus();
                 JOptionPane.showMessageDialog(this, "Número da linha já tem cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -646,10 +696,11 @@ public class FrmChip extends javax.swing.JFrame {
 
         // VERIFICA QUE SÃO VARIOS IGUAIS //////////////////////////////////////
         if (ckVarios.isSelected()) {
-            limparPouco();
             botaoNovo();
+            limparPouco();
             novo = true;
             habilitado(true);
+            cboSituacao.setEnabled(false);
         } else {
             limparTudo();
             botaoInicial();

@@ -12,10 +12,15 @@ import dao.EmprestimoDao;
 import dao.ImpressaoDao;
 import dao.LogDao;
 import dao.MarcaDao;
+import java.awt.Color;
+import java.awt.Component;
 
 import java.util.List;
+import javax.swing.JLabel;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Celular;
@@ -119,7 +124,32 @@ public class FrmCelular extends javax.swing.JFrame {
             contador++;
         }
 
-        lblQuantidade.setText("Quantidade: " + contador);
+        lblQuantidade.setText("Quantidade: " + contador + " localizados.");
+        pintaInativos();
+    }
+
+    // PINTANDO GRADE 
+    private void pintaInativos() {
+        grelha.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                //*******************************************
+                int coluna = 6;
+
+                String procurado = (String) grelha.getValueAt(row, coluna);
+
+                if (procurado.equalsIgnoreCase("EMPRESTADO")) {
+                    label.setForeground(Color.BLUE);
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+
+                //*******************************************
+                return label;
+
+            }
+        });
     }
 
     /**
@@ -257,7 +287,7 @@ public class FrmCelular extends javax.swing.JFrame {
         painel.setBackground(new java.awt.Color(222, 231, 248));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel1.setText("Série:");
+        jLabel1.setText("Série: *");
 
         txtSerie.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtSerie.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -396,7 +426,7 @@ public class FrmCelular extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel3.setText("Categoria:");
+        jLabel3.setText("Categoria: *");
 
         cboMarca.setMaximumRowCount(20);
 
@@ -418,10 +448,10 @@ public class FrmCelular extends javax.swing.JFrame {
         txtEmei1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel7.setText("IMEI 1:");
+        jLabel7.setText("IMEI 1: *");
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel8.setText("IMEI 2:");
+        jLabel8.setText("IMEI 2: *");
 
         txtEmei2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtEmei2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -439,7 +469,7 @@ public class FrmCelular extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtObservacao);
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel4.setText("Marca Modelo:");
+        jLabel4.setText("Marca Modelo: *");
 
         lblQuantidade.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblQuantidade.setForeground(new java.awt.Color(0, 0, 204));
@@ -447,7 +477,7 @@ public class FrmCelular extends javax.swing.JFrame {
         lblQuantidade.setText("quantidade");
 
         jLabel9.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel9.setText("Empresa Comodato:");
+        jLabel9.setText("Empresa Comodato: *");
 
         ckVarios.setText("Varios iguais");
         ckVarios.setOpaque(false);
@@ -472,11 +502,17 @@ public class FrmCelular extends javax.swing.JFrame {
         jLabel2.setText("Situação:");
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel10.setText("Estado do Bem:");
+        jLabel10.setText("Estado do Bem: *");
 
         cboEstadoBem.setMaximumRowCount(20);
         cboEstadoBem.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "BOM ESTADO", "BAIXADO", "DEFEITO", "DOADO", "EXTRAVIADO", "INSERVÍVEL", "NOVO", "QUEBRADO" }));
+        cboEstadoBem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEstadoBemActionPerformed(evt);
+            }
+        });
 
+        btnImprimir.setBackground(new java.awt.Color(255, 204, 153));
         btnImprimir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
         btnImprimir.setText("imprimir");
@@ -605,29 +641,31 @@ public class FrmCelular extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelLayout.createSequentialGroup()
-                                .addComponent(cboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelLayout.createSequentialGroup()
                                 .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtSerie)
                                     .addGroup(painelLayout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtEmei1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(txtEmei2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(painelLayout.createSequentialGroup()
+                                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtSerie)
+                                            .addGroup(painelLayout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(txtEmei1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(txtEmei2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(painelLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(409, 409, 409)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel9)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(57, 57, 57)))
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(painelLayout.createSequentialGroup()
@@ -1186,9 +1224,13 @@ public class FrmCelular extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCodigoDotMouseClicked
 
     private void grelhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_grelhaKeyReleased
-         // TODO add your handling code here:
-         buscar();
+        // TODO add your handling code here:
+        buscar();
     }//GEN-LAST:event_grelhaKeyReleased
+
+    private void cboEstadoBemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoBemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboEstadoBemActionPerformed
 
     // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
     private String verificaComQuemEsta(String id) {

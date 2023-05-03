@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82c01ce5-c7e1-4e0f-93e2-48b49b7d7224">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="29"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[SELECT * FROM emprestimo
@@ -302,7 +302,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataEmprestimo}]]></textFieldExpression>
 			</textField>
@@ -315,7 +315,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
@@ -328,7 +328,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeLocalidade}]]></textFieldExpression>
 			</textField>
@@ -341,7 +341,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{marca} != null ? $F{marca} : "----"]]></textFieldExpression>
 			</textField>
@@ -354,7 +354,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{imei1} != null ? $F{imei1} : "----"]]></textFieldExpression>
 			</textField>
@@ -367,7 +367,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement>
-					<font size="9"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{numeroLinha} != null ? $F{numeroLinha} : "Sem Chip"]]></textFieldExpression>
 			</textField>

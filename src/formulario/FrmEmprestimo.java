@@ -1218,19 +1218,19 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         emprestimo.setProtocolo(txtProtocolo.getText());
         Funcionario f = funcionarioDao.getPorID(funcionario_id);
         emprestimo.setFuncionario(f);
-        Usuario u = (Usuario) cboResponsavel.getSelectedItem();
-        emprestimo.setUsuario(u);
+        Usuario usuario = (Usuario) cboResponsavel.getSelectedItem();
+        emprestimo.setUsuario(usuario);
         emprestimo.setObservacao(txtObservacao.getText());
-        Celular c = new Celular(celular_id);
+        Celular celular = new Celular(celular_id);
         MotivoEmprestimo motivoEmprestimo = (MotivoEmprestimo) cboMotivoEmprestimo.getSelectedItem();
         emprestimo.setMotivoEmprestimo(motivoEmprestimo);
 
         emprestimo.setChamado(txtChamado.getText());
 
-        c.setStatus("EMPRESTADO");
-        c.setEstadoBem("BOM ESTADO");
+        celular.setStatus("EMPRESTADO");
+        celular.setEstadoBem("BOM ESTADO");
 
-        emprestimo.setCelular(c);
+        emprestimo.setCelular(celular);
 
         Chip chip = new Chip(chip_id);
 
@@ -1243,7 +1243,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 emprestimo_id = emprestimoDao.retornaUltimoIDCadastrado();
                 cadatrarAcessorio(); // cadatrar acessorios
                 alterarChipBanco();
-                celularDao.updateStatus(c); // MUDAR O ESTADO PARA EMPRESTADO               
+                celularDao.updateStatus(celular); // MUDAR O ESTADO PARA EMPRESTADO               
 
                 logDao.insert("Novo Emprestimo, para: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
 
@@ -1266,8 +1266,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             emprestimo.setIdEmprestimo(emprestimo_id);
             if (emprestimoDao.update(emprestimo)) {
                 cadatrarAcessorio();
-                celularDao.updateStatus(c); // MUDAR O ESTADO PARA EMPRESTADO                
-                JOptionPane.showMessageDialog(this, "Alterado com Sucesso, reemitir termo.", null, JOptionPane.INFORMATION_MESSAGE);
+                celularDao.updateStatus(celular); // MUDAR O ESTADO PARA EMPRESTADO                
+                JOptionPane.showMessageDialog(this, "Alterado com Sucesso.", null, JOptionPane.INFORMATION_MESSAGE);
                 logDao.insert("Alterar Emprestimo, de: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
                 this.dispose();
 

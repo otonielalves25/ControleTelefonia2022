@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82c01ce5-c7e1-4e0f-93e2-48b49b7d7224">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
@@ -95,22 +95,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="2" width="115" height="20" backcolor="#CCCCCC" uuid="96ea3d21-c3bb-43d1-b3a4-ff669e1bb87b"/>
-				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<text><![CDATA[SÉRIE	]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Opaque" x="115" y="2" width="278" height="20" backcolor="#CCCCCC" uuid="be1dfc17-becc-42c2-a162-c845b38e068f"/>
+				<reportElement mode="Opaque" x="115" y="2" width="242" height="20" backcolor="#CCCCCC" uuid="be1dfc17-becc-42c2-a162-c845b38e068f"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -125,7 +110,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[MARCA / MODELO	]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="493" y="2" width="100" height="20" backcolor="#CCCCCC" uuid="4c958836-dafc-46ba-8920-ba3b3204baed"/>
+				<reportElement mode="Opaque" x="442" y="2" width="100" height="20" backcolor="#CCCCCC" uuid="4c958836-dafc-46ba-8920-ba3b3204baed"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -140,7 +125,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[IMEI 1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="593" y="2" width="95" height="20" backcolor="#CCCCCC" uuid="8d421c9b-52a3-4a7d-874f-69ac74dc8232"/>
+				<reportElement mode="Opaque" x="542" y="2" width="95" height="20" backcolor="#CCCCCC" uuid="8d421c9b-52a3-4a7d-874f-69ac74dc8232"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -155,7 +140,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[IMEI 2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="688" y="2" width="114" height="20" backcolor="#CCCCCC" uuid="60941c72-4fec-4a18-b34e-993def14ad1b"/>
+				<reportElement mode="Opaque" x="637" y="2" width="94" height="20" backcolor="#CCCCCC" uuid="60941c72-4fec-4a18-b34e-993def14ad1b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -170,7 +155,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<text><![CDATA[ESTADO DO BEM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="393" y="2" width="100" height="20" backcolor="#CCCCCC" uuid="973940e9-02f3-4a66-a409-ada7745f3fad"/>
+				<reportElement mode="Opaque" x="357" y="2" width="85" height="20" backcolor="#CCCCCC" uuid="973940e9-02f3-4a66-a409-ada7745f3fad"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -184,12 +169,8 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				</textElement>
 				<text><![CDATA[PATRIMÔNIO]]></text>
 			</staticText>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="115" height="20" backcolor="#FFFFCC" uuid="f41aa3c6-e1ed-4a1c-b36d-71c07d0efd1b"/>
+			<staticText>
+				<reportElement mode="Opaque" x="731" y="2" width="71" height="20" backcolor="#CCCCCC" uuid="343aa94c-e382-4eac-8bbf-c61535d8657b"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -197,14 +178,48 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="8"/>
-					<paragraph leftIndent="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{serie}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[SITUAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="2" width="90" height="20" backcolor="#CCCCCC" uuid="96ea3d21-c3bb-43d1-b3a4-ff669e1bb87b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[SÉRIE	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="2" width="25" height="20" backcolor="#CCCCCC" uuid="6dab78d8-06d1-4543-b0a7-97df77b3f7bd"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Qtde]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="115" y="0" width="278" height="20" backcolor="#FFFFCC" uuid="7b07a797-9956-4138-8637-c4fe44ea3d83"/>
+				<reportElement mode="Opaque" x="115" y="0" width="242" height="20" backcolor="#FFFFCC" uuid="7b07a797-9956-4138-8637-c4fe44ea3d83"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -219,7 +234,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<textFieldExpression><![CDATA[""+$F{marca}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="493" y="0" width="100" height="20" backcolor="#FFFFCC" uuid="0fe2f1e0-aefa-4a13-8b02-2943e3cb26f2"/>
+				<reportElement mode="Opaque" x="442" y="0" width="100" height="20" backcolor="#FFFFCC" uuid="0fe2f1e0-aefa-4a13-8b02-2943e3cb26f2"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -234,7 +249,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<textFieldExpression><![CDATA[""+$F{imei1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="593" y="0" width="95" height="20" backcolor="#FFFFCC" uuid="b9dd60f2-d87e-499a-8a1e-658fbbc79a25"/>
+				<reportElement mode="Opaque" x="542" y="0" width="95" height="20" backcolor="#FFFFCC" uuid="b9dd60f2-d87e-499a-8a1e-658fbbc79a25"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -249,7 +264,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<textFieldExpression><![CDATA[""+$F{imei2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="688" y="0" width="114" height="20" backcolor="#FFFFCC" uuid="26bd5de8-4ae9-45c8-9f41-8009c7939a66"/>
+				<reportElement mode="Opaque" x="637" y="0" width="94" height="20" backcolor="#FFFFCC" uuid="26bd5de8-4ae9-45c8-9f41-8009c7939a66"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -264,7 +279,7 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 				<textFieldExpression><![CDATA[""+$F{estadoBem}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement mode="Opaque" x="393" y="0" width="100" height="20" backcolor="#FFFFCC" uuid="6179d87e-4c35-4000-a353-350006934d18"/>
+				<reportElement mode="Opaque" x="357" y="0" width="85" height="20" backcolor="#FFFFCC" uuid="6179d87e-4c35-4000-a353-350006934d18"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -277,6 +292,51 @@ JOIN empresa ON  celular.empresa_id = empresa.idEmpresa]]>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{patrimonio} !=null && $F{patrimonio}.length() == 12)? $F{patrimonio}.substring(0, 3) +"."+ $F{patrimonio}.substring(3, 6)+"."+$F{patrimonio}.substring(6, 9)+"."+$F{patrimonio}.substring(9, 12): "Sem Patrimônio"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="731" y="0" width="71" height="20" backcolor="#FFFFCC" uuid="444613d5-9d22-4a01-ac78-9f00c176028d"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="25" y="0" width="90" height="20" backcolor="#FFFFCC" uuid="f41aa3c6-e1ed-4a1c-b36d-71c07d0efd1b"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="25" height="20" backcolor="#FFFFCC" uuid="e4bbeb11-cdd5-41a6-94d3-3c8b54c1ac43"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

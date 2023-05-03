@@ -303,7 +303,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblPrevilegio2.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
         lblPrevilegio2.setForeground(new java.awt.Color(255, 255, 204));
-        lblPrevilegio2.setText("Versão 4.0.4 - 13/05/2022");
+        lblPrevilegio2.setText("Versão 4.0.5 - 16/12/2022");
 
         jDesktopPanel.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPanel.setLayer(lblPrevilegio1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -672,13 +672,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu15);
 
         jMenu13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/usuarios.png"))); // NOI18N
-        jMenu13.setText("Acesso");
+        jMenu13.setText("Usuários");
         jMenu13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenu13.setMinimumSize(new java.awt.Dimension(200, 0));
         jMenu13.setPreferredSize(new java.awt.Dimension(100, 19));
 
         jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/acesso.png"))); // NOI18N
-        jMenuItem17.setText("Acesso ao Sistema");
+        jMenuItem17.setText("Usuários do Sistema");
         jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem17ActionPerformed(evt);

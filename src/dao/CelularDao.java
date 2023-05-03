@@ -102,13 +102,13 @@ public class CelularDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean updateStatus(Celular celular) {
 
-        String sql = "UPDATE celular set status=?, estadoBem=?, observacao=? where idCelular = ?";
+        String sql = "UPDATE celular set status=?, observacao=?, estadoBem=? where idCelular = ?";
         try {
             con = conexao.ConexaoSqLite.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, celular.getStatus());
-            stm.setString(2, celular.getEstadoBem());
-            stm.setString(3, celular.getObservacao());
+            stm.setString(1, celular.getStatus());           
+            stm.setString(2, celular.getObservacao());
+            stm.setString(3, celular.getEstadoBem());
             stm.setInt(4, celular.getIdCelular());
             stm.execute();
             //fechando as conexões

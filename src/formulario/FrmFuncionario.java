@@ -55,8 +55,6 @@ public class FrmFuncionario extends javax.swing.JFrame {
             cboLocalidade.addItem(localidade);
 
         }
-        
-         
 
     }
 
@@ -545,7 +543,7 @@ public class FrmFuncionario extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (new EmprestimoDao().verificaEmprestimoFuncionario(Integer.parseInt(txtCodigo.getText())) > 0) {
-            JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Excluído.\nConsta EMPRÉSTIMO em Aberto.", null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Funcionario Não pode ser Excluído.\n\nConsta EMPRÉSTIMO em Aberto.", null, JOptionPane.ERROR_MESSAGE);
             botaoInicial();
             limparTudo();
             habilitado(false);

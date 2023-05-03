@@ -5,19 +5,18 @@
  */
 package formulario;
 
-
 import dao.LogDao;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.LogsSistema;
+import modelo.Session;
 
 /**
  *
  * @author Tony
  */
 public class FrmLogsSistema extends javax.swing.JDialog {
-
-
 
     DefaultTableModel modeloTabela;
     LogDao logDao = new LogDao();
@@ -30,29 +29,27 @@ public class FrmLogsSistema extends javax.swing.JDialog {
         initComponents();
         modeloTabela = (DefaultTableModel) grelha.getModel();
         carregaPesquisa();
-        
+
     }
 
     // PESQUISA AVANÇADA DE FUNCIONARIOS ///////////////////////////////////////
     private void carregaPesquisa() {
-        
+
         List<LogsSistema> listagem = null;
         int limite = Integer.parseInt(spMaximo.getValue().toString());
         // TIPO DE PESQUISA DOS LOGINS
-        if(radAtividade.isSelected()){
-             listagem = logDao.listagemLogs(txtPesquisa.getText(), limite);
-        }else if(radUsuario.isSelected()){
+        if (radAtividade.isSelected()) {
+            listagem = logDao.listagemLogs(txtPesquisa.getText(), limite);
+        } else if (radUsuario.isSelected()) {
             listagem = logDao.listagemLogsPorUsuario(txtPesquisa.getText(), limite);
-        }else if(radData.isSelected()){
+        } else if (radData.isSelected()) {
             listagem = logDao.listagemLogsPorData(txtPesquisa.getText(), limite);
         }
-       
+
         modeloTabela.setNumRows(0);
         for (LogsSistema logo : listagem) {
             modeloTabela.addRow(new Object[]{
-                logo.getIdLog(),logo.getData(),logo.getAtividade(),logo.getUsuario().getNome(),                
-            
-            });
+                logo.getIdLog(), logo.getData(), logo.getAtividade(), logo.getUsuario().getNome(),});
         }
         txtRegistro.setText("Localizados " + modeloTabela.getRowCount() + " registros.");
     }
@@ -81,6 +78,7 @@ public class FrmLogsSistema extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtRegistro = new javax.swing.JLabel();
         radData = new javax.swing.JRadioButton();
+        btnExcluir = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -144,23 +142,38 @@ public class FrmLogsSistema extends javax.swing.JDialog {
         }
 
         buttonGroup1.add(radAtividade);
+        radAtividade.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         radAtividade.setSelected(true);
         radAtividade.setText("Atividade");
         radAtividade.setOpaque(false);
 
         buttonGroup1.add(radUsuario);
+        radUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         radUsuario.setText("Responsável");
         radUsuario.setOpaque(false);
 
         spMaximo.setModel(new javax.swing.SpinnerNumberModel(500, 500, null, 500));
 
-        jLabel2.setText("Máximo:");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Limite:");
 
+        txtRegistro.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txtRegistro.setText("Registros");
 
         buttonGroup1.add(radData);
+        radData.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         radData.setText("Data");
         radData.setOpaque(false);
+
+        btnExcluir.setBackground(new java.awt.Color(255, 204, 204));
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/cross.png"))); // NOI18N
+        btnExcluir.setText("Excluir Log");
+        btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,7 +199,8 @@ public class FrmLogsSistema extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(spMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtRegistro)))
                 .addContainerGap())
         );
@@ -204,10 +218,12 @@ public class FrmLogsSistema extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(radData))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRegistro)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtRegistro)
+                    .addComponent(btnExcluir))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,9 +244,40 @@ public class FrmLogsSistema extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
-          // TODO add your handling code here:
+        // TODO add your handling code here:
         carregaPesquisa();
     }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+        int celula = grelha.getSelectedRow();
+
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (celula < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um linha para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            int resposta;
+            resposta = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Escolha um", JOptionPane.YES_NO_OPTION);
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
+                int id = Integer.parseInt(grelha.getValueAt(celula, 0).toString());
+                new LogDao().excluir(id);
+                carregaPesquisa();
+                JOptionPane.showMessageDialog(this, "Excluído com Sucesso.");
+
+            } else if (resposta == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Operação Cancelada.");
+            }
+        }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,6 +327,7 @@ public class FrmLogsSistema extends javax.swing.JDialog {
     private int codigoCelular;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable grelha;
     private javax.swing.JLabel jLabel1;

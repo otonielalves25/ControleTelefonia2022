@@ -5,19 +5,28 @@
  */
 package dao;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.view.JasperViewer;
 import utilidade.SqlGlobal;
 
@@ -36,6 +45,13 @@ public class ImpressaoDao {
     InputStream logoDot = this.getClass().getResourceAsStream("/imagem/logoDot.png");
     InputStream logoCoogi = this.getClass().getResourceAsStream("/imagem/logoCoogi.png");
     // FIM IMAGENS DO RELETORIO ************************************************
+        
+    
+        private String dataRelatorio() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hhmmss");
+        return simpleDateFormat.format(new Date());
+    }
+
 
     // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
     public void imprimirEmprestimoChip(int codigoTermo) {
@@ -75,14 +91,39 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, parametro, result);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
-            view.setLocationRelativeTo(null);
+            String caminhoArquivo = "c:/temp/TermoEmprestimoChip "+dataRelatorio()+".pdf";
 
-            view.setVisible(true);
+            File file = new java.io.File(caminhoArquivo);
+
+            JRPdfExporter exporter = new JRPdfExporter(); // EM PDF
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            if (!file.isFile()) {
+                exporter.exportReport();
+            }
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(file);
+                file.deleteOnExit();
+                        
+                
+
+                //  FIM TESTAR CONVERSÃO PDF ///////////////////////////////////////
+            } catch (IOException ex) {
+                Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//            JasperViewer view = new JasperViewer(impressao, false);
+//            view.setSize(1200, 1000);
+//            view.setLocationRelativeTo(null);
+//
+//            view.setVisible(true);
             //parametro.clear();
             //JasperPrintManager.printPage(impressao, 0, true);    
-
             //JasperExportManager.exportReportToPdfFile(impressao,"C:\\temp\\teste.pdf");
         } catch (JRException e) {
         }
@@ -334,7 +375,12 @@ public class ImpressaoDao {
     }
 
     // IMPRIMIR TODOS OS EMPRESTIMOS ///////////////////////////////////////////
-    public void imprimirEmprestados() {
+    public void imprimirEmprestados(String tipo) {
+
+        String caminhoArquivo = "";
+        String caminhoRelativoUsuario = System.getProperty("java.io.tmpdir"); // caminho da pasta temp do usuario LINUX OU WINDWOS
+        File arquivoGerado = null;
+        JRExporter exporter = null;
 
         String sql = SqlGlobal.getSqlGlogalEmprestimos();
 
@@ -356,11 +402,40 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, new HashMap(), result);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
-            view.setLocationRelativeTo(null);
+//            JasperViewer view = new JasperViewer(impressao, false);
+//            view.setSize(1200, 1000);
+//            view.setLocationRelativeTo(null);
+//
+//            view.setVisible(true);
 
-            view.setVisible(true);
+            if (tipo.equalsIgnoreCase("pdf")) {
+
+                caminhoArquivo = caminhoRelativoUsuario + "RelatorioEmprestimos " + dataRelatorio() + ".pdf";
+                exporter = new JRPdfExporter();
+
+            } else {
+
+                caminhoArquivo = caminhoRelativoUsuario + "RelatorioEmprestimos " + dataRelatorio() + ".xlsx";
+                exporter = new JRXlsxExporter();
+
+            }
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
 
         } catch (JRException e) {
         }
@@ -372,12 +447,14 @@ public class ImpressaoDao {
         }
 
     }
-    
-        // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
+
+
+
+    // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
     public void imprimirEmprestimoGenerico(String nomeFuncionario) {
         Map parametro = new HashMap();
 
-        String sql = "SELECT * FROM funcionario "           
+        String sql = "SELECT * FROM funcionario "
                 + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
                 + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
                 + "where funcionario.nome = '" + nomeFuncionario + "'";
@@ -409,12 +486,12 @@ public class ImpressaoDao {
             JasperViewer view = new JasperViewer(impressao, false);
             view.setSize(1200, 1000);
             view.setLocationRelativeTo(null);
-       
-            view.toFront();     
+
+            view.toFront();
             view.setVisible(true);
 
         } catch (JRException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
 
         try {
