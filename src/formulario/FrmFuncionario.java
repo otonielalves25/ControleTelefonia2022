@@ -62,9 +62,9 @@ public class FrmFuncionario extends javax.swing.JFrame {
     private void carregaCargos() {
         List<Cargo> listagem = new CargoDao().getListagemCargos();
         cboCargo.addItem("Selecione...");
-        for (Cargo cargo : listagem) {
+        listagem.forEach((cargo) -> {
             cboCargo.addItem(cargo);
-        }
+        });
 
     }
 
@@ -355,8 +355,9 @@ public class FrmFuncionario extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(204, 0, 0));
         jLabel7.setText("Obs: Para exclusão definifitiva deverá excluir 2 vezes,  a primeira ficar somente EXCLUIDO.");
 
+        txtMensagemErro.setBackground(new java.awt.Color(255, 255, 255));
         txtMensagemErro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtMensagemErro.setForeground(new java.awt.Color(0, 0, 255));
+        txtMensagemErro.setForeground(new java.awt.Color(153, 0, 0));
         txtMensagemErro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtMensagemErro.setMinimumSize(new java.awt.Dimension(10, 10));
 

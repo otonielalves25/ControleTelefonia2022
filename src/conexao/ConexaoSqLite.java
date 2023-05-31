@@ -37,18 +37,19 @@ public class ConexaoSqLite {
     private static final String URL = "jdbc:mysql://10.50.0.19/bd_telefonia";
     private static final String ROOT = "detran_cgi";
     private static final String SENHA = "Detr@n2020";
-
+    
     public static Connection getConnection() {
-
+        
         try {
-
+            
             Class.forName(DRIVER);
             conexaoMysql = DriverManager.getConnection(URL, ROOT, SENHA);
-
+            conexaoMysql.setAutoCommit(false);
+            
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de conexão com o banco de Dados: Erro -> " + ex);
         }
-
+        
         return conexaoMysql;
     }
 
