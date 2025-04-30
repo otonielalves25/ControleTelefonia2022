@@ -62,6 +62,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     // VARIAVEIS DE ID ////////////////////////////////////////////////////////
     int emprestimo_id, funcionario_id, celular_id = 0, chip_id = 0, usuario_id;
     String listagemACessorios = "";
+    
 
     // CONSTRUTO DA CLASSE
     public FrmEmprestimo(java.awt.Frame parent, boolean modal) {
@@ -70,7 +71,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtDataEmprestimo.setText(hoje());
         carregaCombobox();
         carregaComboboxMotivo();
-        txtCodigo.setVisible(false);
+        //txtCodigo.setVisible(false);
         ckAparelho.setSelected(true);
         ckChip.setSelected(true);
         btnBuscFuncionario1.requestFocus();
@@ -83,7 +84,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         cboResponsavel.addItem("Selecione...");
         for (Usuario usuario : lista) {
             cboResponsavel.addItem(usuario);
-            if (Session.getNome().equalsIgnoreCase(usuario.getNome())) {
+            if (Session.getNome().equalsIgnoreCase(usuario.getNome()) && !Session.getNome().equalsIgnoreCase("")) {
                 cboResponsavel.setSelectedItem(usuario);
             }
         }
@@ -134,6 +135,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         popupMenu1 = new java.awt.PopupMenu();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
         paneAparelho = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -170,7 +173,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtDataEmprestimo = new javax.swing.JFormattedTextField();
         txtDataDevolucao = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
-        txtProtocolo = new javax.swing.JFormattedTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
@@ -178,6 +180,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jLabel25 = new javax.swing.JLabel();
         txtChamado = new javax.swing.JTextField();
         btnBuscFuncionario2 = new javax.swing.JButton();
+        txtProtocolo = new javax.swing.JFormattedTextField();
         paneComplemento = new javax.swing.JPanel();
         ckCaixa = new javax.swing.JCheckBox();
         ckManual = new javax.swing.JCheckBox();
@@ -201,6 +204,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         ckVoz = new javax.swing.JCheckBox();
         ckDados = new javax.swing.JCheckBox();
         txtLinha = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        txtOperadora = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
         txtMensagemErro = new javax.swing.JLabel();
@@ -211,17 +216,24 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         popupMenu1.setLabel("popupMenu1");
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setForeground(new java.awt.Color(0, 0, 204));
 
-        paneAparelho.setBackground(new java.awt.Color(222, 231, 248));
+        paneAparelho.setBackground(new java.awt.Color(159, 186, 213));
         paneAparelho.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         paneAparelho.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -286,10 +298,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                        .addGap(0, 12, Short.MAX_VALUE)))
                 .addGroup(paneAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneAparelhoLayout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addGap(0, 12, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -323,11 +335,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Empréstimo de Aparelhos");
+        lblTitulo.setText("Empréstimo de Equipamento de Telefonia");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        paneFuncionario.setBackground(new java.awt.Color(222, 231, 248));
+        paneFuncionario.setBackground(new java.awt.Color(159, 186, 213));
         paneFuncionario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Funcionário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         paneFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -385,35 +397,32 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             .addGroup(paneFuncionarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(paneFuncionarioLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(21, 21, 21))
-                    .addGroup(paneFuncionarioLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneFuncionarioLayout.createSequentialGroup()
                         .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
+                        .addGap(50, 50, 50)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtRG, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtNome))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneFuncionarioLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneFuncionarioLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel23))
+                    .addGroup(paneFuncionarioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneFuncionarioLayout.createSequentialGroup()
-                        .addComponent(txtFuncao, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                        .addComponent(txtFuncao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtSetor))
@@ -423,13 +432,14 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneFuncionarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel6)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel6)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(paneFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel8)
@@ -442,7 +452,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel4.setBackground(new java.awt.Color(159, 186, 213));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Outros dados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel12.setText("Data Empréstimo:");
@@ -451,8 +461,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel15.setText("Nº Protocolo:");
-
-        cboResponsavel.setMaximumRowCount(15);
 
         txtDataEmprestimo.setBackground(new java.awt.Color(204, 255, 204));
         try {
@@ -470,12 +478,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         jLabel18.setText("Responsável:");
 
-        try {
-            txtProtocolo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(204, 0, 51));
         jLabel20.setText("*");
@@ -486,7 +488,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         jLabel24.setText("Motivo Empréstimo:");
 
-        cboMotivoEmprestimo.setMaximumRowCount(15);
         cboMotivoEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboMotivoEmprestimoActionPerformed(evt);
@@ -496,6 +497,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel25.setText("Chamado:");
 
+        txtChamado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtChamadoFocusLost(evt);
+            }
+        });
         txtChamado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtChamadoActionPerformed(evt);
@@ -517,6 +523,13 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        txtProtocolo.setBackground(new java.awt.Color(255, 204, 204));
+        try {
+            txtProtocolo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -526,36 +539,38 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                        .addGap(42, 42, 42))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cboMotivoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cboMotivoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscFuncionario2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)))
+                        .addGap(41, 41, 41)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel18)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
-                .addComponent(jLabel20)
-                .addGap(2, 2, 2)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel20)
+                        .addGap(4, 4, 4)
+                        .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtChamado, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
-                    .addComponent(cboResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtChamado, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cboResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -567,11 +582,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                     .addComponent(jLabel13)
                     .addComponent(txtDataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15)
-                    .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25)
-                    .addComponent(txtChamado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtChamado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProtocolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cboMotivoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -579,32 +594,32 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                     .addComponent(jLabel18)
                     .addComponent(cboResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscFuncionario2))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        paneComplemento.setBackground(new java.awt.Color(222, 231, 248));
+        paneComplemento.setBackground(new java.awt.Color(159, 186, 213));
         paneComplemento.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Complementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
+        ckCaixa.setBackground(new java.awt.Color(159, 186, 213));
         ckCaixa.setText("Caixa");
-        ckCaixa.setOpaque(false);
 
+        ckManual.setBackground(new java.awt.Color(159, 186, 213));
         ckManual.setText("Manual");
-        ckManual.setOpaque(false);
 
+        ckCarregador.setBackground(new java.awt.Color(159, 186, 213));
         ckCarregador.setText("Carregador");
-        ckCarregador.setOpaque(false);
 
+        ckAdaptador.setBackground(new java.awt.Color(159, 186, 213));
         ckAdaptador.setText("Adaptador");
-        ckAdaptador.setOpaque(false);
 
+        ckFone.setBackground(new java.awt.Color(159, 186, 213));
         ckFone.setText("Fone de Ouvido");
-        ckFone.setOpaque(false);
 
+        ckOutro.setBackground(new java.awt.Color(159, 186, 213));
         ckOutro.setText("Outros");
-        ckOutro.setOpaque(false);
 
+        ckCapinha.setBackground(new java.awt.Color(159, 186, 213));
         ckCapinha.setText("Capa TPU");
-        ckCapinha.setOpaque(false);
 
         javax.swing.GroupLayout paneComplementoLayout = new javax.swing.GroupLayout(paneComplemento);
         paneComplemento.setLayout(paneComplementoLayout);
@@ -652,7 +667,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);
 
-        btnSalvar.setBackground(new java.awt.Color(153, 204, 255));
+        btnSalvar.setBackground(new java.awt.Color(0, 204, 204));
         btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/save.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -663,7 +678,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
-        paneChip.setBackground(new java.awt.Color(222, 231, 248));
+        paneChip.setBackground(new java.awt.Color(159, 186, 213));
         paneChip.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         paneChip.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -686,23 +701,23 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtChip.setEditable(false);
         txtChip.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        radComChip.setBackground(new java.awt.Color(159, 186, 213));
         buttonGroup1.add(radComChip);
         radComChip.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         radComChip.setForeground(new java.awt.Color(0, 51, 153));
         radComChip.setSelected(true);
         radComChip.setText("Com Chip");
-        radComChip.setOpaque(false);
         radComChip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radComChipActionPerformed(evt);
             }
         });
 
+        radSemChip.setBackground(new java.awt.Color(159, 186, 213));
         buttonGroup1.add(radSemChip);
         radSemChip.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         radSemChip.setForeground(new java.awt.Color(153, 0, 51));
         radSemChip.setText("Sem chip");
-        radSemChip.setOpaque(false);
         radSemChip.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 radSemChipMouseClicked(evt);
@@ -716,56 +731,72 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         jLabel17.setText("Nª Linha:");
 
+        ckVoz.setBackground(new java.awt.Color(159, 186, 213));
         ckVoz.setForeground(new java.awt.Color(0, 102, 0));
         ckVoz.setText("Voz");
-        ckVoz.setOpaque(false);
 
+        ckDados.setBackground(new java.awt.Color(159, 186, 213));
         ckDados.setForeground(new java.awt.Color(0, 102, 0));
         ckDados.setText("Dados");
-        ckDados.setOpaque(false);
 
         txtLinha.setEditable(false);
+
+        jLabel26.setText("Operadora:");
+
+        txtOperadora.setEditable(false);
+        txtOperadora.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout paneChipLayout = new javax.swing.GroupLayout(paneChip);
         paneChip.setLayout(paneChipLayout);
         paneChipLayout.setHorizontalGroup(
             paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneChipLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(radComChip)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radSemChip)
-                .addGap(29, 29, 29)
-                .addComponent(ckVoz, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ckDados)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel17)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLinha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscaChip, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(paneChipLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(radComChip)
+                        .addGap(18, 18, 18)
+                        .addComponent(radSemChip)
+                        .addGap(30, 30, 30)
+                        .addComponent(ckVoz, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ckDados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLinha, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscaChip, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(paneChipLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         paneChipLayout.setVerticalGroup(
             paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneChipLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(radComChip)
-                    .addComponent(radSemChip)
-                    .addComponent(ckVoz)
-                    .addComponent(ckDados)
                     .addComponent(jLabel16)
                     .addComponent(txtChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
+                    .addComponent(txtLinha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscaChip)
-                    .addComponent(txtLinha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(paneChipLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(radComChip)
+                        .addComponent(radSemChip)
+                        .addComponent(ckVoz)
+                        .addComponent(ckDados)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
@@ -779,31 +810,34 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        txtCodigo.setEditable(false);
+        txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
-        txtMensagemErro.setBackground(new java.awt.Color(222, 231, 248));
+        txtMensagemErro.setBackground(new java.awt.Color(159, 186, 213));
         txtMensagemErro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtMensagemErro.setForeground(new java.awt.Color(204, 0, 51));
+        txtMensagemErro.setForeground(new java.awt.Color(102, 0, 0));
         txtMensagemErro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtMensagemErro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         txtMensagemErro.setMinimumSize(new java.awt.Dimension(10, 10));
         txtMensagemErro.setOpaque(true);
 
+        ckAparelho.setBackground(new java.awt.Color(159, 186, 213));
         ckAparelho.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckAparelho.setForeground(new java.awt.Color(0, 0, 204));
         ckAparelho.setText("Aparelho");
-        ckAparelho.setOpaque(false);
         ckAparelho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckAparelhoActionPerformed(evt);
             }
         });
 
+        ckChip.setBackground(new java.awt.Color(159, 186, 213));
         ckChip.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckChip.setForeground(new java.awt.Color(0, 0, 204));
         ckChip.setText("Chip");
         ckChip.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ckChip.setOpaque(false);
         ckChip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckChipActionPerformed(evt);
@@ -813,8 +847,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("EMPRÉSTIMO:");
 
+        ckVarios.setBackground(new java.awt.Color(159, 186, 213));
         ckVarios.setText("Emprestar vários itens para este funcionário");
-        ckVarios.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -824,36 +858,34 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ckVarios)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(paneAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMensagemErro, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ckChip, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(paneComplemento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ckVarios)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(paneFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(paneChip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(paneComplemento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(paneAparelho, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(paneFuncionario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtMensagemErro, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ckAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ckChip, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26))))
+                            .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -861,21 +893,23 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMensagemErro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jLabel4)
                         .addComponent(ckAparelho)
-                        .addComponent(ckChip)))
+                        .addComponent(ckChip))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMensagemErro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(paneFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(paneChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -883,9 +917,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ckVarios))
+                    .addComponent(ckVarios)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
         );
@@ -894,13 +926,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -980,7 +1010,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
     // FUNÇÃO QUE VOLTA A OBSERVÇÃO NA DEVOLUÇÃO
     private void verificarObservacaoDevolucao(String imei) {
-
         Emprestimo emprest = emprestimoDao.retornaObservacaoDevolucao(imei);
         if (emprest != null && !emprest.getObservacaoDevolucao().equals("")) {
             txtMensagemErro.setText(emprest.getObservacaoDevolucao().trim());
@@ -992,11 +1021,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private void verificarEmprestimo() {
 
         int contadorCelular = 0, contadorChip = 0;
-        String mensagem = "";
-        ArrayList<Emprestimo> lista = null;
-        lista = emprestimoDao.getListagemEmprestimoPorNome(txtNome.getText());
+        String mensagem;
+    
+        ArrayList<Emprestimo> lista = emprestimoDao.getListagemEmprestimoPorNome(txtNome.getText());
 
-        if (lista.size() > 0) {
+        if (!lista.isEmpty()) {
             for (Emprestimo emp : lista) {
                 if (emp.getCelular().getIdCelular() > 0) {
                     contadorCelular++;
@@ -1011,7 +1040,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         }
 
         if (contadorCelular > 0 || contadorChip > 0) {
-            mensagem = "Funcionário tem: " + contadorCelular + " celular e " + contadorChip + " chip cadastrado com emprétimo.";
+            mensagem = "Funcionário com: " + contadorCelular + " celulares e " + contadorChip + " chips emprestados.";
             txtMensagemErro.setText(mensagem);
         }
 
@@ -1080,6 +1109,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
             txtChip.setText(chip.getCodigoChip());
             txtLinha.setText(chip.getNumeroLinha());
+            txtOperadora.setText(chip.getEmpresa().getNomeEmpresa());
             chip_id = chip.getIdChip();
             radComChip.setSelected(true);
 
@@ -1213,30 +1243,37 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         // FIM VALIDAÇÃO DOS CAMPOS NECESSARIOS 
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setSituacao("EMPRESTADO");
-        emprestimo.setDataEmprestimo(txtDataEmprestimo.getText());
-        emprestimo.setDataDevolucao(txtDataDevolucao.getText());
-        emprestimo.setProtocolo(txtProtocolo.getText());
+        emprestimo.setDataEmprestimo(txtDataEmprestimo.getText().trim());
+        emprestimo.setDataDevolucao(txtDataDevolucao.getText().trim());
+        emprestimo.setProtocolo(txtProtocolo.getText().trim());
         Funcionario f = funcionarioDao.getPorID(funcionario_id);
         emprestimo.setFuncionario(f);
         Usuario usuario = (Usuario) cboResponsavel.getSelectedItem();
         emprestimo.setUsuario(usuario);
-        emprestimo.setObservacao(txtObservacao.getText());
-        Celular celular = new Celular(celular_id);
-        MotivoEmprestimo motivoEmprestimo = (MotivoEmprestimo) cboMotivoEmprestimo.getSelectedItem();
-        emprestimo.setMotivoEmprestimo(motivoEmprestimo);
+        emprestimo.setObservacao(txtObservacao.getText().trim());
 
-        emprestimo.setChamado(txtChamado.getText());
-
-        celular.setStatus("EMPRESTADO");
-        celular.setEstadoBem("BOM ESTADO");
+        Celular celular = null;
+        if (celular_id != 0) {
+            celular = new Celular(celular_id);
+            celular.setStatus("EMPRESTADO");
+            celular.setEstadoBem("BOM ESTADO");
+        }
 
         emprestimo.setCelular(celular);
 
-        Chip chip = new Chip(chip_id);
+        MotivoEmprestimo motivoEmprestimo = (MotivoEmprestimo) cboMotivoEmprestimo.getSelectedItem();
+        emprestimo.setMotivoEmprestimo(motivoEmprestimo);
+        emprestimo.setChamado(txtChamado.getText().trim());
 
-        chip.setStatus("EMPRESTADO");
+        Chip chip = null;
+
+        if (chip_id != 0) {
+            chip = new Chip(chip_id);
+            chip.setStatus("EMPRESTADO");
+        }
 
         emprestimo.setChip(chip);
+
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {
             if (emprestimoDao.insert(emprestimo)) {
@@ -1247,13 +1284,24 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
                 logDao.insert("Novo Emprestimo, para: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
 
-                if (!ckVarios.isSelected()) {
-                    new FrmBarraProgresso(null, true).setVisible(true);
+                if (!ckVarios.isSelected()) {                   
                     imprimirTermo();
                     this.dispose();
                 } else {
-                    limparEContinuaEmprestimo();
-                    JOptionPane.showMessageDialog(this, "Cadastrado com Sucesso.", null, JOptionPane.ERROR_MESSAGE);
+                    
+                    limparEContinuaEmprestimo();                    
+                    ArrayList<Emprestimo> lista = emprestimoDao.getListagemEmprestimoPorNome(txtNome.getText());
+                    
+                    if(!lista.isEmpty()){
+                        //FrmMarcaDevolucao frmMarcaDevolucao = new FrmMarcaDevolucao(null, true);
+                        //frmMarcaDevolucao.mensagem();
+                        
+                        
+                    }else{
+                         JOptionPane.showMessageDialog(this, "Cadastrado com Sucesso.", null, JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                   
 
                 }
 
@@ -1401,151 +1449,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
-        if (!novo && emprestimo_id > 0) {
-
-            Emprestimo emp = emprestimoDao.retornaPorID(emprestimo_id);
-            ArrayList<Acessorio> lista = acessorioDao.getListagemPorEmprestimo(emprestimo_id);
-            // dados do funcionario
-            txtCodigo.setText(emp.getIdEmprestimo() + "");
-            funcionario_id = emp.getFuncionario().getIdFuncionario();
-            txtNome.setText(emp.getFuncionario().getNome());
-            txtSetor.setText(emp.getFuncionario().getLocalidade().getNomeLocalidade());
-            txtCpf.setText(emp.getFuncionario().getCpf());
-            txtRG.setText(emp.getFuncionario().getRg());
-            txtFuncao.setText(emp.getFuncionario().getCargo().getNomeCargo());
-            // dados do aparelho
-
-            if (emp.getCelular().getIdCelular() > 0) {
-                celular_id = emp.getCelular().getIdCelular();
-                txtAparelho.setText(emp.getCelular().getMarca().getCategoria().getCategoria());
-                txtMarca.setText(emp.getCelular().getMarca().getMarca());
-                txtSerie.setText(emp.getCelular().getSerie());
-                txtImei.setText(emp.getCelular().getImei1());
-                txtPatrimonio.setText(patrimonioComPonto(emp.getCelular().getPatrimonio()));
-                btnBuscaAparelho.setEnabled(false);
-                ckCaixa.setEnabled(true);
-                ckCarregador.setEnabled(true);
-                ckManual.setEnabled(true);
-                ckAdaptador.setEnabled(true);
-                ckFone.setEnabled(true);
-                ckCapinha.setEnabled(true);
-                ckOutro.setEnabled(true);
-                txtComplementos.setEnabled(true);
-                ckAparelho.setSelected(true);
-                ckAparelho.setEnabled(false);
-
-            } else {
-                ckCaixa.setEnabled(false);
-                ckCarregador.setEnabled(false);
-                ckManual.setEnabled(false);
-                ckAdaptador.setEnabled(false);
-                ckFone.setEnabled(false);
-                ckCapinha.setEnabled(false);
-                ckOutro.setEnabled(false);
-                txtComplementos.setEnabled(false);
-                btnBuscaAparelho.setEnabled(true);
-                ckAparelho.setSelected(false);
-                ckAparelho.setEnabled(true);
-            }
-
-//            // dados do chip
-            if (emp.getChip().getIdChip() <= 0) {
-                radSemChip.setSelected(true);
-                btnBuscaChip.setEnabled(true);
-                ckChip.setSelected(false);
-                ckChip.setEnabled(true);
-
-            } else {
-
-                if (emp.getChip().isIsDado()) {
-                    ckDados.setSelected(true);
-                } else {
-                    ckDados.setSelected(false);
-                }
-                // telefonia ou voz
-                if (emp.getChip().isIsTelefonia()) {
-                    ckVoz.setSelected(true);
-                } else {
-                    ckVoz.setSelected(false);
-                }
-                chip_id = emp.getChip().getIdChip();
-                txtChip.setText(emp.getChip().getCodigoChip());
-                txtLinha.setText("");
-                txtLinha.setText(emp.getChip().getNumeroLinha());
-
-                radComChip.setSelected(true);
-                btnBuscaChip.setEnabled(false);
-                radComChip.setEnabled(false);
-                radSemChip.setEnabled(false);
-                ckChip.setSelected(true);
-                ckChip.setEnabled(false);
-
-            }
-
-            //System.out.println(emp.getUsuario().getNome());
-            cboResponsavel.getModel().setSelectedItem(emp.getUsuario());
-            cboMotivoEmprestimo.getModel().setSelectedItem(emp.getMotivoEmprestimo());
-            usuario_id = emp.getUsuario().getIdUsuario();
-//            // DADOS DO EMPRESTIMO
-            txtDataEmprestimo.setText("");
-            txtDataDevolucao.setText("");
-            txtDataEmprestimo.setText(emp.getDataEmprestimo());
-            txtDataDevolucao.setText(emp.getDataDevolucao());
-            txtChamado.setText(emp.getChamado());
-            txtProtocolo.setText(emp.getProtocolo());
-            txtObservacao.setText(emp.getObservacao());
-            // PREENCHO OS DADOS DA COMBO DE ACESSORIOS
-            for (int i = 0; i < lista.size(); i++) {
-                switch (lista.get(i).getNomeAcessorio()) {
-                    case "Caixa":
-                        ckCaixa.setSelected(true);
-                        break;
-                    case "Carregador":
-                        ckCarregador.setSelected(true);
-                        break;
-                    case "Manual":
-                        ckManual.setSelected(true);
-                        break;
-                    case "Adaptador":
-                        ckAdaptador.setSelected(true);
-                        break;
-                    case "Fone de Ouvido":
-                        ckFone.setSelected(true);
-                        break;
-                    case "Capinha":
-                        ckCapinha.setSelected(true);
-                        break;
-                    case "Capa TPU":
-                        ckCapinha.setSelected(true);
-                        break;
-                    default:
-                        break;
-                }
-                if (!lista.get(i).getNomeAcessorio().equals("Caixa")
-                        && !lista.get(i).getNomeAcessorio().equals("Carregador")
-                        && !lista.get(i).getNomeAcessorio().equals("Manual")
-                        && !lista.get(i).getNomeAcessorio().equals("Adaptador")
-                        && !lista.get(i).getNomeAcessorio().equals("Capa TPU")
-                        && !lista.get(i).getNomeAcessorio().equals("Fone de Ouvido")) {
-                    ckOutro.setSelected(true);
-                    txtComplementos.setText(lista.get(i).getNomeAcessorio());
-
-                }
-            }
-
-            btnBuscFuncionario1.setEnabled(false);
-
-            if (visualizar) {
-                btnSalvar.setEnabled(false);
-            }
-
-        } else {
-            //carregaComboboxMotivo();
-        }
-    }//GEN-LAST:event_formWindowActivated
-
 
     private void radSemChipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radSemChipMouseClicked
         // TODO add your handling code here:.
@@ -1555,8 +1458,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             ckVoz.setSelected(false);
             ckDados.setEnabled(false);
             ckVoz.setEnabled(false);
-            txtProtocolo.setText("");
+
+            txtOperadora.setText("");
+            txtChip.setText("");
             txtLinha.setText("");
+
         } else {
             ckDados.setSelected(false);
             ckVoz.setSelected(false);
@@ -1569,11 +1475,13 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             bloquearLiberarCampos(paneChip, true);
             radComChip.setSelected(true);
             radSemChip.setEnabled(false);
+            radComChip.setEnabled(true);
 
         } else {
             bloquearLiberarCampos(paneChip, false);
             radSemChip.setSelected(true);
             radSemChip.setEnabled(true);
+            radSemChip.setEnabled(false);
 
         }
     }//GEN-LAST:event_ckChipActionPerformed
@@ -1595,18 +1503,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private void radComChipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radComChipActionPerformed
         // TODO add your handling code here:
         if (radComChip.isSelected()) {
-            ckChip.setSelected(true);
+            //ckChip.setSelected(true);
         }
 
     }//GEN-LAST:event_radComChipActionPerformed
-
-    private void radSemChipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radSemChipActionPerformed
-        // TODO add your handling code here:
-        if (radSemChip.isSelected()) {
-            ckChip.setSelected(false);
-        }
-
-    }//GEN-LAST:event_radSemChipActionPerformed
 
     private void paneFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneFuncionarioMouseClicked
         // TODO add your handling code here:
@@ -1767,6 +1667,198 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboMotivoEmprestimoActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+
+        carregaDadosTela();
+
+
+    }//GEN-LAST:event_formWindowOpened
+
+    private void radSemChipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radSemChipActionPerformed
+        // TODO add your handling code here:
+        if (radSemChip.isSelected()) {
+            txtOperadora.setText("");
+            txtChip.setText("");
+            txtLinha.setText("");
+
+        }
+    }//GEN-LAST:event_radSemChipActionPerformed
+
+    private void txtChamadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtChamadoFocusLost
+        // TODO add your handling code here:
+        if (txtChamado.getText().trim().length() > 8) {
+            JOptionPane.showMessageDialog(this, "Quantidade de caractéres não pode se maior que 8.", null, JOptionPane.ERROR_MESSAGE);
+            txtChamado.setText("");
+        }
+
+    }//GEN-LAST:event_txtChamadoFocusLost
+    // FUNÇÃO QUE CARREGA OS DADOS DO EMPRESTIMO NA TELA
+    private void carregaDadosTela() {
+
+        if (!novo && emprestimo_id > 0) {
+
+            Emprestimo emp = emprestimoDao.retornaPorID(emprestimo_id);
+            ArrayList<Acessorio> lista = acessorioDao.getListagemPorEmprestimo(emprestimo_id);
+            // dados do funcionario
+            txtCodigo.setText(emp.getIdEmprestimo() + "");
+            funcionario_id = emp.getFuncionario().getIdFuncionario();
+            txtNome.setText(emp.getFuncionario().getNome());
+            txtSetor.setText(emp.getFuncionario().getLocalidade().getNomeLocalidade());
+            txtCpf.setText(emp.getFuncionario().getCpf());
+            txtRG.setText(emp.getFuncionario().getRg());
+            txtFuncao.setText(emp.getFuncionario().getCargo().getNomeCargo());
+            // dados do aparelho
+
+            if (emp.getCelular().getIdCelular() > 0) {
+
+                celular_id = emp.getCelular().getIdCelular();
+                txtAparelho.setText(emp.getCelular().getMarca().getCategoria().getCategoria());
+                txtMarca.setText(emp.getCelular().getMarca().getMarca());
+                txtSerie.setText(emp.getCelular().getSerie());
+                txtImei.setText(emp.getCelular().getImei1());
+                txtPatrimonio.setText(emp.getCelular().getPatrimonio());
+                txtPatrimonio.setText(patrimonioComPonto(emp.getCelular().getPatrimonio()));
+                btnBuscaAparelho.setEnabled(false);
+                ckCaixa.setEnabled(true);
+                ckCarregador.setEnabled(true);
+                ckManual.setEnabled(true);
+                ckAdaptador.setEnabled(true);
+                ckFone.setEnabled(true);
+                ckCapinha.setEnabled(true);
+                ckOutro.setEnabled(true);
+                txtComplementos.setEnabled(true);
+                ckAparelho.setSelected(true);
+                ckAparelho.setEnabled(false);
+
+                for (int i = 0; i < lista.size(); i++) {
+                    switch (lista.get(i).getNomeAcessorio()) {
+                        case "Caixa":
+                            ckCaixa.setSelected(true);
+                            break;
+                        case "Carregador":
+                            ckCarregador.setSelected(true);
+                            break;
+                        case "Manual":
+                            ckManual.setSelected(true);
+                            break;
+                        case "Adaptador":
+                            ckAdaptador.setSelected(true);
+                            break;
+                        case "Fone de Ouvido":
+                            ckFone.setSelected(true);
+                            break;
+                        case "Capinha":
+                            ckCapinha.setSelected(true);
+                            break;
+                        case "Capa TPU":
+                            ckCapinha.setSelected(true);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (!lista.get(i).getNomeAcessorio().equals("Caixa")
+                            && !lista.get(i).getNomeAcessorio().equals("Carregador")
+                            && !lista.get(i).getNomeAcessorio().equals("Manual")
+                            && !lista.get(i).getNomeAcessorio().equals("Adaptador")
+                            && !lista.get(i).getNomeAcessorio().equals("Capa TPU")
+                            && !lista.get(i).getNomeAcessorio().equals("Fone de Ouvido")) {
+                        ckOutro.setSelected(true);
+                        txtComplementos.setText(lista.get(i).getNomeAcessorio());
+
+                    }
+                }
+
+            } else {
+
+                ckCaixa.setEnabled(false);
+                ckCarregador.setEnabled(false);
+                ckManual.setEnabled(false);
+                ckAdaptador.setEnabled(false);
+                ckFone.setEnabled(false);
+                ckCapinha.setEnabled(false);
+                ckOutro.setEnabled(false);
+                txtComplementos.setEnabled(false);
+                btnBuscaAparelho.setEnabled(true);
+                ckAparelho.setSelected(false);
+                ckAparelho.setEnabled(true);
+            }
+
+            // dados do chip
+            if (emp.getChip().getIdChip() <= 0) {
+                radSemChip.setSelected(true);
+                btnBuscaChip.setEnabled(true);
+                ckChip.setSelected(false);
+                ckChip.setEnabled(true);
+
+            } else {
+
+                if (emp.getChip().isIsDado()) {
+                    ckDados.setSelected(true);
+                } else {
+                    ckDados.setSelected(false);
+                }
+                // telefonia ou voz
+                if (emp.getChip().isIsTelefonia()) {
+                    ckVoz.setSelected(true);
+                } else {
+                    ckVoz.setSelected(false);
+                }
+                chip_id = emp.getChip().getIdChip();
+                txtChip.setText(emp.getChip().getCodigoChip());
+                txtLinha.setText("");
+                txtLinha.setText(emp.getChip().getNumeroLinha());
+
+                txtOperadora.setText(emp.getChip().getEmpresa().getNomeEmpresa());
+
+                radComChip.setSelected(true);
+                btnBuscaChip.setEnabled(false);
+                radComChip.setEnabled(false);
+                radSemChip.setEnabled(false);
+                ckChip.setSelected(true);
+                ckChip.setEnabled(false);
+
+            }
+
+            //System.out.println(emp.getUsuario().getNome());
+            cboResponsavel.getModel().setSelectedItem(emp.getUsuario());
+            cboMotivoEmprestimo.getModel().setSelectedItem(emp.getMotivoEmprestimo());
+            usuario_id = emp.getUsuario().getIdUsuario();
+            // DADOS DO EMPRESTIMO
+            txtDataEmprestimo.setText("");
+            txtDataDevolucao.setText("");
+            txtDataEmprestimo.setText(emp.getDataEmprestimo());
+            txtDataDevolucao.setText(emp.getDataDevolucao());
+            txtChamado.setText(emp.getChamado());
+            txtProtocolo.setText(emp.getProtocolo());
+            txtObservacao.setText(emp.getObservacao());
+            // PREENCHO OS DADOS DA COMBO DE ACESSORIOS
+
+            // HABILITANDO CAMPOS
+            btnBuscFuncionario1.setEnabled(false);
+            txtDataDevolucao.setEnabled(true);
+
+            if (visualizar) {
+                btnSalvar.setEnabled(false);
+            }
+
+        } else {
+            carregaComboboxMotivo();
+        }
+
+    }
+
+    /*
+    função limbar variáveis
+     */
+    public void limparVariaveis() {
+
+        celular_id = 0;
+        chip_id = 0;
+        emprestimo_id = 0;
+    }
+
     // FUNÇÃO LIBERA E BLOQUEIA ITEMS DOS COMPONENTES 
     public void bloquearLiberarCampos(JPanel painel, boolean acao) {
         Component[] componentes = painel.getComponents();
@@ -1775,7 +1867,9 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         }
     }
 
-    // FUNÇÃO LIMPAR TUDO /////////////////////////////////////////////////////
+    /**
+     * FUNÇÃO LIMPAR TUDO /////////////////////////////////////////////////////
+     */
     private void limparEContinuaEmprestimo() {
 
         String motivo = cboMotivoEmprestimo.getSelectedItem().toString();
@@ -1784,6 +1878,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtMarca.setText("");
         txtImei.setText("");
         txtSerie.setText("");
+        txtOperadora.setText("");
 
         ckVoz.setSelected(false);
         ckDados.setSelected(false);
@@ -1812,6 +1907,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtCpf.setText("");
         txtRG.setText("");
         txtFuncao.setText("");
+        txtOperadora.setText("");
 
         txtAparelho.setText("");
         txtMarca.setText("");
@@ -1824,7 +1920,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         ckDados.setSelected(false);
         txtProtocolo.setText("");
         txtLinha.setText("");
-        txtProtocolo.setText("");
 
         ckCaixa.setSelected(false);
         ckCarregador.setSelected(false);
@@ -1922,15 +2017,18 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel paneAparelho;
     private javax.swing.JPanel paneChip;
@@ -1954,6 +2052,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     private javax.swing.JLabel txtMensagemErro;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextArea txtObservacao;
+    private javax.swing.JTextField txtOperadora;
     private javax.swing.JTextField txtPatrimonio;
     private javax.swing.JFormattedTextField txtProtocolo;
     private javax.swing.JTextField txtRG;

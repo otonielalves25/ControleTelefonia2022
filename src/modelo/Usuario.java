@@ -17,6 +17,7 @@ public class Usuario {
     private String senha;
     private String status;
     private String previlegio;
+    private String ramal;
 
     public Usuario() {
     }
@@ -103,6 +104,15 @@ public class Usuario {
         return previlegio;
     }
 
+    public String getRamal() {
+        return ramal;
+    }
+
+    public void setRamal(String ramal) {
+        this.ramal = ramal;
+    }
+    
+    
     /**
      * @param previlegio the previlegio to set
      */

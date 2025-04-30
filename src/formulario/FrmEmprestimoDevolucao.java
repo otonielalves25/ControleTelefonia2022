@@ -152,7 +152,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setBackground(new java.awt.Color(102, 0, 0));
@@ -164,7 +164,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         lblTitulo.setOpaque(true);
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 34));
 
-        jPanel2.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel2.setBackground(new java.awt.Color(159, 186, 213));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel1.setText("Aparelho:");
@@ -209,7 +209,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -245,7 +245,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 770, 100));
 
-        jPanel3.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel3.setBackground(new java.awt.Color(159, 186, 213));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Funcionário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel6.setText("Nome:");
@@ -287,7 +287,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 770, -1));
 
-        jPanel4.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel4.setBackground(new java.awt.Color(159, 186, 213));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Empréstimo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel12.setText("Data Empréstimo:");
@@ -314,27 +314,21 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
         ckCaixa.setText("Caixa");
         ckCaixa.setEnabled(false);
-        ckCaixa.setOpaque(false);
 
         ckCarregador.setText("Carregador");
         ckCarregador.setEnabled(false);
-        ckCarregador.setOpaque(false);
 
         ckManual.setText("Manual");
         ckManual.setEnabled(false);
-        ckManual.setOpaque(false);
 
         ckAdaptador.setText("Adaptador USB");
         ckAdaptador.setEnabled(false);
-        ckAdaptador.setOpaque(false);
 
         ckFone.setText("Fone de Ouvido");
         ckFone.setEnabled(false);
-        ckFone.setOpaque(false);
 
         ckCapinha.setText("Capinha TPU");
         ckCapinha.setEnabled(false);
-        ckCapinha.setOpaque(false);
         ckCapinha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckCapinhaActionPerformed(evt);
@@ -418,7 +412,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         });
         jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 650, 264, 40));
 
-        jPanel6.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel6.setBackground(new java.awt.Color(159, 186, 213));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         jLabel16.setText(" CHIP:");
@@ -430,13 +424,11 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         radComChip.setForeground(new java.awt.Color(0, 51, 153));
         radComChip.setText("Com Chip");
         radComChip.setEnabled(false);
-        radComChip.setOpaque(false);
 
         buttonGroup1.add(radSemChip);
         radSemChip.setForeground(new java.awt.Color(0, 51, 153));
         radSemChip.setText("Sem chip");
         radSemChip.setEnabled(false);
-        radSemChip.setOpaque(false);
         radSemChip.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 radSemChipMouseClicked(evt);
@@ -448,12 +440,10 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         ckVoz.setForeground(new java.awt.Color(0, 102, 0));
         ckVoz.setText("Voz");
         ckVoz.setEnabled(false);
-        ckVoz.setOpaque(false);
 
         ckDados.setForeground(new java.awt.Color(0, 102, 0));
         ckDados.setText("Dados");
         ckDados.setEnabled(false);
-        ckDados.setOpaque(false);
 
         txtLinha.setEditable(false);
 
@@ -511,28 +501,23 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 650, 110, 30));
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 660, 65, -1));
 
-        jPanel5.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel5.setBackground(new java.awt.Color(159, 186, 213));
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados da Devolução", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ckFoneD.setText("Fone de Ouvido");
-        ckFoneD.setOpaque(false);
         jPanel5.add(ckFoneD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 97, -1, -1));
 
         ckAdaptadorD.setText("Adaptador USB");
-        ckAdaptadorD.setOpaque(false);
         jPanel5.add(ckAdaptadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 74, -1, -1));
 
         ckManualD.setText("Manual");
-        ckManualD.setOpaque(false);
         jPanel5.add(ckManualD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 97, -1, -1));
 
         ckCarregadorD.setText("Carregador");
-        ckCarregadorD.setOpaque(false);
         jPanel5.add(ckCarregadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 74, -1, -1));
 
         ckCaixaD.setText("Caixa");
-        ckCaixaD.setOpaque(false);
         ckCaixaD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 ckCaixaDMouseReleased(evt);
@@ -552,7 +537,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
 
         ckTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckTodos.setText("Devolveu tudo.");
-        ckTodos.setOpaque(false);
         ckTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckTodosActionPerformed(evt);
@@ -563,7 +547,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         ckConfirmaNaoDevolvido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckConfirmaNaoDevolvido.setForeground(new java.awt.Color(0, 51, 153));
         ckConfirmaNaoDevolvido.setText("Faltando item.");
-        ckConfirmaNaoDevolvido.setOpaque(false);
         ckConfirmaNaoDevolvido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckConfirmaNaoDevolvidoActionPerformed(evt);
@@ -572,7 +555,6 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jPanel5.add(ckConfirmaNaoDevolvido, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 55, 162, -1));
 
         ckCapinhaD.setText("Capinha TPU");
-        ckCapinhaD.setOpaque(false);
         ckCapinhaD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckCapinhaDActionPerformed(evt);

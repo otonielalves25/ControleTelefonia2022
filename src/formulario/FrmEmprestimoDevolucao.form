@@ -51,7 +51,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="f8" green="e7" red="de" type="rgb"/>
+          <Color blue="d5" green="ba" red="9f" type="rgb"/>
         </Property>
       </Properties>
 
@@ -84,7 +84,7 @@
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f8" green="e7" red="de" type="rgb"/>
+              <Color blue="d5" green="ba" red="9f" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -120,7 +120,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="txtSerie" min="-2" pref="176" max="-2" attributes="0"/>
-                              <EmptySpace pref="16" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="txtPatrimonio" min="-2" pref="115" max="-2" attributes="0"/>
@@ -236,7 +236,7 @@
         <Container class="javax.swing.JPanel" name="jPanel3">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f8" green="e7" red="de" type="rgb"/>
+              <Color blue="d5" green="ba" red="9f" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -317,7 +317,7 @@
         <Container class="javax.swing.JPanel" name="jPanel4">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f8" green="e7" red="de" type="rgb"/>
+              <Color blue="d5" green="ba" red="9f" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -454,42 +454,36 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Caixa"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckCarregador">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Carregador"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckManual">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manual"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckAdaptador">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adaptador USB"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckFone">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fone de Ouvido"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckCapinha">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Capinha TPU"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckCapinhaActionPerformed"/>
@@ -556,7 +550,7 @@
         <Container class="javax.swing.JPanel" name="jPanel6">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f8" green="e7" red="de" type="rgb"/>
+              <Color blue="d5" green="ba" red="9f" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -641,7 +635,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Com Chip"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="radSemChip">
@@ -654,7 +647,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sem chip"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radSemChipMouseClicked"/>
@@ -672,7 +664,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Voz"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="ckDados">
@@ -682,7 +673,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Dados"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtLinha">
@@ -727,7 +717,7 @@
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f8" green="e7" red="de" type="rgb"/>
+              <Color blue="d5" green="ba" red="9f" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -752,7 +742,6 @@
             <Component class="javax.swing.JCheckBox" name="ckFoneD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fone de Ouvido"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -763,7 +752,6 @@
             <Component class="javax.swing.JCheckBox" name="ckAdaptadorD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adaptador USB"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -774,7 +762,6 @@
             <Component class="javax.swing.JCheckBox" name="ckManualD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manual"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -785,7 +772,6 @@
             <Component class="javax.swing.JCheckBox" name="ckCarregadorD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Carregador"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -796,7 +782,6 @@
             <Component class="javax.swing.JCheckBox" name="ckCaixaD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Caixa"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ckCaixaDMouseReleased"/>
@@ -830,7 +815,6 @@
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Devolveu tudo."/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckTodosActionPerformed"/>
@@ -850,7 +834,6 @@
                   <Color blue="99" green="33" red="0" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Faltando item."/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckConfirmaNaoDevolvidoActionPerformed"/>
@@ -864,7 +847,6 @@
             <Component class="javax.swing.JCheckBox" name="ckCapinhaD">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Capinha TPU"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckCapinhaDActionPerformed"/>

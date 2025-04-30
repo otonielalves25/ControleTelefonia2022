@@ -31,7 +31,7 @@ public class FuncionarioDao {
         String sql = "INSERT INTO funcionario (nome,cpf,rg,status,localidade_id, cargo_id) VALUES (?,?,?,?,?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, funcionario.getNome());
             stm.setString(2, funcionario.getCpf());
@@ -56,7 +56,7 @@ public class FuncionarioDao {
 
         String sql = "UPDATE funcionario set nome=?,cpf=?,rg=?,status=?,localidade_id=?, cargo_id=? where idFuncionario = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, funcionario.getNome());
             stm.setString(2, funcionario.getCpf());
@@ -81,7 +81,7 @@ public class FuncionarioDao {
         String sql = "UPDATE funcionario SET status = 'EXCLUIDO' where idFuncionario= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -98,10 +98,10 @@ public class FuncionarioDao {
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean deleteDefinitivo(int codigo) {
-        String sql = "DELETE  FROM funcionario WHERE idFuncionario = ?";
+        String sql = "DELETE FROM funcionario WHERE idFuncionario = ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -121,7 +121,7 @@ public class FuncionarioDao {
         String sql = "UPDATE funcionario SET status = 'EXONERADO' where idFuncionario= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -144,11 +144,11 @@ public class FuncionarioDao {
                 + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
                 + "WHERE idfuncionario = ?";
         Funcionario funcionario = null;
-        Localidade localidade = null;
-        Cargo cargo = null;
+        Localidade localidade;
+        Cargo cargo;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -192,10 +192,10 @@ public class FuncionarioDao {
                 + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
                 + "WHERE nome = ?";
         Funcionario funcionario = null;
-        Localidade localidade = null;
-        Cargo cargo = null;
+        Localidade localidade;
+        Cargo cargo;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             rs = stm.executeQuery();
@@ -244,7 +244,7 @@ public class FuncionarioDao {
         Cargo cargo = null;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             rs = stm.executeQuery();
@@ -294,7 +294,7 @@ public class FuncionarioDao {
         Cargo cargo = null;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             rs = stm.executeQuery();

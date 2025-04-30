@@ -29,7 +29,7 @@ public class CategoriaDao {
         String sql = "INSERT INTO categoria (categoria) VALUES (?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, categoria.getCategoria());
             stm.execute();
@@ -49,7 +49,7 @@ public class CategoriaDao {
 
         String sql = "UPDATE categoria set categoria = ? where idCategoria = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, categoria.getCategoria());
             stm.setInt(2, categoria.getIdCategoria());
@@ -69,7 +69,7 @@ public class CategoriaDao {
         String sql = "DELETE from categoria where idCategoria= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -90,7 +90,7 @@ public class CategoriaDao {
         String sql = "SELECT * FROM categoria WHERE idCategoria = ?";
         Categoria categoria = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -117,7 +117,7 @@ public class CategoriaDao {
         String sql = "SELECT * FROM categoria WHERE categoria = ?";
         Categoria categoria = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             rs = stm.executeQuery();
@@ -146,7 +146,7 @@ public class CategoriaDao {
         Categoria categoria;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             rs = stm.executeQuery();

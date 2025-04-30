@@ -60,7 +60,7 @@ public class FrmTrocarSenha extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setToolTipText("Trocar senha");
         jPanel1.setName("Trocar senha"); // NOI18N
 

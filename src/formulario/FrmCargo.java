@@ -8,19 +8,8 @@ package formulario;
 import dao.CargoDao;
 
 import dao.LogDao;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cargo;
@@ -75,16 +64,17 @@ public class FrmCargo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Cargos Funcionários:");
 
+        txtTexto.setColumns(1);
         txtTexto.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtTexto.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTextoKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTextoKeyReleased(evt);
             }
         });
 
@@ -178,7 +168,6 @@ public class FrmCargo extends javax.swing.JFrame {
         });
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
         lblTitulo.setBackground(new java.awt.Color(102, 0, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -269,7 +258,7 @@ public class FrmCargo extends javax.swing.JFrame {
         }
 
         if (this.txtCodigo.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Selecione um Tipo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Selecione um Cargo para Excluír.", null, JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -360,18 +349,11 @@ public class FrmCargo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-
-
-    private void txtTextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyPressed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txtTextoKeyPressed
-
     private void grelhaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseReleased
         // TODO add your handling code here:
 
         try {
-            if (grelha.getRowCount() > 0) {
+            if (grelha.getSelectedRowCount() > 0) {
                 txtCodigo.setText(grelha.getValueAt(grelha.getSelectedRow(), 0).toString());
                 txtTexto.setText((String) grelha.getValueAt(grelha.getSelectedRow(), 1));
                 btnAlterar.setEnabled(true);
@@ -381,6 +363,13 @@ public class FrmCargo extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_grelhaMouseReleased
+
+    private void txtTextoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyReleased
+        // TODO add your handling code here:
+        if( txtTexto.getText().length() >= 2){
+           
+        }
+    }//GEN-LAST:event_txtTextoKeyReleased
 
     /**
      * @param args the command line arguments

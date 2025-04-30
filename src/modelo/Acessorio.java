@@ -22,8 +22,6 @@ public class Acessorio {
         this.idAcessorio = idAcessorio;
 
     }
-    
-    
 
     /**
      * @return the idAcessorio

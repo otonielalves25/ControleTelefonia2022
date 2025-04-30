@@ -107,7 +107,7 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
 
         lblTitulo.setBackground(new java.awt.Color(0, 102, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -145,7 +145,7 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        grelha.setRowHeight(20);
+        grelha.setRowHeight(21);
         grelha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 grelhaMouseClicked(evt);
@@ -177,15 +177,12 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
         buttonGroup1.add(radSerie);
         radSerie.setSelected(true);
         radSerie.setText("Série");
-        radSerie.setOpaque(false);
 
         buttonGroup1.add(radImei);
         radImei.setText("IMEI");
-        radImei.setOpaque(false);
 
         buttonGroup1.add(radPatrimonio);
         radPatrimonio.setText("Patrimônio");
-        radPatrimonio.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

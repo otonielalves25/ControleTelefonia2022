@@ -14,10 +14,8 @@ import dao.LogDao;
 import dao.MarcaDao;
 import java.awt.Color;
 import java.awt.Component;
-
 import java.util.List;
 import javax.swing.JLabel;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,6 +36,7 @@ public class FrmCelular extends javax.swing.JFrame {
 
     // variavel controla novo ou alteração
     boolean novo;
+    boolean gerarCodigoDot;
     int marca_id, operadora_id;
     String pegaSituacao;
 
@@ -160,7 +159,7 @@ public class FrmCelular extends javax.swing.JFrame {
      */
     private String patrimonioComPonto(String patrimonio) {
 
-        String novoPatrimonio = "Sem";
+        String novoPatrimonio = "";
         if (!patrimonio.equals("") && patrimonio.length() == 12) {
             novoPatrimonio = patrimonio.substring(0, 3) + "." + patrimonio.substring(3, 6) + "." + patrimonio.substring(6, 9) + "." + patrimonio.substring(9, 12);
         }
@@ -280,11 +279,12 @@ public class FrmCelular extends javax.swing.JFrame {
         radMarca = new javax.swing.JRadioButton();
         radEstadoBem = new javax.swing.JRadioButton();
         btnCodigoDot = new javax.swing.JButton();
+        ckCodigoDot = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        painel.setBackground(new java.awt.Color(222, 231, 248));
+        painel.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Série: *");
@@ -404,7 +404,6 @@ public class FrmCelular extends javax.swing.JFrame {
         });
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -451,7 +450,7 @@ public class FrmCelular extends javax.swing.JFrame {
         jLabel7.setText("IMEI 1: *");
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
-        jLabel8.setText("IMEI 2: *");
+        jLabel8.setText("IMEI 2:");
 
         txtEmei2.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtEmei2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
@@ -480,7 +479,6 @@ public class FrmCelular extends javax.swing.JFrame {
         jLabel9.setText("Empresa Comodato: *");
 
         ckVarios.setText("Varios iguais");
-        ckVarios.setOpaque(false);
         ckVarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckVariosActionPerformed(evt);
@@ -522,26 +520,20 @@ public class FrmCelular extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Acessórios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         ckCaixa.setText("Caixa");
-        ckCaixa.setOpaque(false);
 
         ckCarregador.setText("Carregador");
-        ckCarregador.setOpaque(false);
 
         ckManual.setText("Manual");
-        ckManual.setOpaque(false);
 
         ckCapinha.setText("Capinha");
-        ckCapinha.setOpaque(false);
 
         ckAdaptador.setText("Adaptador");
-        ckAdaptador.setOpaque(false);
 
         ckFone.setText("Fone de Ouvido");
-        ckFone.setOpaque(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -591,23 +583,18 @@ public class FrmCelular extends javax.swing.JFrame {
         buttonGroup1.add(radSerie);
         radSerie.setSelected(true);
         radSerie.setText("Série");
-        radSerie.setOpaque(false);
 
         buttonGroup1.add(radImei);
         radImei.setText("IMEI");
-        radImei.setOpaque(false);
 
         buttonGroup1.add(radPatrimonio);
         radPatrimonio.setText("Patrimônio");
-        radPatrimonio.setOpaque(false);
 
         buttonGroup1.add(radMarca);
         radMarca.setText("Marca Modelo");
-        radMarca.setOpaque(false);
 
         buttonGroup1.add(radEstadoBem);
         radEstadoBem.setText("Estado do Bem");
-        radEstadoBem.setOpaque(false);
 
         btnCodigoDot.setBackground(new java.awt.Color(255, 153, 153));
         btnCodigoDot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/mais.png"))); // NOI18N
@@ -620,6 +607,13 @@ public class FrmCelular extends javax.swing.JFrame {
         btnCodigoDot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCodigoDotActionPerformed(evt);
+            }
+        });
+
+        ckCodigoDot.setText("Patrimonio DOT Automático");
+        ckCodigoDot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckCodigoDotActionPerformed(evt);
             }
         });
 
@@ -679,10 +673,9 @@ public class FrmCelular extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addGroup(painelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelLayout.createSequentialGroup()
                         .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(128, 128, 128)
@@ -693,8 +686,9 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addGroup(painelLayout.createSequentialGroup()
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnCodigoDot, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -714,10 +708,12 @@ public class FrmCelular extends javax.swing.JFrame {
                                 .addComponent(radMarca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(radEstadoBem)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(painelLayout.createSequentialGroup()
+                                .addComponent(ckCodigoDot)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(ckVarios)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -779,10 +775,11 @@ public class FrmCelular extends javax.swing.JFrame {
                                 .addGap(4, 4, 4)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckVarios)))
+                            .addComponent(ckVarios)
+                            .addComponent(ckCodigoDot)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLayout.createSequentialGroup()
                         .addGap(144, 144, 144)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -892,6 +889,8 @@ public class FrmCelular extends javax.swing.JFrame {
         limparTudo();
         novo = false;
         habilitado(false);
+        gerarCodigoDot = false;
+        ckCodigoDot.setSelected(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -903,6 +902,7 @@ public class FrmCelular extends javax.swing.JFrame {
         novo = false;
         habilitado(true);
         botaoNovo();
+
         if (cboSituacao.getSelectedItem().equals("EMPRESTADO")) {
             cboSituacao.setEnabled(false);
 
@@ -930,11 +930,6 @@ public class FrmCelular extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-//        if (txtPatrimonio.getText().equals("") && novo) {
-//            JOptionPane.showMessageDialog(this, "Patrimônio não informada", null, JOptionPane.ERROR_MESSAGE);
-//            txtPatrimonio.requestFocus();
-//            return;
-//        }
 
         if (ValidarCampos.validarCampo(txtSerie, "SÉRIE")) {
             return;
@@ -1065,8 +1060,10 @@ public class FrmCelular extends javax.swing.JFrame {
             limparPouco();
             botaoNovo();
             novo = true;
-            ingrementarPatrimonio();
-            btnCodigoDot.setEnabled(true);
+            if (ckCodigoDot.isSelected()) {
+                gerarCodigoDot();
+                btnCodigoDot.setEnabled(false);
+            }
 
         } else {
             this.botaoInicial();
@@ -1076,6 +1073,13 @@ public class FrmCelular extends javax.swing.JFrame {
         }
         carregaGrelha();
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void gerarCodigoDot() {
+        String retorna = celularDao.geradorCodigoDePatrimonios();
+        txtPatrimonio.setText(retorna);
+        txtPatrimonio.setEnabled(false);
+    }
+
 
     private void txtEmei2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei2KeyPressed
         // TODO add your handling code here:
@@ -1131,7 +1135,7 @@ public class FrmCelular extends javax.swing.JFrame {
     private void buscar() {
 
         try {
-            if (grelha.getSelectedRowCount() > 0) {
+            if (grelha.getSelectedRowCount() > 0 && !novo) {
 
                 int codigo = (int) grelha.getValueAt(grelha.getSelectedRow(), 0);
                 Celular c = celularDao.getPorID(codigo);
@@ -1207,10 +1211,15 @@ public class FrmCelular extends javax.swing.JFrame {
     private void btnCodigoDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCodigoDotActionPerformed
         // TODO add your handling code here:
 
-        if (txtPatrimonio.getText().equals("")) {
+        if (txtPatrimonio.getText().equals("") || novo) {
+
+            gerarCodigoDot = true;
             String retorna = celularDao.geradorCodigoDePatrimonios();
             txtPatrimonio.setText(retorna);
             txtPatrimonio.setEnabled(false);
+
+            ckCodigoDot.setSelected(true);
+
         } else {
             txtPatrimonio.setEnabled(true);
         }
@@ -1231,6 +1240,10 @@ public class FrmCelular extends javax.swing.JFrame {
     private void cboEstadoBemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEstadoBemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboEstadoBemActionPerformed
+
+    private void ckCodigoDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckCodigoDotActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ckCodigoDotActionPerformed
 
     // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
     private String verificaComQuemEsta(String id) {
@@ -3368,6 +3381,7 @@ public class FrmCelular extends javax.swing.JFrame {
     private javax.swing.JCheckBox ckCaixa;
     private javax.swing.JCheckBox ckCapinha;
     private javax.swing.JCheckBox ckCarregador;
+    private javax.swing.JCheckBox ckCodigoDot;
     private javax.swing.JCheckBox ckFone;
     private javax.swing.JCheckBox ckManual;
     private javax.swing.JCheckBox ckVarios;

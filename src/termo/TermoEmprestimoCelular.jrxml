@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="1.366026910730142"/>
+	<property name="ireport.zoom" value="1.818181818181821"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="67"/>
 	<parameter name="acessorios" class="java.lang.String"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
 	<parameter name="logoDetran" class="java.lang.Object"/>
@@ -194,11 +194,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<staticText>
 				<reportElement x="4" y="28" width="151" height="21" uuid="82d64d2d-dd6c-4264-8ea1-dc7eae05b17f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -207,10 +206,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<staticText>
 				<reportElement x="306" y="49" width="35" height="20" uuid="088db0d4-d956-4d33-b7df-086b5d52a10f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -229,7 +227,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 4.  Devolverá o aparelho e os acessórios que o acompanham no prazo máximo de 2 (dois) dias úteis quando solicitado formalmente, ou quando desligar-se do quadro de funcionários do Detran/PR;
 5.  Comunicará, de imediato, a COOGI/DOT em caso de defeito do aparelho. Neste caso, o Detran/PR realizará o envio para assistência técnica especializada do fabricante e, caso fique comprovado o defeito por má utilização, fica o cessionário responsável pelo reembolso ou pela reposição do aparelho e/ou dos acessórios ineficientes ou defeituosos, tais como carregadores, cabos, fones de ouvido, observadas as condições do item 3 para substituição ou reembolso;
 6.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
-7.  Assumirá conhecimento dos termos da Instrução Normativa n.º 001/2015 e da Portaria n.º 083/2019 – DG subsidiariamente.
+7.  Assumirá conhecimento dos termos da da Portaria n.º 083/2019 DG, da Ordem de Serviço n.º 002/2023, e dos contratos que regrem o uso dos equipamentos em questão.
 8.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
 9.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
                                                                                                                                                                                              Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
@@ -237,34 +235,27 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField>
 				<reportElement x="155" y="28" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="341" y="49" width="94" height="20" uuid="8ef5fd11-7b47-4e04-9800-721fbda1a09f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{rg}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="435" y="49" width="31" height="20" uuid="27ad778a-f126-4bb1-a70e-e7dbd605db98"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -272,22 +263,18 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField>
 				<reportElement x="466" y="49" width="78" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{cpf}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="4" y="49" width="151" height="20" uuid="84efcc81-5745-4e15-b0b5-1500fa671d67"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -296,23 +283,20 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField>
 				<reportElement x="155" y="49" width="151" height="20" uuid="280f7918-5aea-4463-bb66-fb69b32f192d"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{nomeLocalidade}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="4" y="69" width="151" height="20" uuid="c0750a39-f413-40f7-b4f8-f67445bc77f2"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
-					<rightPen lineWidth="0.0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -321,33 +305,30 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField>
 				<reportElement x="155" y="69" width="151" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{categoria}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="155" y="89" width="151" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{marca}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="4" y="89" width="151" height="20" uuid="2a423cf5-a74c-4354-8b0f-19b714247b76"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -356,22 +337,19 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField>
 				<reportElement x="387" y="89" width="157" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[""+$F{imei1}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="306" y="89" width="81" height="20" uuid="1a35b4e9-c6b7-42c8-99c4-65121b3dd03e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -402,31 +380,31 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 				<text><![CDATA[COOGI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="592" width="40" height="20" uuid="5e186892-5c23-435c-b565-e521cc716051"/>
+				<reportElement x="9" y="599" width="40" height="20" uuid="5e186892-5c23-435c-b565-e521cc716051"/>
 				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Curitiba:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="53" y="592" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
+				<reportElement x="55" y="599" width="145" height="20" uuid="649a0e7d-7ece-46ae-8f8f-f0473b9eb746"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="155" y="109" width="389" height="28" uuid="ddb3f779-be03-487d-9dee-f32a209d6412"/>
 				<box>
-					<bottomPen lineWidth="1.5"/>
-					<rightPen lineWidth="1.5"/>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{acessorios}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="4" y="109" width="151" height="28" uuid="7039d452-a5d8-4a22-9afe-5cc9bcfb15c0"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="1.25"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="0.0"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -496,11 +474,9 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<staticText>
 				<reportElement x="306" y="69" width="81" height="20" uuid="bbc6e6be-2f52-4d17-a87a-9e4bff4faafe"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -510,11 +486,10 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria]]>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="387" y="69" width="157" height="20" uuid="9011847f-3222-4656-894d-a56f1fc54ad9"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<topPen lineWidth="1.25"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="1.25"/>
-					<rightPen lineWidth="1.25"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>

@@ -242,7 +242,7 @@ public class FrmEmpresa extends javax.swing.JFrame {
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
         // TODO add your handling code here:
         try {
-            if (grelha.getRowCount() > 0) {
+            if (grelha.getSelectedRowCount() > 0) {
                 txtCodigo.setText(grelha.getValueAt(grelha.getSelectedRow(), 0).toString());
                 txtTexto.setText((String) grelha.getValueAt(grelha.getSelectedRow(), 1));
                 btnAlterar.setEnabled(true);

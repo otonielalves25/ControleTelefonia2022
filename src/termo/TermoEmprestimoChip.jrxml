@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
-	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="93"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
 	<parameter name="logoDetran" class="java.lang.Object"/>
 	<parameter name="logoDot" class="java.lang.Object"/>
@@ -168,7 +168,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
     4.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
     5.  Assumirá conhecimento dos termos da Instrução Normativa n.º 001/2015 e da Portaria n.º 083/2019 – DG subsidiariamente.
     6.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
-    7.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
+    7.  Assumirá conhecimento dos termos da da Portaria n.º 083/2019 DG, da Ordem de Serviço n.º 002/2023, e dos contratos que regrem o uso dos equipamentos em questão.
                                                                                                                                                                                                                                                   Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
 ]]></text>
 			</staticText>

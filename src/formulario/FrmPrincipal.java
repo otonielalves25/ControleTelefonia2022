@@ -5,27 +5,74 @@
  */
 package formulario;
 
+import dao.CelularDao;
+import dao.ChipDao;
 import dao.LogDao;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import modelo.Celular;
+import modelo.Chip;
 import modelo.Session;
 
 /**
  *
  * @author otoniel.aalves
  */
-public class FrmPrincipal extends javax.swing.JFrame {
+public final class FrmPrincipal extends javax.swing.JFrame {
 
     int codigoUsuarioLogado;
     LogDao logDao = new LogDao();
 
     public FrmPrincipal() {
         initComponents();
-        //this.setExtendedState(MAXIMIZED_BOTH);
+        //this.setExtendedState(MAXIMIZED_BOTH);   
+
+        //carregarQuantidades();
+    }
+
+    private void carregarQuantidades() {
+        //variavel contadoras de valores
+        int emprestado = 0, disponivel = 0;
+        int chipEmprestado = 0, chipDisponivel = 0;
+        
+        // buscando todos os chips e celulares
+        List<Celular> celulares = new CelularDao().getAlls();
+        List<Chip> chips = new ChipDao().getAlls();
+        
+        // varendo a lista de celulares
+        for (Celular celulare : celulares) {
+
+            if (celulare.getStatus().equalsIgnoreCase("emprestado")) {
+                emprestado++;
+            }
+            if (celulare.getStatus().equalsIgnoreCase("disponível")) {
+                disponivel++;
+            }
+
+        }
+        
+        // varrendo a lista de chips
+        for (Chip chip : chips) {
+
+            if (chip.getStatus().equalsIgnoreCase("emprestado")) {
+                chipEmprestado++;
+            }
+            if (chip.getStatus().equalsIgnoreCase("disponível")) {
+                chipDisponivel++;
+            }
+
+        }
+        
+//        // colocando os valores na tela
+//        txtCelularEmprestado.setText("" + emprestado);
+//        txtCelularDisponivel.setText("" + disponivel);
+//        txtChipDisponivel.setText("" + chipDisponivel);
+//        txtChipEmprestado.setText("" + chipEmprestado);
 
     }
 
@@ -147,6 +194,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(204, 204, 204)));
 
         btnEmp.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnEmp.setForeground(new java.awt.Color(51, 51, 51));
@@ -161,10 +209,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnConsulta.setBackground(new java.awt.Color(255, 255, 255));
         btnConsulta.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsulta.setForeground(new java.awt.Color(51, 51, 51));
-        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa 32x32.jpg"))); // NOI18N
+        btnConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/search_lense.png"))); // NOI18N
         btnConsulta.setText("Consulta");
         btnConsulta.setToolTipText("Consulta");
         btnConsulta.setMinimumSize(new java.awt.Dimension(139, 41));
@@ -175,7 +222,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 51, 51));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/func.png"))); // NOI18N
@@ -188,7 +234,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton3.setForeground(new java.awt.Color(51, 51, 51));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/funDelete.png"))); // NOI18N
@@ -201,7 +246,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton5.setForeground(new java.awt.Color(51, 51, 51));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/celulares.png"))); // NOI18N
@@ -214,7 +258,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton4.setForeground(new java.awt.Color(51, 51, 51));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/chip.png"))); // NOI18N
@@ -289,7 +332,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -299,11 +342,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         lblPrevilegio1.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
         lblPrevilegio1.setForeground(new java.awt.Color(255, 255, 204));
-        lblPrevilegio1.setText("Desenvolvido por Tony/COOGI/2021");
+        lblPrevilegio1.setText("Desenvolvido por Otoniel Amancio/COOGI/2021");
 
         lblPrevilegio2.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
         lblPrevilegio2.setForeground(new java.awt.Color(255, 255, 204));
-        lblPrevilegio2.setText("Versão 4.0.5 - 16/12/2022");
+        lblPrevilegio2.setText("Versão 4.0.5 - 16/12/2023");
 
         jDesktopPanel.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPanel.setLayer(lblPrevilegio1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -325,7 +368,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             jDesktopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPanelLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 482, Short.MAX_VALUE)
                 .addComponent(lblPrevilegio1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPrevilegio2)
@@ -791,6 +834,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
+
         codigoUsuarioLogado = Session.getIdUsuario();
         lblUsuario.setText(Session.getNome());
         if (Session.getPrevilegio().equalsIgnoreCase("admin")) {
@@ -798,9 +842,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
         if (Session.getPrevilegio().equalsIgnoreCase("consulta")) {
             lblPrevilegio.setText("Consulta");
+            jMenu2.setEnabled(false);
+            jMenu15.setEnabled(false);
+            jMenu12.setEnabled(false);
+            jMenu13.setEnabled(false);
+            jMenu21.setEnabled(false);
+            jButton3.setEnabled(false);
+            btnEmp.setEnabled(false);
+            jButton2.setEnabled(false);
+            jButton5.setEnabled(false);
+            jButton4.setEnabled(false);
         }
 
         this.setExtendedState(MAXIMIZED_BOTH);
+
+
     }//GEN-LAST:event_formWindowOpened
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

@@ -32,7 +32,7 @@ public class ChipDao {
         String sql = "INSERT INTO chip (numeroLinha,telefonia,dados,status,observacao,codigoChip,empresa_id) values(?,?,?,?,?,?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, chip.getNumeroLinha());
             stm.setBoolean(2, chip.isIsTelefonia());
@@ -58,7 +58,7 @@ public class ChipDao {
 
         String sql = "UPDATE chip set numeroLinha=?, telefonia=?, dados=?,status=?,observacao=?, codigoChip=?, empresa_id = ? where idChip = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, chip.getNumeroLinha());
             stm.setBoolean(2, chip.isIsTelefonia());
@@ -84,7 +84,7 @@ public class ChipDao {
 
         String sql = "UPDATE chip set telefonia=?, dados=?, status=? where idChip = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setBoolean(1, chip.isIsTelefonia());
             stm.setBoolean(2, chip.isIsDado());
@@ -106,7 +106,7 @@ public class ChipDao {
 
         String sql = "UPDATE chip set status=? where idChip = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, chip.getStatus());
             stm.setInt(2, chip.getIdChip());
@@ -126,7 +126,7 @@ public class ChipDao {
         String sql = "DELETE from chip where idChip= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -147,7 +147,7 @@ public class ChipDao {
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE idChip = ?";
         Chip chip = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -161,9 +161,11 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
+
                     Empresa emp = new Empresa();
                     emp.setIdEmpresa(rs.getInt("idEmpresa"));
                     emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+
                     chip.setEmpresa(emp);
 
                 }
@@ -177,14 +179,60 @@ public class ChipDao {
 
         return chip;
     }
+    
+        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    public ArrayList<Chip> getAlls() {
+
+        ArrayList<Chip> listagem = new ArrayList<>();
+        
+        String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa";
+        Chip chip;
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);      
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    chip = new Chip();
+                    chip.setIdChip(rs.getInt("idChip"));
+                    chip.setCodigoChip(rs.getString("codigoChip"));
+                    chip.setNumeroLinha(rs.getString("numeroLinha"));
+                    chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                    chip.setIsDado(rs.getBoolean("dados"));
+                    chip.setStatus(rs.getString("status"));
+                    chip.setObservacao(rs.getString("observacao"));
+
+                    Empresa emp = new Empresa();
+                    emp.setIdEmpresa(rs.getInt("idEmpresa"));
+                    emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
+
+                    chip.setEmpresa(emp);
+                    
+                    listagem.add(chip);
+
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
+        }
+
+        return listagem;
+    }
+
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Chip retornaPorNome(String procura) {
 
+        Empresa emp;
+  
+
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ? OR numeroLinha = ? ";
         Chip chip = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             stm.setString(2, procura);
@@ -199,10 +247,11 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
-                    Empresa emp = new Empresa();
+                    emp = new Empresa();
                     emp.setIdEmpresa(rs.getInt("idEmpresa"));
                     emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                     chip.setEmpresa(emp);
+                 
                 }
             }
             //fechando as conexões
@@ -210,13 +259,15 @@ public class ChipDao {
             stm.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Consultar clip DAO. " + ex);
-        }
+        } 
 
         return chip;
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
     public ArrayList<Chip> getListagemLike(String busca) {
+
+        Empresa emp;
 
         ArrayList<Chip> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' OR codigoChip LIKE '%" + busca + "%' ORDER BY numeroLinha";
@@ -225,7 +276,7 @@ public class ChipDao {
         Chip chip;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
 //            stm.setString(1, "%" + busca + "%");
 //            stm.setString(2, "%" + busca + "%");
@@ -240,7 +291,7 @@ public class ChipDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setStatus(rs.getString("status"));
                 chip.setObservacao(rs.getString("observacao"));
-                Empresa emp = new Empresa();
+                emp = new Empresa();
                 emp.setIdEmpresa(rs.getInt("idEmpresa"));
                 emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                 chip.setEmpresa(emp);
@@ -258,12 +309,15 @@ public class ChipDao {
 
     // CONSULTA ATIVOS
     public List<Chip> getListagemLikeAtivos(String busca) {
+
+        Empresa emp;
+
         ArrayList<Chip> Listagem = new ArrayList<>();
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE (numeroLinha LIKE ? OR codigoChip LIKE ?) AND status = 'Disponível' ORDER BY numeroLinha";
         Chip chip;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             stm.setString(2, "%" + busca + "%");
@@ -278,7 +332,7 @@ public class ChipDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setStatus(rs.getString("status"));
                 chip.setObservacao(rs.getString("observacao"));
-                Empresa emp = new Empresa();
+                emp = new Empresa();
                 emp.setIdEmpresa(rs.getInt("idEmpresa"));
                 emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                 chip.setEmpresa(emp);
@@ -296,11 +350,12 @@ public class ChipDao {
 
     // CONSULTA POR CHIP //////////////////////////////////////////////////
     public Chip retornaPorChip(String procura) {
+        Empresa emp;
 
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip = ?";
         Chip chip = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             //stm.setString(2, procura);
@@ -315,7 +370,7 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
-                    Empresa emp = new Empresa();
+                    emp = new Empresa();
                     emp.setIdEmpresa(rs.getInt("idEmpresa"));
                     emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                     chip.setEmpresa(emp);
@@ -334,10 +389,12 @@ public class ChipDao {
     // CONSULTA POR NUMERO DA LINHA //////////////////////////////////////////////////
     public Chip retornaPorNumeroLinha(String procura) {
 
+        Empresa emp;
+
         String sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha = ?";
         Chip chip = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             //stm.setString(2, procura);
@@ -352,7 +409,7 @@ public class ChipDao {
                     chip.setIsDado(rs.getBoolean("dados"));
                     chip.setStatus(rs.getString("status"));
                     chip.setObservacao(rs.getString("observacao"));
-                    Empresa emp = new Empresa();
+                    emp = new Empresa();
                     emp.setIdEmpresa(rs.getInt("idEmpresa"));
                     emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                     chip.setEmpresa(emp);
@@ -372,27 +429,26 @@ public class ChipDao {
     public ArrayList<Chip> getListagemLikePorChipOuCelular(String busca, String tipoBusca) {
 
         ArrayList<Chip> Listagem = new ArrayList<>();
-        String sql = "";
+        String sql;
+        Empresa emp;
         String busca2 = busca.replaceAll("[()-]", "");
         System.out.println(busca2);
-        if(tipoBusca.equalsIgnoreCase("buscarPorChip")){
+        if (tipoBusca.equalsIgnoreCase("buscarPorChip")) {
             sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE codigoChip LIKE '%" + busca + "%' ORDER BY numeroLinha";
-        }else{
+        } else {
             sql = "SELECT * FROM chip JOIN empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' ORDER BY numeroLinha";
-            
-            
+
 //             sql = "SELECT * FROM chip JOIN Empresa ON chip.empresa_id = empresa.idEmpresa WHERE numeroLinha LIKE '%" + busca + "%' "
 //                    + "OR (REPLACE(REPLACE(REPLACE(numeroLinha,'(',''),')',''),'-','') LIKE '%" + busca2 + "%') ORDER BY numeroLinha";
         }
-        
+
         //REPLACE(REPLACE(REPLACE(numeroLinha,'(',''),')',''),'-','')
-        
         // seta valor na variável global
         SqlGlobal.setSqlGlogalChipes(sql);
         Chip chip;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
 //            stm.setString(1, "%" + busca + "%");
 //            stm.setString(2, "%" + busca + "%");
@@ -407,7 +463,7 @@ public class ChipDao {
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setStatus(rs.getString("status"));
                 chip.setObservacao(rs.getString("observacao"));
-                Empresa emp = new Empresa();
+                emp = new Empresa();
                 emp.setIdEmpresa(rs.getInt("idEmpresa"));
                 emp.setNomeEmpresa(rs.getString("nomeEmpresa"));
                 chip.setEmpresa(emp);

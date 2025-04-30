@@ -34,7 +34,7 @@ public class CelularDao {
                 + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, celular.getSerie());
             stm.setString(2, celular.getImei1());
@@ -70,7 +70,7 @@ public class CelularDao {
         String sql = "UPDATE celular set serie=?, imei1=?,imei2=?, marca_id=?, status=?, observacao=?, empresa_id=?, estadoBem=?, "
                 + "caixa=?, carregador=?, manual=?, adaptador=?, foneOuvido=?, capinha = ?, patrimonio=? where idCelular = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, celular.getSerie());
             stm.setString(2, celular.getImei1());
@@ -104,7 +104,7 @@ public class CelularDao {
 
         String sql = "UPDATE celular set status=?, observacao=?, estadoBem=? where idCelular = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, celular.getStatus());           
             stm.setString(2, celular.getObservacao());
@@ -126,7 +126,7 @@ public class CelularDao {
 
         String sql = "UPDATE celular set caixa=?, carregador=?, manual=?, adaptador=?, foneOuvido=?, capinha = ? where idCelular = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
              stm.setBoolean(1, celular.isCaixa());
             stm.setBoolean(2, celular.isCarregador());
@@ -152,7 +152,7 @@ public class CelularDao {
         String sql = "DELETE from celular where idcelular= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -180,7 +180,7 @@ public class CelularDao {
         Categoria categoria;
         Empresa empresa;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -231,6 +231,73 @@ public class CelularDao {
 
         return celular;
     }
+    
+      //----------- RETORNA TODOS APARELHOS ------------------------------------------------------------
+    public ArrayList<Celular> getAlls() {
+
+        ArrayList<Celular> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM celular "
+                + "JOIN marca ON  celular.marca_id = marca.idMarca "
+                + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa ";
+          
+        Celular celular;
+        Marca marca;
+        Categoria categoria;
+        Empresa empresa;
+
+        SqlGlobal.setSqlGlogalCelulares(sql);
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            //stm.setString(1, "%" + busca + "%");
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                celular = new Celular();
+                categoria = new Categoria();
+                marca = new Marca();
+                empresa = new Empresa();
+                celular.setIdCelular(rs.getInt("idCelular"));
+                celular.setImei1(rs.getString("imei1"));
+                celular.setImei2(rs.getString("imei2"));
+                celular.setSerie(rs.getString("serie"));
+                celular.setStatus(rs.getString("status"));
+                celular.setObservacao(rs.getString("observacao"));
+                celular.setEstadoBem(rs.getString("estadoBem"));
+                celular.setCaixa(rs.getBoolean("caixa"));
+                celular.setCarregador(rs.getBoolean("carregador"));
+                celular.setAdaptador(rs.getBoolean("adaptador"));
+                celular.setManual(rs.getBoolean("manual"));
+                celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                celular.setCapinha(rs.getBoolean("capinha"));
+                celular.setPatrimonio(rs.getString("patrimonio"));
+
+                //empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                celular.setEmpresa(empresa);
+                // marca
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                // categoria
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setCategoria(rs.getString("categoria"));
+                marca.setCategoria(categoria);
+                celular.setMarca(marca);
+                Listagem.add(celular);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos DAO. " + ex);
+        }
+        return Listagem;
+    }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
     public ArrayList<Celular> getListagemLike(String tipo, String busca) {
@@ -241,15 +308,15 @@ public class CelularDao {
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
                 + "WHERE " + tipo + " LIKE '%" + busca + "%'";
-        Celular celular = null;
-        Marca marca = null;
-        Categoria categoria = null;
+        Celular celular;
+        Marca marca;
+        Categoria categoria;
         Empresa empresa;
 
         SqlGlobal.setSqlGlogalCelulares(sql);
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             //stm.setString(1, "%" + busca + "%");
 
@@ -308,13 +375,13 @@ public class CelularDao {
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
                 + "WHERE ("+ tipoPesquisa +" LIKE ?) AND celular.status = 'Disponível'";
-        Celular celular = null;
-        Marca marca = null;
-        Categoria categoria = null;
+        Celular celular;
+        Marca marca;
+        Categoria categoria;
         Empresa empresa;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
  
@@ -377,7 +444,7 @@ public class CelularDao {
         Categoria categoria = null;
         Empresa empresa;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, imei);
             stm.setString(2, serie);           
@@ -432,12 +499,12 @@ public class CelularDao {
     //GERADOR DE CÓDIGO AUTOMÁTICO /////////////////////////////////////////////
      public String geradorCodigoDePatrimonios() {
 
-        String stg = "SELECT patrimonio FROM celular  ORDER BY patrimonio DESC LIMIT 1";
+        String stg = "SELECT patrimonio FROM celular WHERE patrimonio BETWEEN 200200200000 AND 200200500000 ORDER BY patrimonio DESC LIMIT 1";
         Long patrimonioEncontrado;
         String patrimonioNovo = "";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(stg);        
             rs = stm.executeQuery();
 

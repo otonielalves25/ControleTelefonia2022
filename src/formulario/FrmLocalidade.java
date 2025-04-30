@@ -99,7 +99,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Nome Local:");
@@ -202,7 +202,6 @@ public class FrmLocalidade extends javax.swing.JFrame {
         });
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

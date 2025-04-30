@@ -27,16 +27,17 @@ public class UsuarioDao {
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Usuario usuario) {
 
-        String sql = "INSERT INTO usuario (nome, login, senha, status, previlegio) values(?,?,?,?,?)";
+        String sql = "INSERT INTO usuario (nome, login, senha, status, previlegio,ramal) values(?,?,?,?,?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getLogin());
             stm.setString(3, usuario.getSenha());
             stm.setString(4, usuario.getStatus());
             stm.setString(5, usuario.getPrevilegio());
+            stm.setString(6, usuario.getRamal());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -52,16 +53,17 @@ public class UsuarioDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Usuario usuario) {
 
-        String sql = "UPDATE usuario set nome=?,login=?,senha=?,status=?, previlegio=? where idUsuario = ?";
+        String sql = "UPDATE usuario set nome=?,login=?,senha=?,status=?, previlegio=?, ramal=? where idUsuario = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getLogin());
             stm.setString(3, usuario.getSenha());
             stm.setString(4, usuario.getStatus());
             stm.setString(5, usuario.getPrevilegio());
-            stm.setInt(6, usuario.getIdUsuario());
+            stm.setString(6, usuario.getRamal());
+            stm.setInt(7, usuario.getIdUsuario());
             stm.execute();
             //fechando as conexões
             con.close();
@@ -78,7 +80,7 @@ public class UsuarioDao {
         String sql = "UPDATE usuario SET status = 'Inativo' where idUsuario = ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -99,7 +101,7 @@ public class UsuarioDao {
         String sql = "SELECT * FROM usuario WHERE idUsuario = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -112,6 +114,7 @@ public class UsuarioDao {
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
 
                 }
             }
@@ -131,9 +134,9 @@ public class UsuarioDao {
         String sql = "SELECT * FROM usuario WHERE nome = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, procura);        
+            stm.setString(1, procura);
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -144,6 +147,7 @@ public class UsuarioDao {
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
                 }
             }
             //fechando as conexões
@@ -155,17 +159,17 @@ public class UsuarioDao {
 
         return usuario;
     }
-    
-        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+
+    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagem() {
 
         String sql = "SELECT * FROM usuario WHERE status = 'Ativo' ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         Usuario usuario = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-  
+
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -176,6 +180,7 @@ public class UsuarioDao {
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
                     lista.add(usuario);
                 }
             }
@@ -188,18 +193,17 @@ public class UsuarioDao {
 
         return lista;
     }
-    
-        
-        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+
+    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagemAtivos() {
 
         String sql = "SELECT * FROM usuario WHERE status = 'Ativo' ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         Usuario usuario = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-  
+
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -210,6 +214,7 @@ public class UsuarioDao {
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
                     lista.add(usuario);
                 }
             }
@@ -222,17 +227,17 @@ public class UsuarioDao {
 
         return lista;
     }
-    
-        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+
+    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public Usuario validarLogin(String login, String senha) {
 
         String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ? AND status = 'Ativo'";
         Usuario usuario = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, login);        
-            stm.setString(2, senha);        
+            stm.setString(1, login);
+            stm.setString(2, senha);
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -243,6 +248,7 @@ public class UsuarioDao {
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setStatus(rs.getString("status"));
                     usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
                 }
             }
             //fechando as conexões
@@ -254,15 +260,15 @@ public class UsuarioDao {
 
         return usuario;
     }
-    
+
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean trocarSenha(String senha, int idUsuario) {
 
         String sql = "UPDATE usuario set senha=? where idUsuario = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
-            stm = con.prepareStatement(sql);        
-            stm.setString(1, senha);         
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, senha);
             stm.setInt(2, idUsuario);
             stm.execute();
             //fechando as conexões
@@ -274,6 +280,5 @@ public class UsuarioDao {
             return false;
         }
     }
-
 
 }

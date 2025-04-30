@@ -56,6 +56,7 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
                 chip.getIdChip(),
                 chip.getNumeroLinha(),
                 chip.getCodigoChip(),
+                chip.getEmpresa().getNomeEmpresa(),
                 sim,
                 nao,
                 chip.getStatus(),});
@@ -96,7 +97,7 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -128,18 +129,18 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Nª LINHA", "CODIGO", "INTERNET", "VOZ", "STATUS"
+                "ID", "Nª LINHA", "CODIGO", "OPERADORA", "DADOS", "VOZ", "STATUS"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        grelha.setRowHeight(20);
+        grelha.setRowHeight(21);
         grelha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 grelhaMouseClicked(evt);
@@ -151,12 +152,14 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
             grelha.getColumnModel().getColumn(0).setMaxWidth(30);
             grelha.getColumnModel().getColumn(1).setPreferredWidth(110);
             grelha.getColumnModel().getColumn(1).setMaxWidth(110);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(80);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(80);
-            grelha.getColumnModel().getColumn(4).setPreferredWidth(80);
-            grelha.getColumnModel().getColumn(4).setMaxWidth(80);
-            grelha.getColumnModel().getColumn(5).setPreferredWidth(100);
-            grelha.getColumnModel().getColumn(5).setMaxWidth(100);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(200);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(200);
+            grelha.getColumnModel().getColumn(4).setPreferredWidth(45);
+            grelha.getColumnModel().getColumn(4).setMaxWidth(45);
+            grelha.getColumnModel().getColumn(5).setPreferredWidth(45);
+            grelha.getColumnModel().getColumn(5).setMaxWidth(45);
+            grelha.getColumnModel().getColumn(6).setPreferredWidth(100);
+            grelha.getColumnModel().getColumn(6).setMaxWidth(100);
         }
 
         btnOk1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -172,11 +175,11 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -234,7 +237,7 @@ public class FrmChipConsultaRapida extends javax.swing.JDialog {
 
     private void btnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOk1ActionPerformed
         // TODO add your handling code here:
-        int linhaSelecionada = grelha.getSelectedRowCount();
+        int linhaSelecionada = grelha.getSelectedRow();
         if (linhaSelecionada > 0) {
             int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
             this.setCodigoChip(codigo);

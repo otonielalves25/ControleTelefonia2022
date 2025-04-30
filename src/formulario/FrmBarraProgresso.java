@@ -41,7 +41,7 @@ public class FrmBarraProgresso extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         lblMensagem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMensagem.setText("0 %");
@@ -147,7 +147,7 @@ public class FrmBarraProgresso extends javax.swing.JDialog {
 
                 for (int i = 0; i <= 100; i++) {
                     try {
-                        sleep(8);  // velocidade que a barra anda
+                        sleep(10);  // velocidade que a barra anda
 
                         progressoBar.setValue(i);
 

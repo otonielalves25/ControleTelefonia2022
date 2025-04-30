@@ -29,7 +29,7 @@ public class LocalidadeDao {
         String sql = "INSERT INTO localidade (nomeLocalidade, tipoLocalidade) VALUES (?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, localidade.getNomeLocalidade());
             stm.setString(2, localidade.getTipoLocalidade());
@@ -50,7 +50,7 @@ public class LocalidadeDao {
 
         String sql = "UPDATE localidade set nomeLocalidade=?, tipoLocalidade=? where idLocalidade = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, localidade.getNomeLocalidade());
             stm.setString(2, localidade.getTipoLocalidade());
@@ -71,7 +71,7 @@ public class LocalidadeDao {
         String sql = "DELETE from localidade where idLocalidade= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -92,7 +92,7 @@ public class LocalidadeDao {
         String sql = "SELECT * FROM localidade WHERE idLocalidade = ?";
         Localidade localidade = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -120,7 +120,7 @@ public class LocalidadeDao {
         String sql = "SELECT * FROM localidade WHERE nomeLocalidade = ?";
         Localidade localidade = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             rs = stm.executeQuery();
@@ -150,7 +150,7 @@ public class LocalidadeDao {
         Localidade localidade;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             rs = stm.executeQuery();

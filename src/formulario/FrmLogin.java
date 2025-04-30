@@ -5,14 +5,13 @@
  */
 package formulario;
 
-import utilidade.ConvertendoSenhaMD5;
 import dao.LogDao;
 import dao.UsuarioDao;
+import utilidade.ConvertendoSenhaMD5;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import modelo.Session;
 import modelo.Usuario;
 
@@ -22,8 +21,9 @@ import modelo.Usuario;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
-    UsuarioDao usuarioDao = new UsuarioDao();
+    UsuarioDao usarDao = new UsuarioDao();
     LogDao logDao = new LogDao();
+    
 
     /**
      * Creates new form FrmLogin
@@ -60,7 +60,7 @@ public class FrmLogin extends javax.swing.JFrame {
         setBackground(new java.awt.Color(222, 231, 248));
         setResizable(false);
 
-        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lock-silver.png"))); // NOI18N
 
@@ -86,7 +86,6 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Senha:");
 
-        btnEntrar.setBackground(new java.awt.Color(255, 255, 255));
         btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ok.png"))); // NOI18N
         btnEntrar.setText("Entrar");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +108,7 @@ public class FrmLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Versão 4.0.4 - 11/05/2022 - Coogi - Detran - PR");
+        jLabel4.setText("Versão 4.0.5 - 18/08/2022 - Coogi - Detran - PR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,8 +141,7 @@ public class FrmLogin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 35, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblDesejada)
                         .addGap(28, 28, 28)
@@ -159,8 +157,11 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addComponent(btnEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel4)))
-                .addContainerGap())
+                        .addComponent(jLabel4)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,7 +210,7 @@ public class FrmLogin extends javax.swing.JFrame {
         //String senha = txtSenha.getText();
         //Convertendo senha para md5 no banco
 
-        Usuario usuarioRetorno = usuarioDao.validarLogin(login, senha);
+        Usuario usuarioRetorno = usarDao.validarLogin(login, senha);
 
         if (login.equals("admin") && senha.equals("admin")) {
 
@@ -222,7 +223,8 @@ public class FrmLogin extends javax.swing.JFrame {
             try {
                 // ABRE A JANELA PRINCIPAL
                 // LOG OS SISTAMA
-                logDao.insert("Logou no sistema: " + Session.getNome() + ", maquina: " + InetAddress.getLocalHost().getHostName());
+                String osUser = System.getProperty("user.name");  // pego o nome do usuário da maquina
+                logDao.insert("Logou no sistema: " + Session.getNome() + ", maquina: " + InetAddress.getLocalHost().getHostName() + " - " + osUser);
             } catch (UnknownHostException ex) {
 
             }
@@ -244,7 +246,8 @@ public class FrmLogin extends javax.swing.JFrame {
             try {
                 // ABRE A JANELA PRINCIPAL
                 // LOG OS SISTAMA
-                logDao.insert("Logou no sistema: " + Session.getNome() + ", maquina: " + InetAddress.getLocalHost().getHostName());
+                String osUser = System.getProperty("user.name");  // pego o nome do usuário da maquina
+                logDao.insert("Logou no sistema: " + Session.getNome() + ", maquina: " + InetAddress.getLocalHost().getHostName() + " - " + osUser);
             } catch (UnknownHostException ex) {
 
             }
@@ -298,6 +301,7 @@ public class FrmLogin extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
+          
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());

@@ -45,13 +45,14 @@ public class ImpressaoDao {
     InputStream logoDot = this.getClass().getResourceAsStream("/imagem/logoDot.png");
     InputStream logoCoogi = this.getClass().getResourceAsStream("/imagem/logoCoogi.png");
     // FIM IMAGENS DO RELETORIO ************************************************
-        
-    
-        private String dataRelatorio() {
+
+    //String caminhoRelativoUsuario = System.getProperty("java.io.tmpdir"); // caminho da pasta TEMP do usuario LINUX OU WINDWOS
+    String caminhoRelativoUsuario = System.getProperty("user.home") + "/Downloads/"; // caminho da pasta TEMP do usuario LINUX OU WINDWOS
+
+    private String dataRelatorio() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy hhmmss");
         return simpleDateFormat.format(new Date());
     }
-
 
     // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
     public void imprimirEmprestimoChip(int codigoTermo) {
@@ -68,7 +69,7 @@ public class ImpressaoDao {
 
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql2);
             rs = stm.executeQuery();
             // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
@@ -91,7 +92,7 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, parametro, result);
-            String caminhoArquivo = "c:/temp/TermoEmprestimoChip "+dataRelatorio()+".pdf";
+            String caminhoArquivo = caminhoRelativoUsuario + dataRelatorio() + ".pdf";
 
             File file = new java.io.File(caminhoArquivo);
 
@@ -109,22 +110,12 @@ public class ImpressaoDao {
             try {
                 desktop.open(file);
                 file.deleteOnExit();
-                        
-                
 
                 //  FIM TESTAR CONVERSÃO PDF ///////////////////////////////////////
             } catch (IOException ex) {
                 Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-//            JasperViewer view = new JasperViewer(impressao, false);
-//            view.setSize(1200, 1000);
-//            view.setLocationRelativeTo(null);
-//
-//            view.setVisible(true);
-            //parametro.clear();
-            //JasperPrintManager.printPage(impressao, 0, true);    
-            //JasperExportManager.exportReportToPdfFile(impressao,"C:\\temp\\teste.pdf");
         } catch (JRException e) {
         }
 
@@ -138,6 +129,10 @@ public class ImpressaoDao {
     // IMPRIMIR TERMO DE CELULAR //////////////////////////////////////////////////
     public void imprimirEmprestimoCelular(int codigoTermo, HashMap paramatros) {
 
+        String caminhoArquivo = "";
+        File arquivoGerado = null;
+        JRExporter exporter = null;
+
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                 + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
@@ -149,7 +144,7 @@ public class ImpressaoDao {
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = " + codigoTermo;
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
@@ -168,13 +163,26 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, paramatros, result);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);  // TAMANHO DA JANELA TELA 
-            view.setLocationRelativeTo(null);
 
-            view.setVisible(true);
-            //paramatros.clear();
-            //JasperPrintManager.printPage(impressao, 0, true);
+            caminhoArquivo = caminhoRelativoUsuario + "Termo Emprestimo " + dataRelatorio() + ".pdf";
+            exporter = new JRPdfExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
 
         } catch (JRException e) {
         }
@@ -188,6 +196,10 @@ public class ImpressaoDao {
     // IMPRIMIR TERMO DE CELULAR //////////////////////////////////////////////////
     public void imprimirEmprestimoCelularEChip(int codigoTermo, HashMap paramatros) {
 
+        String caminhoArquivo = "";
+        File arquivoGerado = null;
+        JRExporter exporter = null;
+
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                 + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
@@ -200,7 +212,7 @@ public class ImpressaoDao {
         try {
 
             // System.out.println(paramatros);
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
@@ -216,18 +228,33 @@ public class ImpressaoDao {
 
         InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/TermoEmprestimoCelularEChip.jasper");
         JRResultSetDataSource result = new JRResultSetDataSource(rs);
-
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, paramatros, result);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
-            view.setLocationRelativeTo(null);
 
-            view.setVisible(true);
+            caminhoArquivo = caminhoRelativoUsuario + "Termo Emprestimo " + dataRelatorio() + ".pdf";
+            exporter = new JRPdfExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
 
         } catch (JRException e) {
         }
+
         try {
             con.close();
         } catch (SQLException ex) {
@@ -238,6 +265,10 @@ public class ImpressaoDao {
 
     // IMPRIMIR TERMO DE CELULAR //////////////////////////////////////////////////
     public void imprimirTermoDevolucao(int codigoTermo, HashMap paramatros) {
+
+        String caminhoArquivo = "";
+        File arquivoGerado = null;
+        JRExporter exporter = null;
 
         String sql = "SELECT * FROM emprestimo "
                 + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
@@ -250,7 +281,7 @@ public class ImpressaoDao {
                 + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria where emprestimo.idEmprestimo = " + codigoTermo;
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
@@ -273,15 +304,27 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, paramatros, result);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
-            view.setLocationRelativeTo(null);
 
-            view.setVisible(true);
-            //JasperPrintManager.printPage(impressao, 0, true);
-            // paramatros.clear();
+            caminhoArquivo = caminhoRelativoUsuario + "Termo Devolução " + dataRelatorio() + ".pdf";
+            exporter = new JRPdfExporter();
 
-            //con.close();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
+
         } catch (JRException e) {
         }
 
@@ -292,7 +335,7 @@ public class ImpressaoDao {
         }
     }
 
-    // IMPRIMIR RELATORIO DE CELULARES //////////////////////////////////////////////////
+// IMPRIMIR RELATORIO DE CELULARES //////////////////////////////////////////////////
     public void imprimirCelulares() {
 
         // VARIAVEL GLOBAL BUSCA O FILTRO
@@ -300,7 +343,7 @@ public class ImpressaoDao {
 
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
@@ -326,8 +369,10 @@ public class ImpressaoDao {
 
         try {
             con.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImpressaoDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -339,7 +384,7 @@ public class ImpressaoDao {
 
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
@@ -369,8 +414,10 @@ public class ImpressaoDao {
 
         try {
             con.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImpressaoDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -378,7 +425,6 @@ public class ImpressaoDao {
     public void imprimirEmprestados(String tipo) {
 
         String caminhoArquivo = "";
-        String caminhoRelativoUsuario = System.getProperty("java.io.tmpdir"); // caminho da pasta temp do usuario LINUX OU WINDWOS
         File arquivoGerado = null;
         JRExporter exporter = null;
 
@@ -386,7 +432,7 @@ public class ImpressaoDao {
 
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
 
@@ -402,11 +448,6 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, new HashMap(), result);
-//            JasperViewer view = new JasperViewer(impressao, false);
-//            view.setSize(1200, 1000);
-//            view.setLocationRelativeTo(null);
-//
-//            view.setVisible(true);
 
             if (tipo.equalsIgnoreCase("pdf")) {
 
@@ -442,16 +483,21 @@ public class ImpressaoDao {
 
         try {
             con.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImpressaoDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-
-
     // IMPRIMIR TERMO DE ENVIO //////////////////////////////////////////////////
     public void imprimirEmprestimoGenerico(String nomeFuncionario) {
+
+        String caminhoArquivo = "";
+        File arquivoGerado = null;
+        JRExporter exporter = null;
+
         Map parametro = new HashMap();
 
         String sql = "SELECT * FROM funcionario "
@@ -461,7 +507,7 @@ public class ImpressaoDao {
 
         try {
 
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             // BUSCADO IMAGEM NO BANCO /////////////////////////////////////////
@@ -483,21 +529,36 @@ public class ImpressaoDao {
         try {
 
             JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, parametro, resultado);
-            JasperViewer view = new JasperViewer(impressao, false);
-            view.setSize(1200, 1000);
-            view.setLocationRelativeTo(null);
 
-            view.toFront();
-            view.setVisible(true);
+            caminhoArquivo = caminhoRelativoUsuario + "RelatorioEmprestimos " + dataRelatorio() + ".pdf";
+            exporter = new JRPdfExporter();
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
 
         } catch (JRException e) {
-            e.printStackTrace();
         }
 
         try {
             con.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(ImpressaoDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ImpressaoDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

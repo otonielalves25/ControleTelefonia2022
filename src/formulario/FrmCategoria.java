@@ -63,7 +63,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Categoria de Equipamento:");
@@ -166,7 +166,6 @@ public class FrmCategoria extends javax.swing.JFrame {
         });
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 0));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -242,7 +241,7 @@ public class FrmCategoria extends javax.swing.JFrame {
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
         // TODO add your handling code here:
         try {
-            if (grelha.getRowCount() > 0) {
+            if (grelha.getSelectedRowCount() > 0) {
                 txtCodigo.setText(grelha.getValueAt(grelha.getSelectedRow(), 0).toString());
                 txtTexto.setText((String) grelha.getValueAt(grelha.getSelectedRow(), 1));
                 btnAlterar.setEnabled(true);

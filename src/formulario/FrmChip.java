@@ -73,7 +73,7 @@ public class FrmChip extends javax.swing.JFrame {
         } else {
             lista = chipDao.getListagemLikePorChipOuCelular(txtPesquisa.getText().trim(), "celular");
         }
-        lista = chipDao.getListagemLike(txtPesquisa.getText().trim());
+        //lista = chipDao.getListagemLike(txtPesquisa.getText().trim());
         modelo.setNumRows(0);
         for (Chip chip : lista) {
 
@@ -92,11 +92,11 @@ public class FrmChip extends javax.swing.JFrame {
             contador++;
         }
         lblQuantidade.setText("Quantidade: " + contador);
-        
+
         pintaInativos();
     }
-    
-        // PINTANDO GRADE 
+
+    // PINTANDO GRADE 
     private void pintaInativos() {
         grelha.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -119,20 +119,8 @@ public class FrmChip extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //LIMPAR******************************************************************
 
+    //LIMPAR******************************************************************
     private void limparPouco() {
 
         txtChip.setText("");
@@ -211,7 +199,7 @@ public class FrmChip extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtChip.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -246,6 +234,11 @@ public class FrmChip extends javax.swing.JFrame {
         grelha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 grelhaMouseClicked(evt);
+            }
+        });
+        grelha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                grelhaKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(grelha);
@@ -330,7 +323,6 @@ public class FrmChip extends javax.swing.JFrame {
         jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(656, 251, 119, 33));
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(728, 61, 47, -1));
 
         lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
@@ -378,7 +370,6 @@ public class FrmChip extends javax.swing.JFrame {
         ckVoz.setForeground(new java.awt.Color(153, 51, 0));
         ckVoz.setText("Voz /Telefonia");
         ckVoz.setToolTipText("");
-        ckVoz.setOpaque(false);
         ckVoz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckVozActionPerformed(evt);
@@ -390,7 +381,6 @@ public class FrmChip extends javax.swing.JFrame {
         ckDados.setForeground(new java.awt.Color(153, 51, 0));
         ckDados.setText("Dados/Internet");
         ckDados.setToolTipText("");
-        ckDados.setOpaque(false);
         jPanel1.add(ckDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 88, -1, -1));
 
         jPanel1.add(cboOperadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 141, 500, -1));
@@ -428,7 +418,6 @@ public class FrmChip extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 750, 50));
 
         ckVarios.setText("Varios iguais");
-        ckVarios.setOpaque(false);
         jPanel1.add(ckVarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
@@ -452,13 +441,11 @@ public class FrmChip extends javax.swing.JFrame {
 
         buttonGroup1.add(radChip);
         radChip.setText("Código do Chip");
-        radChip.setOpaque(false);
         jPanel1.add(radChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, -1, -1));
 
         buttonGroup1.add(radLinha);
         radLinha.setSelected(true);
         radLinha.setText("Nª da Linha");
-        radLinha.setOpaque(false);
         jPanel1.add(radLinha, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -480,6 +467,12 @@ public class FrmChip extends javax.swing.JFrame {
 
     private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
         // TODO add your handling code here:
+        carregaTela();
+
+    }//GEN-LAST:event_grelhaMouseClicked
+
+    private void carregaTela() {
+
         try {
             if (grelha.getRowCount() > 0) {
 
@@ -515,7 +508,8 @@ public class FrmChip extends javax.swing.JFrame {
 
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_grelhaMouseClicked
+
+    }
 
     // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
     private String verificaComQuemEsta(int id) {
@@ -744,6 +738,11 @@ public class FrmChip extends javax.swing.JFrame {
         // TODO add your handling code here:
         new ImpressaoDao().imprimirChipes();
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void grelhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_grelhaKeyReleased
+        // TODO add your handling code here:
+        carregaTela();
+    }//GEN-LAST:event_grelhaKeyReleased
 
     /**
      * @param args the command line arguments

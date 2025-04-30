@@ -66,7 +66,7 @@ public class FrmMotivoEmprestimo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel1.setText("Motivo do empréstimo:");
@@ -97,7 +97,6 @@ public class FrmMotivoEmprestimo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        grelha.setRowHeight(20);
         grelha.getTableHeader().setReorderingAllowed(false);
         grelha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -169,7 +168,6 @@ public class FrmMotivoEmprestimo extends javax.swing.JFrame {
         });
 
         txtCodigo.setEnabled(false);
-        txtCodigo.setOpaque(false);
 
         lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

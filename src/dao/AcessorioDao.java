@@ -29,7 +29,7 @@ public class AcessorioDao {
         String sql = "INSERT INTO emprestimo_acessorio (nomeAcessorio, emprestimo_id) VALUES (?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, acessorio.getNomeAcessorio());
             stm.setInt(2, acessorio.getEmprestimo().getIdEmprestimo());
@@ -50,7 +50,7 @@ public class AcessorioDao {
 
         String sql = "UPDATE emprestimo_acessorio set nomeAcessorio = ?, emprestimo_id = ? where idAcessorio = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, acessorio.getNomeAcessorio());
             stm.setInt(2, acessorio.getEmprestimo().getIdEmprestimo());
@@ -70,7 +70,7 @@ public class AcessorioDao {
         String sql = "DELETE from emprestimo_acessorio where idAcessorio= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -89,7 +89,7 @@ public class AcessorioDao {
         String sql = "DELETE from emprestimo_acessorio where emprestimo_id = ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -109,7 +109,7 @@ public class AcessorioDao {
         String sql = "SELECT * FROM emprestimo_acessorio WHERE idAcessorio = ?";
         Acessorio acessorio = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -123,8 +123,8 @@ public class AcessorioDao {
             //fechando as conexões
             con.close();
             stm.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar acessorio DAO. " + ex);
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar acessorio DAO. " + erro);
         }
 
         return acessorio;
@@ -138,10 +138,11 @@ public class AcessorioDao {
         Acessorio acessorio;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, emprestimo_id);
             rs = stm.executeQuery();
+            
             while (rs.next()) {
 
                 acessorio = new Acessorio();
@@ -158,4 +159,6 @@ public class AcessorioDao {
         }
         return Listagem;
     }
+    
+    
 }

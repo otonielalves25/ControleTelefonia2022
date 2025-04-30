@@ -94,6 +94,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         radData = new javax.swing.JRadioButton();
         spQuantidade = new javax.swing.JSpinner();
         btnExcel = new javax.swing.JButton();
+        radCargo = new javax.swing.JRadioButton();
+        radMotivo = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -102,13 +105,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
+        jPanel1.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
 
         lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("Consulta  de Empréstimos de CELULARES");
+        lblTitulo.setText("Consulta  de Empréstimos");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
@@ -118,15 +122,12 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         buttonGroup1.add(radNome);
         radNome.setSelected(true);
         radNome.setText("Nome");
-        radNome.setOpaque(false);
 
         buttonGroup1.add(radImei);
         radImei.setText("Imei");
-        radImei.setOpaque(false);
 
         buttonGroup1.add(radLinha);
         radLinha.setText("Nª da Linha ");
-        radLinha.setOpaque(false);
 
         txtPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +140,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        grelhaEmprestimo.setAutoCreateRowSorter(true);
         grelhaEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -157,7 +159,6 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
         grelhaEmprestimo.setRowHeight(21);
         grelhaEmprestimo.setSelectionBackground(new java.awt.Color(0, 204, 204));
-        grelhaEmprestimo.setSelectionForeground(new java.awt.Color(0, 0, 0));
         grelhaEmprestimo.getTableHeader().setReorderingAllowed(false);
         grelhaEmprestimo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -240,7 +241,6 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         ckDevolvidos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckDevolvidos.setForeground(new java.awt.Color(153, 0, 0));
         ckDevolvidos.setText("MOSTRA DEVOLVIDOS");
-        ckDevolvidos.setOpaque(false);
         ckDevolvidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckDevolvidosActionPerformed(evt);
@@ -259,11 +259,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         buttonGroup1.add(radLocalidade);
         radLocalidade.setText("Localidade ");
-        radLocalidade.setOpaque(false);
 
         buttonGroup1.add(radPatrimonio);
         radPatrimonio.setText("Patrimonio");
-        radPatrimonio.setOpaque(false);
 
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/clearResultado.png"))); // NOI18N
         btnLimpar.setText("Limpar");
@@ -274,20 +272,19 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("* PRETO - Emprestados");
+        jLabel2.setText("* EMPRESTADOS");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel3.setText("* VERMELHO - Devolvidos");
+        jLabel3.setText("*DEVOLVIDOS");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 204));
-        jLabel4.setText("* AZUL - Devoluções Atrasadas");
+        jLabel4.setText("* ATRASADOS");
 
         ckAtrazados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckAtrazados.setForeground(new java.awt.Color(0, 0, 153));
         ckAtrazados.setText("ATRASADOS");
-        ckAtrazados.setOpaque(false);
         ckAtrazados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckAtrazadosActionPerformed(evt);
@@ -305,7 +302,6 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         buttonGroup1.add(radModelo);
         radModelo.setText("Marca Modelo");
-        radModelo.setOpaque(false);
 
         lblQuantidade.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblQuantidade.setForeground(new java.awt.Color(102, 0, 0));
@@ -313,7 +309,6 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         buttonGroup1.add(radData);
         radData.setText("Data Empréstimo");
-        radData.setOpaque(false);
         radData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radDataActionPerformed(evt);
@@ -344,6 +339,30 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(radCargo);
+        radCargo.setText("Cargo");
+        radCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radCargoActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(radMotivo);
+        radMotivo.setText("Motivo");
+        radMotivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radMotivoActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/4.png"))); // NOI18N
+        jButton2.setToolTipText("Gerar resposta pra chamado.");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -355,26 +374,30 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radNome)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radImei)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radLocalidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radLinha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radPatrimonio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radModelo)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radCargo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radMotivo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radData)
-                        .addGap(7, 7, 7)
+                        .addGap(27, 27, 27)
                         .addComponent(ckDevolvidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ckAtrazados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisa)
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -383,16 +406,18 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addComponent(btnExcel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,16 +439,18 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(radImei)
                     .addComponent(radLocalidade)
                     .addComponent(radLinha)
-                    .addComponent(ckDevolvidos)
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(radPatrimonio)
-                    .addComponent(btnLimpar)
-                    .addComponent(ckAtrazados)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(radModelo)
+                    .addComponent(radCargo)
                     .addComponent(radData)
+                    .addComponent(ckDevolvidos)
+                    .addComponent(ckAtrazados)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLimpar)
+                    .addComponent(btnExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radMotivo))
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -436,7 +463,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(lblQuantidade))
+                    .addComponent(lblQuantidade)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18))
         );
 
@@ -459,6 +487,13 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
+        // VALIDAR PREVILÉGIO DO USUARIO
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // FIM VALIDAR PREVILÉGIO DO USUARIO
+
         FrmEmprestimo frm = new FrmEmprestimo(this, false);
         frm.novo = true;
         frm.setVisible(true);
@@ -484,6 +519,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void carregarGrelha() {
         // pesquisa somente emprestados
         String soEmprestados = "", tipoPesquisa;
+        String campoPesquisa = txtPesquisa.getText();
         int quantidade = Integer.parseInt(spQuantidade.getValue().toString());
 
         if (radNome.isSelected()) {
@@ -498,6 +534,10 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             tipoPesquisa = "modelo";
         } else if (radData.isSelected()) {
             tipoPesquisa = "dataEmprestimo";
+        } else if (radMotivo.isSelected()) {
+            tipoPesquisa = "motivo";
+        } else if (radCargo.isSelected()) {
+            tipoPesquisa = "cargo";
         } else {
             tipoPesquisa = "linha";
         }
@@ -506,30 +546,17 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             soEmprestados = "EMPRESTADO";
         }
 
-        if (ckAtrazados.isSelected()) {
-
+        if (radPatrimonio.isSelected()) {
+           campoPesquisa = campoPesquisa.replace(".", "");
         }
 
-        ArrayList<Emprestimo> lista = emprestimoDao.getListagemLike(txtPesquisa.getText(), soEmprestados, tipoPesquisa, quantidade);
+        ArrayList<Emprestimo> lista = emprestimoDao.getListagemLike(campoPesquisa, soEmprestados, tipoPesquisa, quantidade);
         modeloGrelha.setNumRows(0);
 
         //System.out.println(lista.size());
         lista.forEach((emprestimo) -> {
 
-            String dados;
-            String voz;
             String patrimonioCorrigido = "";
-
-            if (emprestimo.getChip().isIsDado()) {
-                dados = "Sim";
-            } else {
-                dados = "---";
-            }
-            if (emprestimo.getChip().isIsTelefonia()) {
-                voz = "Sim";
-            } else {
-                voz = "---";
-            }
 
             if (emprestimo.getCelular().getPatrimonio() != null) {
                 patrimonioCorrigido = patrimonioComPonto(emprestimo.getCelular().getPatrimonio());
@@ -547,8 +574,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 emprestimo.getCelular().getImei1(),
                 patrimonioCorrigido,
                 emprestimo.getChip().getNumeroLinha(),
-                dados,
-                voz,
+                emprestimo.getChip().isIsDado() ? "dados" : "---",
+                emprestimo.getChip().isIsTelefonia() ? "voz" : "---",
                 emprestimo.getProtocolo(),
                 emprestimo.getDataDevolucao(),
                 emprestimo.getUsuario().getNome()
@@ -642,12 +669,13 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
 
+        // VALIDAR PREVILÉGIO DO USUARIO
         if (Session.getPrevilegio().equals("Consulta")) {
             JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        if (grelhaEmprestimo.getSelectedRow() < 0) {
+        // FIM VALIDAR PREVILÉGIO DO USUARIO
+        if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -680,7 +708,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             return;
         }
 
-        if (grelhaEmprestimo.getSelectedRow() < 0) {
+        if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Excluír.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -720,7 +748,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         // TODO add your handling code here:
-        if (grelhaEmprestimo.getSelectedRow() < 0) {
+        // VALIDAR PREVILÉGIO DO USUARIO
+        if (Session.getPrevilegio().equals("Consulta")) {
+            JOptionPane.showMessageDialog(this, "Usuário se permissão para exclusão.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // FIM VALIDAR PREVILÉGIO DO USUARIO
+
+        if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
             JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -756,7 +791,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         imprimir = new ImpressaoDao();
 
-        if (grelhaEmprestimo.getSelectedRow() < 0) {
+        if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
             JOptionPane.showMessageDialog(null, "Selecione um termo pra Reemitir.", null, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -764,8 +799,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // SE ALINHA´ESTÁ SELECIONADA CONTINUA ///////////////////////////////////
         String listagemACessorios = "";
 
-        new FrmBarraProgresso(null, true).setVisible(true);
-
+        //new FrmBarraProgresso(null, true).setVisible(true);
         int emprestimo_id = (int) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
         String tipoTermo = (String) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
 
@@ -816,7 +850,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
 
-            if (grelhaEmprestimo.getSelectedRow() < 0) {
+            if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -851,12 +885,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        new Thread() {
-            public void run() {
-                new FrmBarraProgresso(null, true).setVisible(true);
-                new ImpressaoDao().imprimirEmprestados("pdf");
-            }
-        }.start();
+        //new FrmBarraProgresso(null, true).setVisible(true);
+        new ImpressaoDao().imprimirEmprestados("pdf");
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaActionPerformed
@@ -879,13 +910,40 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
     private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
         // TODO add your handling code here:
-        new Thread() {
-            public void run() {
-                new FrmBarraProgresso(null, true).setVisible(true);
-                new ImpressaoDao().imprimirEmprestados("");
-            }
-        }.start();
+
+        //new FrmBarraProgresso(null, true).setVisible(true);
+        new ImpressaoDao().imprimirEmprestados("");
+
     }//GEN-LAST:event_btnExcelActionPerformed
+
+    private void radCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radCargoActionPerformed
+
+    private void radMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radMotivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radMotivoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // FIM VALIDAR PREVILÉGIO DO USUARIO
+        if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um empréstimo.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String devolvido = (String) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
+        if (devolvido.equalsIgnoreCase("DEVOLVIDO")) {
+            JOptionPane.showMessageDialog(null, "Situação DEVOLVIDO não permite alteração.", null, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int codigo = (int) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
+
+        FrmRespostaChamado frmResposta = new FrmRespostaChamado();
+        frmResposta.codigo = codigo;
+        frmResposta.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -932,6 +990,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.JCheckBox ckDevolvidos;
     private javax.swing.JTable grelhaEmprestimo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -940,11 +999,13 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JRadioButton radCargo;
     private javax.swing.JRadioButton radData;
     private javax.swing.JRadioButton radImei;
     private javax.swing.JRadioButton radLinha;
     private javax.swing.JRadioButton radLocalidade;
     private javax.swing.JRadioButton radModelo;
+    private javax.swing.JRadioButton radMotivo;
     private javax.swing.JRadioButton radNome;
     private javax.swing.JRadioButton radPatrimonio;
     private javax.swing.JSpinner spQuantidade;

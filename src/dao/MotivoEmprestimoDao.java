@@ -30,7 +30,7 @@ public class MotivoEmprestimoDao {
         String sql = "INSERT INTO motivoemprestimo (motivo) VALUES (?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, motivo.getMotivoEmprestimo());
             stm.execute();
@@ -50,7 +50,7 @@ public class MotivoEmprestimoDao {
 
         String sql = "UPDATE motivoemprestimo set motivo = ? where idmotivoEmprestimo = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, motivo.getMotivoEmprestimo());
             stm.setInt(2, motivo.getIdMotivoEmprestimo());
@@ -70,7 +70,7 @@ public class MotivoEmprestimoDao {
         String sql = "DELETE from motivoemprestimo where idmotivoEmprestimo= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -93,7 +93,7 @@ public class MotivoEmprestimoDao {
         MotivoEmprestimo motivo;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {

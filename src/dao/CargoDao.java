@@ -30,7 +30,7 @@ public class CargoDao {
         String sql = "INSERT INTO cargoFuncionario (nomeCargo) VALUES (?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, cargo.getNomeCargo());
             stm.execute();
@@ -50,7 +50,7 @@ public class CargoDao {
 
         String sql = "UPDATE cargoFuncionario set nomeCargo = ? where idCargo = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, cargo.getNomeCargo());
             stm.setInt(2, cargo.getIdCargo());
@@ -70,7 +70,7 @@ public class CargoDao {
         String sql = "DELETE from cargoFuncionario where idCargo= ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -94,7 +94,7 @@ public class CargoDao {
         Cargo cargo;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);           
             rs = stm.executeQuery();
             while (rs.next()) {

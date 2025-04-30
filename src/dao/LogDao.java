@@ -35,7 +35,7 @@ public class LogDao {
         String sql = "INSERT INTO logsistema (data, atividade, usuario_id) VALUES (?,?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, sdf.format(new Date()));
             stm.setString(2, atividade);
@@ -57,7 +57,7 @@ public class LogDao {
         String sql = "DELETE FROM logsistema WHERE idLog = ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, idLog);
             stm.execute();
@@ -79,7 +79,7 @@ public class LogDao {
                 + "WHERE logsistema.atividade LIKE ? ORDER BY idLog DESC LIMIT " + limite;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + atividade + "%");
 
@@ -116,7 +116,7 @@ public class LogDao {
                 + "WHERE usuario.nome LIKE ? ORDER BY idLog DESC LIMIT " + limite;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + usuarioProcurado + "%");
 
@@ -153,7 +153,7 @@ public class LogDao {
                 + "WHERE logsistema.data LIKE ? ORDER BY idLog DESC LIMIT " + limite;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + data + "%");
 

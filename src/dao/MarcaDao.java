@@ -30,7 +30,7 @@ public class MarcaDao {
         String sql = "INSERT INTO marca (marca, categoria_id) VALUES (?,?)";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, marca.getMarca());
             stm.setInt(2, marca.getCategoria().getIdCategoria());
@@ -51,7 +51,7 @@ public class MarcaDao {
 
         String sql = "UPDATE marca SET marca =?, categoria_id = ? where idMarca = ?";
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, marca.getMarca());
             stm.setInt(2, marca.getCategoria().getIdCategoria());
@@ -72,7 +72,7 @@ public class MarcaDao {
         String sql = "DELETE from marca where idMarca = ?";
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             stm.executeUpdate();
@@ -93,7 +93,7 @@ public class MarcaDao {
         String sql = "SELECT * FROM marca WHERE idMarca = ?";
         Marca marca = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, codigo);
             rs = stm.executeQuery();
@@ -122,7 +122,7 @@ public class MarcaDao {
         String sql = "SELECT * FROM marca WHERE marca = ?";
         Marca marca = null;
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, procura);
             rs = stm.executeQuery();
@@ -153,7 +153,7 @@ public class MarcaDao {
         Marca marca = null;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
             rs = stm.executeQuery();
@@ -183,7 +183,7 @@ public class MarcaDao {
         Marca marca = null;
 
         try {
-            con = conexao.ConexaoSqLite.getConnection();
+            con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setInt(1, categoria_id);
             rs = stm.executeQuery();

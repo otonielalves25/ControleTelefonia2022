@@ -65,7 +65,7 @@ public class FrmTermoGenerico extends javax.swing.JDialog {
         setTitle("Termo de Empréstimo -Genérico");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(222, 231, 248));
+        jPanel1.setBackground(new java.awt.Color(159, 186, 213));
 
         lblMensagem1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblMensagem1.setText("Termo de Empréstimo -Genérico");

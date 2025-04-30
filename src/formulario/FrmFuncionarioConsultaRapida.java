@@ -98,7 +98,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
 
         lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -136,7 +136,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        grelha.setRowHeight(20);
+        grelha.setRowHeight(21);
         grelha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 grelhaMouseClicked(evt);
@@ -153,8 +153,8 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             grelha.getColumnModel().getColumn(0).setMaxWidth(50);
             grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
             grelha.getColumnModel().getColumn(2).setMaxWidth(180);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(90);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(90);
+            grelha.getColumnModel().getColumn(3).setPreferredWidth(70);
+            grelha.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         btnOk1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -170,7 +170,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +178,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPesquisa))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnOk1)))
