@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cargo;
 import modelo.Session;
+import utilidade.MaximoLength;
 import utilidade.ValidarCampos;
 
 /**
@@ -366,9 +367,7 @@ public class FrmCargo extends javax.swing.JFrame {
 
     private void txtTextoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyReleased
         // TODO add your handling code here:
-        if( txtTexto.getText().length() >= 2){
-           
-        }
+        MaximoLength.tamanhoMaximoCaracter(txtTexto, 150);
     }//GEN-LAST:event_txtTextoKeyReleased
 
     /**

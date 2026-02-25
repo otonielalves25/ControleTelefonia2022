@@ -23,6 +23,7 @@ import modelo.Chip;
 import modelo.Empresa;
 import modelo.Emprestimo;
 import modelo.Session;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -207,6 +208,9 @@ public class FrmChip extends javax.swing.JFrame {
         txtChip.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtChipKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtChipKeyReleased(evt);
             }
         });
         jPanel1.add(txtChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 89, 299, -1));
@@ -743,6 +747,11 @@ public class FrmChip extends javax.swing.JFrame {
         // TODO add your handling code here:
         carregaTela();
     }//GEN-LAST:event_grelhaKeyReleased
+
+    private void txtChipKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChipKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtChip, 50);
+    }//GEN-LAST:event_txtChipKeyReleased
 
     /**
      * @param args the command line arguments

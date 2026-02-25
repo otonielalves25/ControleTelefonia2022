@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import modelo.Session;
 import modelo.Usuario;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -75,11 +76,17 @@ public class FrmLogin extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
         });
 
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyReleased(evt);
             }
         });
 
@@ -157,11 +164,9 @@ public class FrmLogin extends javax.swing.JFrame {
                             .addComponent(btnEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel4)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))))
+                        .addComponent(jLabel4))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -290,6 +295,16 @@ public class FrmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtUsuario, 15);
+    }//GEN-LAST:event_txtUsuarioKeyReleased
+
+    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
+        // TODO add your handling code here:
+         MaximoLength.tamanhoMaximoCaracter( txtSenha, 15);
+    }//GEN-LAST:event_txtSenhaKeyReleased
 
     /**
      * @param args the command line arguments

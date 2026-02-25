@@ -19,6 +19,7 @@ import modelo.Emprestimo;
 import modelo.Funcionario;
 import modelo.Localidade;
 import modelo.Session;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -179,6 +180,9 @@ public class FrmFuncionario extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
         });
 
         grelha.setAutoCreateRowSorter(true);
@@ -309,6 +313,9 @@ public class FrmFuncionario extends javax.swing.JFrame {
         txtRg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtRgKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRgKeyReleased(evt);
             }
         });
 
@@ -787,6 +794,16 @@ public class FrmFuncionario extends javax.swing.JFrame {
         
     
     }//GEN-LAST:event_lblIconeLocalidadeMouseClicked
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtNome, 150);
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void txtRgKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRgKeyReleased
+        // TODO add your handling code here:
+         MaximoLength.tamanhoMaximoCaracter(txtRg, 50);
+    }//GEN-LAST:event_txtRgKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1869,7 +1886,6 @@ public class FrmFuncionario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
-    private javax.swing.JButton btnBuscaLocalidade;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;

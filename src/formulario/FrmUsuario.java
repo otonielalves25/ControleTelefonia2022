@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Session;
 import modelo.Usuario;
 import utilidade.ConvertendoSenhaMD5;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -157,6 +158,9 @@ public class FrmUsuario extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNomeKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
         });
 
         grelha.setAutoCreateRowSorter(true);
@@ -278,6 +282,15 @@ public class FrmUsuario extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtLoginKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLoginKeyReleased(evt);
+            }
+        });
+
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyReleased(evt);
+            }
         });
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
@@ -294,6 +307,9 @@ public class FrmUsuario extends javax.swing.JFrame {
         txtRamal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtRamalKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRamalKeyReleased(evt);
             }
         });
 
@@ -601,6 +617,26 @@ public class FrmUsuario extends javax.swing.JFrame {
     private void txtRamalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRamalKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRamalKeyPressed
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtNome, 200);
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void txtLoginKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtLogin, 15);
+    }//GEN-LAST:event_txtLoginKeyReleased
+
+    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtSenha, 15);
+    }//GEN-LAST:event_txtSenhaKeyReleased
+
+    private void txtRamalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRamalKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtRamal, 5);
+    }//GEN-LAST:event_txtRamalKeyReleased
 
     /**
      * @param args the command line arguments

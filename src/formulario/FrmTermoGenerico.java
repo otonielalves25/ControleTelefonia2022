@@ -130,19 +130,23 @@ public class FrmTermoGenerico extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-         // TODO add your handling code here:
-         if(cboFuncionario.getSelectedItem().toString().equalsIgnoreCase("Selecione...")){             
-              JOptionPane.showMessageDialog(null, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
-         }else{
-             String nomeFuncionario = cboFuncionario.getSelectedItem().toString();
-             ImpressaoDao impressaoDao = new ImpressaoDao();
-              this.dispose();
-              new FrmBarraProgresso(null, true).setVisible(true);
-             impressaoDao.imprimirEmprestimoGenerico(nomeFuncionario);
-             new LogDao().insert("Imprimir termo genérico do funcionário: " + nomeFuncionario);
-            
-         }
-         
+        // TODO add your handling code here:
+        if (cboFuncionario.getSelectedItem().toString().equalsIgnoreCase("Selecione...")) {
+            JOptionPane.showMessageDialog(null, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
+        } else {
+            String nomeFuncionario = cboFuncionario.getSelectedItem().toString();
+            ImpressaoDao impressaoDao = new ImpressaoDao();
+            this.dispose();
+            new Thread(() -> {
+                impressaoDao.imprimirEmprestimoGenerico(nomeFuncionario);
+            }).start();
+
+            new FrmBarraProgresso(null, true).setVisible(true);
+            //impressaoDao.imprimirEmprestimoGenerico(nomeFuncionario);
+            new LogDao().insert("Imprimir termo genérico do funcionário: " + nomeFuncionario);
+
+        }
+
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**

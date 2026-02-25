@@ -31,6 +31,7 @@ import modelo.Funcionario;
 import modelo.MotivoEmprestimo;
 import modelo.Session;
 import modelo.Usuario;
+import utilidade.MaximoLength;
 import utilidade.ValidarCampos;
 
 /**
@@ -62,7 +63,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
     // VARIAVEIS DE ID ////////////////////////////////////////////////////////
     int emprestimo_id, funcionario_id, celular_id = 0, chip_id = 0, usuario_id;
     String listagemACessorios = "";
-    
 
     // CONSTRUTO DA CLASSE
     public FrmEmprestimo(java.awt.Frame parent, boolean modal) {
@@ -232,6 +232,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(159, 186, 213));
         jPanel1.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         paneAparelho.setBackground(new java.awt.Color(159, 186, 213));
         paneAparelho.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Aparelho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -241,24 +242,32 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel1.setText("Aparelho:");
 
         txtAparelho.setEditable(false);
+        txtAparelho.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtAparelho.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel2.setText("Marca Modelo:");
 
         txtMarca.setEditable(false);
+        txtMarca.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtMarca.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel3.setText("IMEI:");
 
         txtImei.setEditable(false);
+        txtImei.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtImei.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         txtSerie.setEditable(false);
+        txtSerie.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtSerie.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel11.setText("Série:");
 
         btnBuscaAparelho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa.png"))); // NOI18N
@@ -272,8 +281,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         });
 
         txtPatrimonio.setEditable(false);
+        txtPatrimonio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtPatrimonio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel19.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel19.setText("Patrimonio:");
 
         javax.swing.GroupLayout paneAparelhoLayout = new javax.swing.GroupLayout(paneAparelho);
@@ -298,10 +309,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPatrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                        .addGap(0, 14, Short.MAX_VALUE)))
                 .addGroup(paneAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneAparelhoLayout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(0, 13, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,6 +342,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(paneAparelho, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 213, 878, -1));
+
         lblTitulo.setBackground(new java.awt.Color(0, 51, 102));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -338,6 +351,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         lblTitulo.setText("Empréstimo de Equipamento de Telefonia");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
+        jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 938, 46));
 
         paneFuncionario.setBackground(new java.awt.Color(159, 186, 213));
         paneFuncionario.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Funcionário", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -347,29 +361,39 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel6.setText("Nome:");
 
         txtNome.setEditable(false);
+        txtNome.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtNome.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel7.setText("Setor:");
 
         txtSetor.setEditable(false);
+        txtSetor.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtSetor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel8.setText("CPF:");
 
         txtCpf.setEditable(false);
+        txtCpf.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtCpf.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel9.setText("RG:");
 
         txtRG.setEditable(false);
+        txtRG.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtRG.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel10.setText("Função:");
 
         txtFuncao.setEditable(false);
+        txtFuncao.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtFuncao.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         btnBuscFuncionario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa.png"))); // NOI18N
@@ -452,15 +476,22 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(paneFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 878, -1));
+
         jPanel4.setBackground(new java.awt.Color(159, 186, 213));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Outros dados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel12.setText("Data Empréstimo:");
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel13.setText("Devolução:");
 
+        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel15.setText("Nº Protocolo:");
+
+        cboResponsavel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
         txtDataEmprestimo.setBackground(new java.awt.Color(204, 255, 204));
         try {
@@ -468,6 +499,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDataEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
         txtDataDevolucao.setBackground(new java.awt.Color(255, 204, 204));
         try {
@@ -475,7 +507,9 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDataDevolucao.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
+        jLabel18.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel18.setText("Responsável:");
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -486,14 +520,17 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jLabel22.setForeground(new java.awt.Color(204, 0, 51));
         jLabel22.setText("*");
 
+        jLabel24.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel24.setText("Motivo Empréstimo:");
 
+        cboMotivoEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         cboMotivoEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboMotivoEmprestimoActionPerformed(evt);
             }
         });
 
+        jLabel25.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel25.setText("Chamado:");
 
@@ -510,6 +547,9 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtChamado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtChamadoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtChamadoKeyReleased(evt);
             }
         });
 
@@ -529,6 +569,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtProtocolo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -597,28 +638,37 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 509, 878, -1));
+
         paneComplemento.setBackground(new java.awt.Color(159, 186, 213));
         paneComplemento.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Complementos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         ckCaixa.setBackground(new java.awt.Color(159, 186, 213));
+        ckCaixa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckCaixa.setText("Caixa");
 
         ckManual.setBackground(new java.awt.Color(159, 186, 213));
+        ckManual.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckManual.setText("Manual");
 
         ckCarregador.setBackground(new java.awt.Color(159, 186, 213));
+        ckCarregador.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckCarregador.setText("Carregador");
 
         ckAdaptador.setBackground(new java.awt.Color(159, 186, 213));
+        ckAdaptador.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckAdaptador.setText("Adaptador");
 
         ckFone.setBackground(new java.awt.Color(159, 186, 213));
+        ckFone.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckFone.setText("Fone de Ouvido");
 
         ckOutro.setBackground(new java.awt.Color(159, 186, 213));
+        ckOutro.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckOutro.setText("Outros");
 
         ckCapinha.setBackground(new java.awt.Color(159, 186, 213));
+        ckCapinha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckCapinha.setText("Capa TPU");
 
         javax.swing.GroupLayout paneComplementoLayout = new javax.swing.GroupLayout(paneComplemento);
@@ -657,18 +707,23 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                     .addComponent(ckOutro)
                     .addComponent(txtComplementos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ckCapinha))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.add(paneComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 326, 878, 70));
+
         jLabel14.setText("Observação:");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 616, -1, -1));
 
         txtObservacao.setColumns(20);
         txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);
 
-        btnSalvar.setBackground(new java.awt.Color(0, 204, 204));
-        btnSalvar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 639, 878, 54));
+
+        btnSalvar.setBackground(new java.awt.Color(102, 255, 204));
+        btnSalvar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/save.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setBorder(null);
@@ -677,6 +732,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(753, 700, 159, 40));
 
         paneChip.setBackground(new java.awt.Color(159, 186, 213));
         paneChip.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Chip", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
@@ -686,6 +742,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel16.setText(" CHIP:");
 
         btnBuscaChip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/lupa.png"))); // NOI18N
@@ -699,6 +756,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         });
 
         txtChip.setEditable(false);
+        txtChip.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtChip.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         radComChip.setBackground(new java.awt.Color(159, 186, 213));
@@ -729,6 +787,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel17.setText("Nª Linha:");
 
         ckVoz.setBackground(new java.awt.Color(159, 186, 213));
@@ -740,10 +799,13 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         ckDados.setText("Dados");
 
         txtLinha.setEditable(false);
+        txtLinha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
 
+        jLabel26.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel26.setText("Operadora:");
 
         txtOperadora.setEditable(false);
+        txtOperadora.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtOperadora.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout paneChipLayout = new javax.swing.GroupLayout(paneChip);
@@ -799,6 +861,8 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        jPanel1.add(paneChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 878, -1));
+
         btnCancelar.setBackground(new java.awt.Color(204, 204, 204));
         btnCancelar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/cancel.png"))); // NOI18N
@@ -809,11 +873,13 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 700, 110, 30));
 
         txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodigo.setEnabled(false);
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 66, 52, -1));
 
         txtMensagemErro.setBackground(new java.awt.Color(159, 186, 213));
         txtMensagemErro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -822,6 +888,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         txtMensagemErro.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         txtMensagemErro.setMinimumSize(new java.awt.Dimension(10, 10));
         txtMensagemErro.setOpaque(true);
+        jPanel1.add(txtMensagemErro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 66, 583, 21));
 
         ckAparelho.setBackground(new java.awt.Color(159, 186, 213));
         ckAparelho.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -832,6 +899,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 ckAparelhoActionPerformed(evt);
             }
         });
+        jPanel1.add(ckAparelho, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 64, 81, -1));
 
         ckChip.setBackground(new java.awt.Color(159, 186, 213));
         ckChip.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -843,84 +911,16 @@ public class FrmEmprestimo extends javax.swing.JDialog {
                 ckChipActionPerformed(evt);
             }
         });
+        jPanel1.add(ckChip, new org.netbeans.lib.awtextra.AbsoluteConstraints(861, 64, 51, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("EMPRÉSTIMO:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(695, 68, -1, -1));
 
         ckVarios.setBackground(new java.awt.Color(159, 186, 213));
+        ckVarios.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         ckVarios.setText("Emprestar vários itens para este funcionário");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ckVarios)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtMensagemErro, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ckAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ckChip, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paneChip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(paneComplemento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(paneAparelho, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(paneFuncionario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(26, 26, 26))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jLabel4)
-                        .addComponent(ckAparelho)
-                        .addComponent(ckChip))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMensagemErro, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paneAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paneComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneChip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckVarios)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
-        );
+        jPanel1.add(ckVarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 700, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -930,7 +930,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
         );
 
         pack();
@@ -1022,7 +1022,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
         int contadorCelular = 0, contadorChip = 0;
         String mensagem;
-    
+
         ArrayList<Emprestimo> lista = emprestimoDao.getListagemEmprestimoPorNome(txtNome.getText());
 
         if (!lista.isEmpty()) {
@@ -1164,7 +1164,6 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         if (radComChip.isSelected() && txtChip.getText().equals("")) {
             txtChip.setBackground(Color.yellow);
             txtLinha.setBackground(Color.yellow);
-
             JOptionPane.showMessageDialog(this, "Chip não informada", null, JOptionPane.ERROR_MESSAGE);
             return;
         } else {
@@ -1174,12 +1173,10 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         }
         if (!radComChip.isSelected() && !radSemChip.isSelected()) {
             JOptionPane.showMessageDialog(this, "Informe se é COM CHIP ou SEM CHIP.", null, JOptionPane.ERROR_MESSAGE);
-
             return;
         }
         if (radComChip.isSelected() && !ckDados.isSelected() && !ckVoz.isSelected()) {
             JOptionPane.showMessageDialog(this, "Com chip deve informar dados ou voz \n Alterar no Cadastro do Chip.", null, JOptionPane.ERROR_MESSAGE);
-
             return;
         }
         if (ckOutro.isSelected() && txtComplementos.getText().equals("")) {
@@ -1284,25 +1281,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
                 logDao.insert("Novo Emprestimo, para: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
 
-                if (!ckVarios.isSelected()) {                   
+                if (!ckVarios.isSelected()) {
                     imprimirTermo();
                     this.dispose();
                 } else {
-                    
-                    limparEContinuaEmprestimo();                    
-                    ArrayList<Emprestimo> lista = emprestimoDao.getListagemEmprestimoPorNome(txtNome.getText());
-                    
-                    if(!lista.isEmpty()){
-                        //FrmMarcaDevolucao frmMarcaDevolucao = new FrmMarcaDevolucao(null, true);
-                        //frmMarcaDevolucao.mensagem();
-                        
-                        
-                    }else{
-                         JOptionPane.showMessageDialog(this, "Cadastrado com Sucesso.", null, JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-                   
-
+                    limparEContinuaEmprestimo();
                 }
 
             } else {
@@ -1693,6 +1676,11 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_txtChamadoFocusLost
+
+    private void txtChamadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChamadoKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtChamado, 10);
+    }//GEN-LAST:event_txtChamadoKeyReleased
     // FUNÇÃO QUE CARREGA OS DADOS DO EMPRESTIMO NA TELA
     private void carregaDadosTela() {
 

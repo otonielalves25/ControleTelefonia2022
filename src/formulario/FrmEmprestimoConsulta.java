@@ -97,6 +97,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         radCargo = new javax.swing.JRadioButton();
         radMotivo = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
+        radOperadora = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -116,17 +117,20 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Seleciona Pesquisa:");
 
         buttonGroup1.add(radNome);
+        radNome.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radNome.setSelected(true);
         radNome.setText("Nome");
 
         buttonGroup1.add(radImei);
+        radImei.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radImei.setText("Imei");
 
         buttonGroup1.add(radLinha);
+        radLinha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radLinha.setText("Nª da Linha ");
 
         txtPesquisa.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +145,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         grelhaEmprestimo.setAutoCreateRowSorter(true);
+        grelhaEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         grelhaEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -200,7 +205,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         }
 
         btnNovo.setBackground(new java.awt.Color(204, 255, 204));
-        btnNovo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnNovo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/new.png"))); // NOI18N
         btnNovo.setText("NOVO EMPRESTIMO");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +215,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         btnAlterar.setBackground(new java.awt.Color(153, 204, 255));
-        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAlterar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/edit.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -219,7 +224,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnExcluir.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/delete.png"))); // NOI18N
         btnExcluir.setText("Excluir Devolvidos");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -229,7 +234,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         btnDevolver.setBackground(new java.awt.Color(255, 153, 153));
-        btnDevolver.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnDevolver.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/devolver.png"))); // NOI18N
         btnDevolver.setText("Devolução de Empréstimo");
         btnDevolver.addActionListener(new java.awt.event.ActionListener() {
@@ -238,9 +243,9 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        ckDevolvidos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckDevolvidos.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         ckDevolvidos.setForeground(new java.awt.Color(153, 0, 0));
-        ckDevolvidos.setText("MOSTRA DEVOLVIDOS");
+        ckDevolvidos.setText("DEVOLVIDOS");
         ckDevolvidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ckDevolvidosActionPerformed(evt);
@@ -248,7 +253,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         btnReemitir.setBackground(new java.awt.Color(255, 204, 153));
-        btnReemitir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnReemitir.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnReemitir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/impressora.png"))); // NOI18N
         btnReemitir.setText("Reemitir Termo");
         btnReemitir.addActionListener(new java.awt.event.ActionListener() {
@@ -258,11 +263,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(radLocalidade);
+        radLocalidade.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radLocalidade.setText("Localidade ");
 
         buttonGroup1.add(radPatrimonio);
+        radPatrimonio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radPatrimonio.setText("Patrimonio");
 
+        btnLimpar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/clearResultado.png"))); // NOI18N
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -271,18 +279,18 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel2.setText("* EMPRESTADOS");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 0, 0));
         jLabel3.setText("*DEVOLVIDOS");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 204));
         jLabel4.setText("* ATRASADOS");
 
-        ckAtrazados.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        ckAtrazados.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         ckAtrazados.setForeground(new java.awt.Color(0, 0, 153));
         ckAtrazados.setText("ATRASADOS");
         ckAtrazados.addActionListener(new java.awt.event.ActionListener() {
@@ -292,6 +300,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(255, 204, 153));
+        jButton1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/pdf_1.png"))); // NOI18N
         jButton1.setText("PDF");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -301,13 +310,15 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(radModelo);
+        radModelo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radModelo.setText("Marca Modelo");
 
-        lblQuantidade.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblQuantidade.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         lblQuantidade.setForeground(new java.awt.Color(102, 0, 0));
         lblQuantidade.setText("0 - Empréstimo localizados");
 
         buttonGroup1.add(radData);
+        radData.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radData.setText("Data Empréstimo");
         radData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,6 +342,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         btnExcel.setBackground(new java.awt.Color(204, 255, 204));
+        btnExcel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/xls.png"))); // NOI18N
         btnExcel.setText("EXCEL");
         btnExcel.addActionListener(new java.awt.event.ActionListener() {
@@ -340,6 +352,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(radCargo);
+        radCargo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radCargo.setText("Cargo");
         radCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +361,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(radMotivo);
+        radMotivo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radMotivo.setText("Motivo");
         radMotivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,6 +377,15 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(radOperadora);
+        radOperadora.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        radOperadora.setText("Operadora");
+        radOperadora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radOperadoraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -372,7 +395,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radNome)
@@ -392,12 +415,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addComponent(radMotivo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radData)
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radOperadora)
+                        .addGap(18, 18, 18)
                         .addComponent(ckDevolvidos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(5, 5, 5)
                         .addComponent(ckAtrazados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                        .addComponent(txtPesquisa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,7 +439,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                         .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
@@ -450,7 +475,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(btnLimpar)
                     .addComponent(btnExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radMotivo))
+                    .addComponent(radMotivo)
+                    .addComponent(radOperadora))
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -538,6 +564,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             tipoPesquisa = "motivo";
         } else if (radCargo.isSelected()) {
             tipoPesquisa = "cargo";
+        } else if (radOperadora.isSelected()) {
+            tipoPesquisa = "operadora";
         } else {
             tipoPesquisa = "linha";
         }
@@ -620,7 +648,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
                         if (dataDevolucaoDate.before(new Date()) && procurado.equals("EMPRESTADO")) {
 
-                            label.setForeground(Color.BLUE);
+                            label.setForeground(new Color(0, 0, 156));
                         }
 
                     } catch (ParseException ex) {
@@ -945,6 +973,10 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         frmResposta.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void radOperadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radOperadoraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radOperadoraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1007,6 +1039,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.JRadioButton radModelo;
     private javax.swing.JRadioButton radMotivo;
     private javax.swing.JRadioButton radNome;
+    private javax.swing.JRadioButton radOperadora;
     private javax.swing.JRadioButton radPatrimonio;
     private javax.swing.JSpinner spQuantidade;
     private javax.swing.JTextField txtPesquisa;

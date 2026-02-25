@@ -129,6 +129,7 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
             }
         });
 
+        grelha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         grelha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -175,13 +176,16 @@ public class FrmCelularConsultaRapida extends javax.swing.JDialog {
         });
 
         buttonGroup1.add(radSerie);
+        radSerie.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radSerie.setSelected(true);
         radSerie.setText("Série");
 
         buttonGroup1.add(radImei);
+        radImei.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radImei.setText("IMEI");
 
         buttonGroup1.add(radPatrimonio);
+        radPatrimonio.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         radPatrimonio.setText("Patrimônio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

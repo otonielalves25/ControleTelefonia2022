@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="239"/>
 	<subDataset name="Table Dataset 1" uuid="df9fd294-9311-4892-867d-99d61dfa4692"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
 	<parameter name="logoDetran" class="java.lang.Object"/>
@@ -183,10 +183,10 @@ where funcionario.nome = 'Otoniel Amancio Alves']]>
 2.  Fará o uso exclusivamente para fins profissionais e dentro da necessidade funcional.
 3.  Providenciará aparelho da mesma marca e modelo para restituição à proprietária em caso de extravio, furto ou roubo, acompanhado de Boletim de Ocorrência Policial ou, em caso de descontinuidade do aparelho da mesma marca e modelo, modelo equivalente ou superior ao cedido tendo como base o valor apresentado em Nota Fiscal;
 4.  Devolverá o aparelho e os acessórios que o acompanham no prazo máximo de 2 (dois) dias úteis quando solicitado formalmente, ou quando desligar-se do quadro de funcionários do Detran/PR;
-5.  Comunicará, de imediato, a COOGI/DOT em caso de defeito do aparelho. Neste caso, o Detran/PR realizará o envio para assistência técnica especializada do fabricante e, caso fique comprovado o defeito por má utilização, fica o cessionário responsável pelo reembolso ou pela reposição do aparelho e/ou dos acessórios ineficientes ou defeituosos, tais como carregadores, cabos, fones de ouvido, observadas as condições do item 3 para substituição ou reembolso;
-6.  Comunicará, de imediato, a COOGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
+5.  Comunicará, de imediato, a DEGI/DOT em caso de defeito do aparelho. Neste caso, o Detran/PR realizará o envio para assistência técnica especializada do fabricante e, caso fique comprovado o defeito por má utilização, fica o cessionário responsável pelo reembolso ou pela reposição do aparelho e/ou dos acessórios ineficientes ou defeituosos, tais como carregadores, cabos, fones de ouvido, observadas as condições do item 3 para substituição ou reembolso;
+6.  Comunicará, de imediato, a DEGI/DOT para casos de solicitações de reparos ou quaisquer outras ocorrências referentes à telefonia móvel por meio de registro de chamado técnico, no workflow: CGI >> Telefonia Móvel;
 7.  Assumirá conhecimento dos termos da da Portaria n.º 083/2019 DG, da Ordem de Serviço n.º 002/2023, e dos contratos que regrem o uso dos equipamentos em questão.
-8.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/COOGI deve ser consultada;
+8.  Para casos omissos neste termo de comodato e nas referidas normas citadas acima, a DTD/DEGI deve ser consultada;
 9.  Assumirá que o cumprimento dos itens elencados nesse comodato não exime o cessionário da apuração de eventuais irregularidades na conduta com o aparelho ou seus acessórios.
                                                                                                                                                                                              Concordo com o termo e seu conteúdo disposto acima apresentados no Protocolo Integrado em questão e me responsabilizo pelo uso do aparelho nos termos aqui definidos.
 ]]></text>
@@ -196,7 +196,7 @@ where funcionario.nome = 'Otoniel Amancio Alves']]>
 				<textElement textAlignment="Justified">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["     O smartphone em questão é de propriedade da "+$F{nomeEmpresa} + ". De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["     O smartphone em questão é de propriedade do Detran/PR. De acordo com previsão contratual, ao final da vigência do contrato, o Detran/PR devolverá todos os equipamentos recebidos em comodato (cessão para uso) em pleno funcionamento e em boas condições, conforme previsto em edital. Diante do exposto, o cessionário concorda que:"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -221,7 +221,7 @@ where funcionario.nome = 'Otoniel Amancio Alves']]>
 			<staticText>
 				<reportElement x="21" y="90" width="208" height="20" uuid="79e84799-4a1a-43a4-9c4f-6398776804ab"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
-				<text><![CDATA[COOGI]]></text>
+				<text><![CDATA[DEGI]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="340" y="30" width="196" height="20" uuid="dde97f6a-4eba-4f0b-9461-834503be6da5"/>

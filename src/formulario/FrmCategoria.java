@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Categoria;
 import modelo.Session;
+import utilidade.MaximoLength;
 import utilidade.ValidarCampos;
 
 /**
@@ -73,6 +74,9 @@ public class FrmCategoria extends javax.swing.JFrame {
         txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTextoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTextoKeyReleased(evt);
             }
         });
 
@@ -359,6 +363,11 @@ public class FrmCategoria extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtTextoKeyPressed
+
+    private void txtTextoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtTexto, 150);
+    }//GEN-LAST:event_txtTextoKeyReleased
 
     /**
      * @param args the command line arguments

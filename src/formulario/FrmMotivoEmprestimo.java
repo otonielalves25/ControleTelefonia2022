@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Cargo;
 import modelo.MotivoEmprestimo;
 import modelo.Session;
+import utilidade.MaximoLength;
 import utilidade.ValidarCampos;
 
 /**
@@ -76,6 +77,9 @@ public class FrmMotivoEmprestimo extends javax.swing.JFrame {
         txtTexto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTextoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTextoKeyReleased(evt);
             }
         });
 
@@ -370,6 +374,11 @@ public class FrmMotivoEmprestimo extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_grelhaMouseReleased
+
+    private void txtTextoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTextoKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtTexto, 150);
+    }//GEN-LAST:event_txtTextoKeyReleased
 
     /**
      * @param args the command line arguments

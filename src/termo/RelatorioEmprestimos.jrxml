@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="957" pageHeight="595" orientation="Landscape" columnWidth="917" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82c01ce5-c7e1-4e0f-93e2-48b49b7d7224">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="957" pageHeight="595" orientation="Landscape" columnWidth="917" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="82c01ce5-c7e1-4e0f-93e2-48b49b7d7224">
 	<property name="ireport.zoom" value="1.5000000000000007"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -247,7 +247,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<text><![CDATA[Marca / Modelo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="676" y="2" width="68" height="20" backcolor="#CCCCCC" uuid="7e10169f-57be-436e-aadd-f18204b75088"/>
+				<reportElement mode="Opaque" x="676" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="7e10169f-57be-436e-aadd-f18204b75088"/>
 				<box topPadding="0" leftPadding="0" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -261,7 +261,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<text><![CDATA[Imei]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="744" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="bceafab1-1142-4728-a7a4-d5dfe163aa3d"/>
+				<reportElement mode="Opaque" x="734" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="bceafab1-1142-4728-a7a4-d5dfe163aa3d"/>
 				<box topPadding="0" leftPadding="0" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -331,7 +331,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<text><![CDATA[Motivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="802" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="88f00225-9bb1-4ee6-8ed3-fccb00a5f406"/>
+				<reportElement mode="Opaque" x="792" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="88f00225-9bb1-4ee6-8ed3-fccb00a5f406"/>
 				<box topPadding="0" leftPadding="0" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -345,7 +345,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<text><![CDATA[Protocolo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="860" y="2" width="58" height="20" backcolor="#CCCCCC" uuid="4761309c-f16f-47ef-be26-fe866e5c441d"/>
+				<reportElement mode="Opaque" x="850" y="2" width="68" height="20" backcolor="#CCCCCC" uuid="4761309c-f16f-47ef-be26-fe866e5c441d"/>
 				<box topPadding="0" leftPadding="0" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -415,7 +415,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<textFieldExpression><![CDATA[$F{marca} != null ? $F{marca} : "----"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="676" y="0" width="68" height="13" uuid="43a90517-cf40-4ee2-8aa0-1fd27f6bce8c"/>
+				<reportElement x="676" y="0" width="58" height="13" uuid="43a90517-cf40-4ee2-8aa0-1fd27f6bce8c"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -428,7 +428,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<textFieldExpression><![CDATA[$F{imei1} != null ? $F{imei1} : "----"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="744" y="0" width="58" height="13" uuid="8cb47eaa-0829-4233-881a-cdb88e3e2975"/>
+				<reportElement x="734" y="0" width="58" height="13" uuid="8cb47eaa-0829-4233-881a-cdb88e3e2975"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -494,7 +494,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<textFieldExpression><![CDATA[$F{motivo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="802" y="0" width="58" height="13" uuid="ab017169-635b-40e8-a406-d469e76d3156"/>
+				<reportElement x="792" y="0" width="58" height="13" uuid="ab017169-635b-40e8-a406-d469e76d3156"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -507,7 +507,7 @@ LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE chip.idC
 				<textFieldExpression><![CDATA[$F{protocolo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="860" y="0" width="58" height="13" uuid="91e40ef1-f80d-405c-80a9-7bc16d4fe985"/>
+				<reportElement x="850" y="0" width="68" height="13" uuid="91e40ef1-f80d-405c-80a9-7bc16d4fe985"/>
 				<box topPadding="3" leftPadding="3" rightPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>

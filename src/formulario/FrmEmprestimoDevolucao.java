@@ -240,7 +240,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtEmei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 770, 100));
@@ -363,7 +363,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                             .addComponent(ckCarregador)
                             .addComponent(ckAdaptador)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,16 +506,16 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ckFoneD.setText("Fone de Ouvido");
-        jPanel5.add(ckFoneD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 97, -1, -1));
+        jPanel5.add(ckFoneD, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, -1, -1));
 
         ckAdaptadorD.setText("Adaptador USB");
-        jPanel5.add(ckAdaptadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 74, -1, -1));
+        jPanel5.add(ckAdaptadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, -1));
 
         ckManualD.setText("Manual");
-        jPanel5.add(ckManualD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 97, -1, -1));
+        jPanel5.add(ckManualD, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, -1, -1));
 
         ckCarregadorD.setText("Carregador");
-        jPanel5.add(ckCarregadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 74, -1, -1));
+        jPanel5.add(ckCarregadorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, -1, -1));
 
         ckCaixaD.setText("Caixa");
         ckCaixaD.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -528,12 +528,12 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckCaixaDActionPerformed(evt);
             }
         });
-        jPanel5.add(ckCaixaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(519, 49, -1, -1));
+        jPanel5.add(ckCaixaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 51, 0));
         jLabel4.setText("Marque os itens devolvidos");
-        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 27, -1, -1));
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, -1, -1));
 
         ckTodos.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckTodos.setText("Devolveu tudo.");
@@ -542,7 +542,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckTodosActionPerformed(evt);
             }
         });
-        jPanel5.add(ckTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
+        jPanel5.add(ckTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
 
         ckConfirmaNaoDevolvido.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         ckConfirmaNaoDevolvido.setForeground(new java.awt.Color(0, 51, 153));
@@ -552,7 +552,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckConfirmaNaoDevolvidoActionPerformed(evt);
             }
         });
-        jPanel5.add(ckConfirmaNaoDevolvido, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 55, 162, -1));
+        jPanel5.add(ckConfirmaNaoDevolvido, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 162, -1));
 
         ckCapinhaD.setText("Capinha TPU");
         ckCapinhaD.addActionListener(new java.awt.event.ActionListener() {
@@ -560,7 +560,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
                 ckCapinhaDActionPerformed(evt);
             }
         });
-        jPanel5.add(ckCapinhaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, -1, -1));
+        jPanel5.add(ckCapinhaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, -1, -1));
 
         cboEstadoBem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "BOM ESTADO", "DEFEITO", "EXTRAVIADO", "QUEBRADO" }));
         jPanel5.add(cboEstadoBem, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 80, 230, -1));
@@ -579,7 +579,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
         }
         jPanel5.add(txtDataDevolucao, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 40, 108, -1));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 770, 130));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 770, 120));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -678,7 +678,7 @@ public class FrmEmprestimoDevolucao extends javax.swing.JDialog {
             String estado = cboEstadoBem.getModel().getSelectedItem().toString();
 
             itensNaoDevolvido = estado + ". \n" + itensNaoDevolvido.toUpperCase();
-            txtObservacao.setText(itensNaoDevolvido);
+            txtObservacao.setText(itensNaoDevolvido.trim());
             emprestimo.setObservacaoDevolucao(itensNaoDevolvido);
             // MUDA OS ITEM DO CELULAR CONFORME DEVOLUÇÃO //////////////////////
 

@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Localidade;
 import modelo.Session;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -109,6 +110,9 @@ public class FrmLocalidade extends javax.swing.JFrame {
         txtLocalidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtLocalidadeKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLocalidadeKeyReleased(evt);
             }
         });
 
@@ -425,6 +429,11 @@ public class FrmLocalidade extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtLocalidadeKeyPressed
+
+    private void txtLocalidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocalidadeKeyReleased
+        // TODO add your handling code here:
+         MaximoLength.tamanhoMaximoCaracter(txtLocalidade, 150);
+    }//GEN-LAST:event_txtLocalidadeKeyReleased
 
     /**
      * @param args the command line arguments

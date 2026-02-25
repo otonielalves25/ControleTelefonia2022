@@ -6,7 +6,6 @@
 package formulario;
 
 import dao.FuncionarioDao;
-import dao.LogDao;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -109,8 +108,10 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel1.setText("Nome do Funcionário:");
 
+        txtPesquisa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyPressed(evt);
@@ -120,6 +121,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             }
         });
 
+        grelha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         grelha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

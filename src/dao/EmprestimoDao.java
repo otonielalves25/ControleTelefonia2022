@@ -332,6 +332,8 @@ public class EmprestimoDao {
             modoPesquisa = "cargoFuncionario.nomeCargo";
         } else if (tipoPesquisa.equals("motivo")) {
             modoPesquisa = "motivoemprestimo.motivo";
+        } else if (tipoPesquisa.equals("operadora")) {
+            modoPesquisa = "empresa.nomeEmpresa";
         } else {
             modoPesquisa = "chip.numeroLinha";
         }
@@ -384,7 +386,7 @@ public class EmprestimoDao {
             con = conexao.ConexaoMySql.getConnection();
 
             stm = con.prepareStatement(sql);
-         
+
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -851,7 +853,7 @@ public class EmprestimoDao {
                 chip.setNumeroLinha(rs.getString("numeroLinha"));
                 chip.setIsDado(rs.getBoolean("dados"));
                 chip.setIsTelefonia(rs.getBoolean("telefonia"));
-                
+
                 // coloca valores dos dados
                 chip.setEmpresa(empresa);
                 emprestimo.setChip(chip);

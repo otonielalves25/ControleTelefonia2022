@@ -26,6 +26,7 @@ import modelo.Empresa;
 import modelo.Emprestimo;
 import modelo.Marca;
 import modelo.Session;
+import utilidade.MaximoLength;
 import utilidade.ValidarCampos;
 
 /**
@@ -296,6 +297,11 @@ public class FrmCelular extends javax.swing.JFrame {
                 txtSerieFocusLost(evt);
             }
         });
+        txtSerie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSerieKeyReleased(evt);
+            }
+        });
 
         grelha.setAutoCreateRowSorter(true);
         grelha.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
@@ -445,6 +451,11 @@ public class FrmCelular extends javax.swing.JFrame {
 
         txtEmei1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
         txtEmei1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtEmei1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmei1KeyReleased(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel7.setText("IMEI 1: *");
@@ -457,6 +468,9 @@ public class FrmCelular extends javax.swing.JFrame {
         txtEmei2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtEmei2KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmei2KeyReleased(evt);
             }
         });
 
@@ -576,6 +590,11 @@ public class FrmCelular extends javax.swing.JFrame {
 
         txtPatrimonio.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         txtPatrimonio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtPatrimonio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPatrimonioKeyReleased(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel11.setText("Patrimônio:");
@@ -1244,6 +1263,26 @@ public class FrmCelular extends javax.swing.JFrame {
     private void ckCodigoDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckCodigoDotActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ckCodigoDotActionPerformed
+
+    private void txtPatrimonioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPatrimonioKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtPatrimonio, 16);
+    }//GEN-LAST:event_txtPatrimonioKeyReleased
+
+    private void txtSerieKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtSerie, 50);
+    }//GEN-LAST:event_txtSerieKeyReleased
+
+    private void txtEmei1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei1KeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtEmei1, 50);
+    }//GEN-LAST:event_txtEmei1KeyReleased
+
+    private void txtEmei2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmei2KeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtEmei2, 50);
+    }//GEN-LAST:event_txtEmei2KeyReleased
 
     // FUNÇÃO BUSCANDO COM QUEM ESTÁ O CHIP //////////////////////////////////
     private String verificaComQuemEsta(String id) {

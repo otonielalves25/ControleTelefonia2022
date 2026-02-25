@@ -10,6 +10,7 @@ import dao.LogDao;
 import dao.UsuarioDao;
 import javax.swing.JOptionPane;
 import modelo.Session;
+import utilidade.MaximoLength;
 
 /**
  *
@@ -84,6 +85,9 @@ public class FrmTrocarSenha extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyReleased(evt);
+            }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -116,6 +120,9 @@ public class FrmTrocarSenha extends javax.swing.JFrame {
         txtConfirmaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtConfirmaSenhaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtConfirmaSenhaKeyReleased(evt);
             }
         });
 
@@ -274,6 +281,16 @@ public class FrmTrocarSenha extends javax.swing.JFrame {
         // TODO add your handling code here:
         txtUsuario.setText(Session.getLogin());
     }//GEN-LAST:event_formWindowOpened
+
+    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtSenha, 15);
+    }//GEN-LAST:event_txtSenhaKeyReleased
+
+    private void txtConfirmaSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtConfirmaSenhaKeyReleased
+        // TODO add your handling code here:
+        MaximoLength.tamanhoMaximoCaracter(txtConfirmaSenha, 15);
+    }//GEN-LAST:event_txtConfirmaSenhaKeyReleased
 
     /**
      * @param args the command line arguments
