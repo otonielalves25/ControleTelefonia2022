@@ -159,6 +159,38 @@ public class UsuarioDao {
 
         return usuario;
     }
+    
+        //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    public Usuario retornaPorLogin(String procura) {
+
+        String sql = "SELECT * FROM usuario WHERE login = ?";
+        Usuario usuario = null;
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, procura);
+            rs = stm.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNome(rs.getString("nome"));
+                    usuario.setLogin(rs.getString("login"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setStatus(rs.getString("status"));
+                    usuario.setPrevilegio(rs.getString("previlegio"));
+                    usuario.setRamal(rs.getString("ramal"));
+                }
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
+        }
+
+        return usuario;
+    }
 
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagem() {

@@ -215,7 +215,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        cboTipoLocalidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "POSTO", "SETOR", "OUTRO", " " }));
+        cboTipoLocalidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione...", "COORDENADORIA", "CIRETRAN", "POSTO DE TRÂNSITO", "SETOR", "OUTROS" }));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 11)); // NOI18N
         jLabel2.setText("Tipo Localidade:");
@@ -385,7 +385,14 @@ public class FrmLocalidade extends javax.swing.JFrame {
             txtLocalidade.requestFocus();
             return;
         }
+
         if (cboTipoLocalidade.getSelectedItem().equals("Selecione...")) {
+            JOptionPane.showMessageDialog(this, "Tipo localidde não informada", null, JOptionPane.ERROR_MESSAGE);
+            cboTipoLocalidade.requestFocus();
+            return;
+        }
+
+        if (cboTipoLocalidade.getSelectedItem().equals("")) {
             JOptionPane.showMessageDialog(this, "Tipo localidde não informada", null, JOptionPane.ERROR_MESSAGE);
             cboTipoLocalidade.requestFocus();
             return;
@@ -432,7 +439,7 @@ public class FrmLocalidade extends javax.swing.JFrame {
 
     private void txtLocalidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLocalidadeKeyReleased
         // TODO add your handling code here:
-         MaximoLength.tamanhoMaximoCaracter(txtLocalidade, 150);
+        MaximoLength.tamanhoMaximoCaracter(txtLocalidade, 150);
     }//GEN-LAST:event_txtLocalidadeKeyReleased
 
     /**

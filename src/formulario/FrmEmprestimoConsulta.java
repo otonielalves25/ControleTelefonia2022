@@ -98,6 +98,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         radMotivo = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
         radOperadora = new javax.swing.JRadioButton();
+        ckEmprestado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -145,7 +146,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         });
 
         grelhaEmprestimo.setAutoCreateRowSorter(true);
-        grelhaEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        grelhaEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 11)); // NOI18N
         grelhaEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -386,6 +387,16 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             }
         });
 
+        ckEmprestado.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        ckEmprestado.setForeground(new java.awt.Color(0, 102, 51));
+        ckEmprestado.setSelected(true);
+        ckEmprestado.setText("EMPRESTADO");
+        ckEmprestado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckEmprestadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -417,12 +428,14 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addComponent(radData)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radOperadora)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ckEmprestado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ckDevolvidos)
-                        .addGap(5, 5, 5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ckAtrazados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisa)
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -439,7 +452,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
@@ -476,7 +489,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                     .addComponent(btnExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(radMotivo)
-                    .addComponent(radOperadora))
+                    .addComponent(radOperadora)
+                    .addComponent(ckEmprestado))
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -572,14 +586,26 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
 
         if (!ckDevolvidos.isSelected()) {
             soEmprestados = "EMPRESTADO";
+        } else {
+            soEmprestados = "DEVOLVIDO";
+        }
+
+        if (ckDevolvidos.isSelected() && ckEmprestado.isSelected()) {
+            soEmprestados = "EMPRESTADO_DEVOLVIDO";
         }
 
         if (radPatrimonio.isSelected()) {
-           campoPesquisa = campoPesquisa.replace(".", "");
+            campoPesquisa = campoPesquisa.replace(".", "");
         }
 
+        // realiza a busca no banco
         ArrayList<Emprestimo> lista = emprestimoDao.getListagemLike(campoPesquisa, soEmprestados, tipoPesquisa, quantidade);
+
+        // limpa a tabela
         modeloGrelha.setNumRows(0);
+        
+  
+        
 
         //System.out.println(lista.size());
         lista.forEach((emprestimo) -> {
@@ -639,7 +665,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
                 if (procurado.equals("EMPRESTADO")) {
                     label.setForeground(Color.BLACK);
                 } else {
-                    label.setForeground(Color.RED);
+                    label.setForeground(new Color(153, 0, 1));
                 }
 
                 if (dataDevolucao.replace("/", "").length() >= 8) {
@@ -805,6 +831,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (ckDevolvidos.isSelected()) {
             ckAtrazados.setSelected(false);
+        } else {
+            ckEmprestado.setSelected(true);
         }
         carregarGrelha();
     }//GEN-LAST:event_ckDevolvidosActionPerformed
@@ -899,6 +927,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         txtPesquisa.setText("");
         ckAtrazados.setSelected(false);
         ckDevolvidos.setSelected(false);
+        ckEmprestado.setSelected(true);
         carregarGrelha();
     }//GEN-LAST:event_btnLimparActionPerformed
 
@@ -906,6 +935,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (ckAtrazados.isSelected()) {
             ckDevolvidos.setSelected(false);
+        } else {
+            ckEmprestado.setSelected(true);
         }
         carregarGrelha();
     }//GEN-LAST:event_ckAtrazadosActionPerformed
@@ -977,6 +1008,15 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radOperadoraActionPerformed
 
+    private void ckEmprestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckEmprestadoActionPerformed
+        // TODO add your handling code here:
+        if (!ckDevolvidos.isSelected() && !ckAtrazados.isSelected()) {
+            ckEmprestado.setSelected(true);
+        }
+
+        carregarGrelha();
+    }//GEN-LAST:event_ckEmprestadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1020,6 +1060,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JCheckBox ckAtrazados;
     private javax.swing.JCheckBox ckDevolvidos;
+    private javax.swing.JCheckBox ckEmprestado;
     private javax.swing.JTable grelhaEmprestimo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

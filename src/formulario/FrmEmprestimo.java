@@ -716,6 +716,7 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 616, -1, -1));
 
         txtObservacao.setColumns(20);
+        txtObservacao.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtObservacao.setLineWrap(true);
         txtObservacao.setRows(5);
         jScrollPane1.setViewportView(txtObservacao);

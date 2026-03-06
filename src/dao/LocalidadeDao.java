@@ -172,4 +172,88 @@ public class LocalidadeDao {
         return Listagem;
     }
 
+    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
+    public ArrayList<Localidade> getAllsLocalidades() {
+
+        ArrayList<Localidade> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM localidade ORDER BY nomeLocalidade";
+        Localidade localidade;
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                localidade = new Localidade();
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+                Listagem.add(localidade);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex);
+        }
+        return Listagem;
+    }
+
+    // Lista tipos de localidade por String
+    public ArrayList<String> getAllsTiposLocalidade() {
+
+        ArrayList<String> Listagem = new ArrayList<>();
+        String sql = "SELECT DISTINCT tipoLocalidade FROM localidade ORDER BY tipoLocalidade";
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Listagem.add(rs.getString("tipoLocalidade"));
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex);
+        }
+        return Listagem;
+    }
+
+    // BUSCA AS LOCALIDADES POR TIPOS
+    public ArrayList<Localidade> getAllsLocalidadesByTipo(String tipoLocalidade) {
+
+        ArrayList<Localidade> Listagem = new ArrayList<>();
+        String sql = "SELECT * FROM localidade WHERE tipoLocalidade = '" + tipoLocalidade + "' ORDER BY nomeLocalidade";
+        Localidade localidade;
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+
+                localidade = new Localidade();
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+                Listagem.add(localidade);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex);
+        }
+        return Listagem;
+    }
 }

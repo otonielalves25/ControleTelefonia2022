@@ -574,6 +574,13 @@ public class FrmUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Usuário já tem cadastro.", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
+            m = usuarioDao.retornaPorLogin(txtLogin.getText());
+            if (m != null) {
+                JOptionPane.showMessageDialog(this, "Login já tem cadastro.", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             usuarioDao.insert(usuario);
             // PEGANDO LOGS DO SISTEMA 
             logDao.insert("Cadastrar nova usuario: " + txtNome.getText().toUpperCase());

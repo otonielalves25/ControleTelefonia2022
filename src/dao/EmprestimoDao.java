@@ -340,6 +340,7 @@ public class EmprestimoDao {
 
         //System.out.println(soEmprestados);
         if (soEmprestados.equals("EMPRESTADO")) {
+
             sql = "SELECT * FROM emprestimo "
                     + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                     + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
@@ -352,7 +353,24 @@ public class EmprestimoDao {
                     + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
                     + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
                     + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'EMPRESTADO' ORDER BY funcionario.nome LIMIT " + limite;
+
+        } else if (soEmprestados.equals("DEVOLVIDO")) {
+
+            sql = "SELECT * FROM emprestimo "
+                    + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
+                    + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                    + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
+                    + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
+                    + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
+                    + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
+                    + "LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa "
+                    + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                    + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
+                    + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + modoPesquisa + " "
+                    + "LIKE '%" + procura + "%' AND emprestimo.situacao = 'DEVOLVIDO' ORDER BY funcionario.nome LIMIT " + limite;
+
         } else {
+
             sql = "SELECT * FROM emprestimo "
                     + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
                     + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
@@ -477,8 +495,186 @@ public class EmprestimoDao {
         }
         return Listagem;
     }
+//    //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
 
+    public ArrayList<Emprestimo> getListagemFiltro(String soEmprestados, String tipoLocalidade, String localidade1, String modelo,
+            String motivo1, String cargo1, String operadora, String ordenar) {
+
+        ArrayList<Emprestimo> Listagem = new ArrayList<>();
+        String sql = "";
+
+        // Define se é emprestado ou devolvido
+        if (soEmprestados.equalsIgnoreCase("EMPRESTADO")) {
+            soEmprestados = "emprestimo.situacao = 'EMPRESTADO'";
+        } else if (soEmprestados.equalsIgnoreCase("DEVOLVIDO")) {
+            soEmprestados = "emprestimo.situacao = 'DEVOLVIDO'";
+        } else {
+            soEmprestados = "(emprestimo.situacao = 'EMPRESTADO' OR emprestimo.situacao = 'DEVOLVIDO')";
+        }
+
+        // MODO DE PESQUISA
+        String modoPesquisa = "";
+        if (!tipoLocalidade.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND localidade.tipoLocalidade = '" + tipoLocalidade + "' ";
+        }
+        if (!localidade1.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND localidade.nomeLocalidade = '" + localidade1 + "' ";
+        }
+        if (!modelo.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND marca.marca = '" + modelo + "' ";
+        }
+        if (!motivo1.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND motivoemprestimo.motivo = '" + motivo1 + "' ";
+        }
+        if (!cargo1.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND cargoFuncionario.nomeCargo = '" + cargo1 + "' ";
+        }
+        if (!operadora.equalsIgnoreCase("TODOS")) {
+            modoPesquisa += "AND empresa.nomeEmpresa = '" + operadora + "' ";
+        }
+
+        // VERIFICAR QUAL A ORDENAÇAO
+        String ordem = "";
+        if (ordenar.equalsIgnoreCase("nome")) {
+            ordem = "funcionario.nome";
+        } else if (ordenar.equalsIgnoreCase("tipoLocalidade")) {
+            ordem = "localidade.tipoLocalidade";
+        } else if (ordenar.equalsIgnoreCase("localidade")) {
+            ordem = "localidade.nomeLocalidade";
+        } else if (ordenar.equalsIgnoreCase("cargo")) {
+            ordem = "cargoFuncionario.nomeCargo";
+        } else if (ordenar.equalsIgnoreCase("modelo")) {
+            ordem = "marca.marca";
+        } else if (ordenar.equalsIgnoreCase("motivo")) {
+            ordem = "motivoemprestimo.motivo";
+        }
+
+        //System.out.println(soEmprestados);
+        sql = "SELECT * FROM emprestimo "
+                + "JOIN funcionario on emprestimo.funcionario_id = funcionario.idFuncionario "
+                + "JOIN cargoFuncionario ON funcionario.cargo_id = cargoFuncionario.idCargo "
+                + "JOIN localidade on funcionario.localidade_id = localidade.idLocalidade "
+                + "JOIN usuario on emprestimo.usuario_id = usuario.idUsuario "
+                + "LEFT JOIN celular on emprestimo.celular_id = celular.idCelular "
+                + "LEFT JOIN chip on emprestimo.chip_id = chip.idChip "
+                + "LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa "
+                + "LEFT JOIN marca on celular.marca_id = marca.idMarca "
+                + "JOIN motivoemprestimo on emprestimo.motivoEmprestimo_id = motivoemprestimo.idmotivoEmprestimo "
+                + "LEFT JOIN categoria on marca.categoria_id = categoria.idCategoria WHERE " + soEmprestados + " "
+                + " " + modoPesquisa + " ORDER BY " + ordem;
+
+        // PASSANDO OS VALORES NAS VARIÁVEL GLOBAL ////////////////////////////
+        SqlGlobal.setSqlGlogalEmprestimos(sql);
+
+        // PEQUISA POR NOME TUDO ///////////////////////////////////////////////////////////////// 
+        Emprestimo emprestimo;
+        Funcionario funcionario;
+        Localidade localidade;
+        Categoria categoria;
+        Usuario usuario;
+        Celular celular;
+        Chip chip;
+        Marca marca;
+        Empresa empresa;
+        Cargo cargo;
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+
+                emprestimo = new Emprestimo();
+                localidade = new Localidade();
+                funcionario = new Funcionario();
+                usuario = new Usuario();
+                categoria = new Categoria();
+                marca = new Marca();
+                celular = new Celular();
+                chip = new Chip();
+                empresa = new Empresa();
+
+                //----------------------------------------------------------
+                emprestimo.setIdEmprestimo(rs.getInt("idEmprestimo"));
+                emprestimo.setSituacao(rs.getString("situacao"));
+                emprestimo.setDataEmprestimo(rs.getString("dataEmprestimo"));
+                emprestimo.setDataDevolucao(rs.getString("dataDevolucao"));
+                emprestimo.setProtocolo(rs.getString("protocolo"));
+                emprestimo.setObservacao(rs.getString("observacao"));
+                emprestimo.setChamado(rs.getString("chamado"));
+
+                // localidade 
+                localidade.setIdLocalidade(rs.getInt("idLocalidade"));
+                localidade.setNomeLocalidade(rs.getString("nomeLocalidade"));
+                localidade.setTipoLocalidade(rs.getString("tipoLocalidade"));
+                // BUSCANDO FUNCIONARIO
+                funcionario.setLocalidade(localidade);
+                funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+                funcionario.setCpf(rs.getString("cpf"));
+                funcionario.setNome(rs.getString("nome"));
+                funcionario.setRg(rs.getString("rg"));
+                //CARGO
+                cargo = new Cargo();
+                cargo.setIdCargo(rs.getInt("idCargo"));
+                cargo.setNomeCargo(rs.getString("nomeCargo"));
+
+                funcionario.setCargo(cargo);
+
+                emprestimo.setFuncionario(funcionario);
+                // USUARIO QUE CADASTROU 
+                usuario.setIdUsuario(rs.getInt("usuario.idUsuario"));
+                usuario.setNome(rs.getString("usuario.nome"));  // PEGA NUMERO DA COLUNA   
+                usuario.setRamal(rs.getString("usuario.ramal"));
+                emprestimo.setUsuario(usuario);
+                // CATEGORIA
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setCategoria(rs.getString("categoria"));
+                // marca
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                marca.setCategoria(categoria);
+                // empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                // celualar
+                celular.setMarca(marca);
+                celular.setEmpresa(empresa);
+                celular.setIdCelular(rs.getInt("idCelular"));
+                celular.setImei1(rs.getString("imei1"));
+                celular.setSerie(rs.getString("serie"));
+                celular.setPatrimonio(rs.getString("patrimonio"));
+                emprestimo.setCelular(celular);
+
+                // chip
+                chip.setIdChip(rs.getInt("idChip"));
+                chip.setStatus(rs.getString("codigoChip"));
+                chip.setNumeroLinha(rs.getString("numeroLinha"));
+                chip.setIsDado(rs.getBoolean("dados"));
+                chip.setIsTelefonia(rs.getBoolean("telefonia"));
+                chip.setEmpresa(empresa);
+                emprestimo.setChip(chip);
+                // MOTIVO 
+                MotivoEmprestimo motivo = new MotivoEmprestimo();
+                motivo.setIdMotivoEmprestimo(rs.getInt("idMotivoEmprestimo"));
+                motivo.setMotivoEmprestimo(rs.getString("motivo"));
+                emprestimo.setMotivoEmprestimo(motivo);
+
+                Listagem.add(emprestimo);
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos DAO. " + ex);
+        }
+        return Listagem;
+    }
     // RETORNAR O ULTIMO ID ////////////////////////////////////////////////////
+
     public int verificaEmprestimoFuncionario(int funcionario_id) {
         int retorno = 0;
 
