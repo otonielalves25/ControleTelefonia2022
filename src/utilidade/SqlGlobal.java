@@ -10,10 +10,11 @@ package utilidade;
  * @author otoniel.aalves
  */
 public class SqlGlobal {
-    
+
     private static String sqlGlogalCelulares;
     private static String sqlGlogalChipes;
     private static String sqlGlogalEmprestimos;
+    private static String sqlFiltro;
 
     public static String getSqlGlogalCelelares() {
         return sqlGlogalCelulares;
@@ -39,6 +40,12 @@ public class SqlGlobal {
         sqlGlogalEmprestimos = aSqlGlogalEmprestimos;
     }
 
+    public static void setSqlFiltro(String sqlFiltro) {
+        SqlGlobal.sqlFiltro = sqlFiltro;
+    }
 
-    
+    public static String getSqlFiltro() {
+        return sqlFiltro;
+    }
+
 }

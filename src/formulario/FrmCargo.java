@@ -324,6 +324,15 @@ public class FrmCargo extends javax.swing.JFrame {
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////
         if (novo) {
 
+            // Validar se já tem cadastro
+            String texto = txtTexto.getText().toUpperCase().trim();           
+           
+
+            if (cargoDao.verificaJaCadastrado(texto)) {
+                JOptionPane.showMessageDialog(this, "Cargo já cadastrado !!!", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             cargoDao.insert(cargo);
 
             JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
@@ -338,8 +347,7 @@ public class FrmCargo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Alterado com Sucesso !!!", null, JOptionPane.ERROR_MESSAGE);
             //log do sistema
             logDao.insert("Alterado cargo: " + cargoAntigo + " para -> " + txtTexto.getText().trim());
-           
-            
+
         }
         carregaGrelha();
         botaoInicial();

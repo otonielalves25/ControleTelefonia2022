@@ -10,7 +10,6 @@ import dao.EmpresaDao;
 import dao.EmprestimoDao;
 import dao.ImpressaoDao;
 import dao.LocalidadeDao;
-import dao.LogDao;
 import dao.MarcaDao;
 import dao.MotivoEmprestimoDao;
 import java.awt.Color;
@@ -41,13 +40,16 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
     LocalidadeDao localidadeDao = new LocalidadeDao();
     DefaultTableModel modeloGrelha;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+    //Lista dos filtros
+    ArrayList<Emprestimo> lista = null;
 
     /**
      * Creates new form FrmEmprestimoConsulta
      */
     public FrmEmprestimoConsultaFiltro() {
         initComponents();
-        modeloGrelha = (DefaultTableModel) grelhaEmprestimo.getModel();
+        modeloGrelha = (DefaultTableModel) grelhaEmprestimoFiltro.getModel();
         this.setExtendedState(MAXIMIZED_BOTH);
 
         // carregando os combobox
@@ -135,7 +137,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        grelhaEmprestimo = new javax.swing.JTable();
+        grelhaEmprestimoFiltro = new javax.swing.JTable();
         ckDevolvidos = new javax.swing.JCheckBox();
         btnLimpar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -183,9 +185,9 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Seleciona Pesquisa:");
 
-        grelhaEmprestimo.setAutoCreateRowSorter(true);
-        grelhaEmprestimo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 11)); // NOI18N
-        grelhaEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
+        grelhaEmprestimoFiltro.setAutoCreateRowSorter(true);
+        grelhaEmprestimoFiltro.setFont(new java.awt.Font("Segoe UI Semibold", 0, 11)); // NOI18N
+        grelhaEmprestimoFiltro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -201,46 +203,46 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        grelhaEmprestimo.setRowHeight(21);
-        grelhaEmprestimo.setSelectionBackground(new java.awt.Color(0, 204, 204));
-        grelhaEmprestimo.getTableHeader().setReorderingAllowed(false);
-        grelhaEmprestimo.addMouseListener(new java.awt.event.MouseAdapter() {
+        grelhaEmprestimoFiltro.setRowHeight(21);
+        grelhaEmprestimoFiltro.setSelectionBackground(new java.awt.Color(0, 204, 204));
+        grelhaEmprestimoFiltro.getTableHeader().setReorderingAllowed(false);
+        grelhaEmprestimoFiltro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                grelhaEmprestimoMouseReleased(evt);
+                grelhaEmprestimoFiltroMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(grelhaEmprestimo);
-        if (grelhaEmprestimo.getColumnModel().getColumnCount() > 0) {
-            grelhaEmprestimo.getColumnModel().getColumn(0).setPreferredWidth(40);
-            grelhaEmprestimo.getColumnModel().getColumn(0).setMaxWidth(40);
-            grelhaEmprestimo.getColumnModel().getColumn(1).setPreferredWidth(80);
-            grelhaEmprestimo.getColumnModel().getColumn(1).setMaxWidth(80);
-            grelhaEmprestimo.getColumnModel().getColumn(2).setPreferredWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(2).setMaxWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setMaxWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(270);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setMaxWidth(270);
-            grelhaEmprestimo.getColumnModel().getColumn(5).setPreferredWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(5).setMaxWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(6).setPreferredWidth(200);
-            grelhaEmprestimo.getColumnModel().getColumn(6).setMaxWidth(200);
-            grelhaEmprestimo.getColumnModel().getColumn(7).setPreferredWidth(190);
-            grelhaEmprestimo.getColumnModel().getColumn(7).setMaxWidth(190);
-            grelhaEmprestimo.getColumnModel().getColumn(8).setPreferredWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(8).setMaxWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(9).setPreferredWidth(110);
-            grelhaEmprestimo.getColumnModel().getColumn(9).setMaxWidth(110);
-            grelhaEmprestimo.getColumnModel().getColumn(10).setPreferredWidth(110);
-            grelhaEmprestimo.getColumnModel().getColumn(10).setMaxWidth(110);
-            grelhaEmprestimo.getColumnModel().getColumn(11).setPreferredWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(11).setMaxWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(12).setPreferredWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(12).setMaxWidth(60);
-            grelhaEmprestimo.getColumnModel().getColumn(13).setPreferredWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(13).setMaxWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(14).setPreferredWidth(90);
-            grelhaEmprestimo.getColumnModel().getColumn(14).setMaxWidth(90);
+        jScrollPane1.setViewportView(grelhaEmprestimoFiltro);
+        if (grelhaEmprestimoFiltro.getColumnModel().getColumnCount() > 0) {
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(0).setPreferredWidth(40);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(0).setMaxWidth(40);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(1).setPreferredWidth(80);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(1).setMaxWidth(80);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(2).setPreferredWidth(100);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(2).setMaxWidth(100);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setPreferredWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setMaxWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(4).setPreferredWidth(270);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(4).setMaxWidth(270);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(5).setPreferredWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(5).setMaxWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(6).setPreferredWidth(200);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(6).setMaxWidth(200);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(7).setPreferredWidth(190);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(7).setMaxWidth(190);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(8).setPreferredWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(8).setMaxWidth(130);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(9).setPreferredWidth(110);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(9).setMaxWidth(110);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(10).setPreferredWidth(110);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(10).setMaxWidth(110);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(11).setPreferredWidth(60);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(11).setMaxWidth(60);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(12).setPreferredWidth(60);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(12).setMaxWidth(60);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(13).setPreferredWidth(100);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(13).setMaxWidth(100);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(14).setPreferredWidth(90);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(14).setMaxWidth(90);
         }
 
         ckDevolvidos.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
@@ -683,7 +685,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         }
 
         // realiza a busca no banco
-        ArrayList<Emprestimo> lista = emprestimoDao.getListagemFiltro(soEmprestados, tipoLocalidade, localidade, modelo, motivo, cargo, operadora, ordenar);
+         lista = emprestimoDao.getListagemFiltro(soEmprestados, tipoLocalidade, localidade, modelo, motivo, cargo, operadora, ordenar);
 
         // limpa a tabela
         modeloGrelha.setNumRows(0);
@@ -731,7 +733,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
 
     // PINTANDO GRADE 
     private void pinta() {
-        grelhaEmprestimo.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+        grelhaEmprestimoFiltro.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -740,9 +742,9 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
                 int coluna = 2;
                 int colunaDevolucao = 14;
 
-                Object procurado = grelhaEmprestimo.getValueAt(row, coluna);
+                Object procurado = grelhaEmprestimoFiltro.getValueAt(row, coluna);
 
-                String dataDevolucao = (String) grelhaEmprestimo.getValueAt(row, colunaDevolucao);
+                String dataDevolucao = (String) grelhaEmprestimoFiltro.getValueAt(row, colunaDevolucao);
 
                 Date dataDevolucaoDate = null;
 
@@ -779,8 +781,8 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
 
         for (int i = 0; i < modeloGrelha.getRowCount(); i++) {
 
-            String dataDelucao = (String) grelhaEmprestimo.getValueAt(i, 14);
-            String emprestado = (String) grelhaEmprestimo.getValueAt(i, 2);
+            String dataDelucao = (String) grelhaEmprestimoFiltro.getValueAt(i, 14);
+            String emprestado = (String) grelhaEmprestimoFiltro.getValueAt(i, 2);
             Date dataDevolucaoDate = null;
 
             if (dataDelucao.replace("/", "").length() >= 8) {
@@ -816,17 +818,17 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ckDevolvidosActionPerformed
 
-    private void grelhaEmprestimoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaEmprestimoMouseReleased
+    private void grelhaEmprestimoFiltroMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaEmprestimoFiltroMouseReleased
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
 
-            if (grelhaEmprestimo.getSelectedRowCount() <= 0) {
+            if (grelhaEmprestimoFiltro.getSelectedRowCount() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione um Equipamento para Alteração.", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             //String devolvido = (String) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
-            int codigo = (int) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
+            int codigo = (int) grelhaEmprestimoFiltro.getValueAt(grelhaEmprestimoFiltro.getSelectedRow(), 0);
             FrmEmprestimo frm = new FrmEmprestimo(this, false);
             frm.novo = false;
             frm.visualizar = true;
@@ -834,7 +836,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
             frm.setVisible(true);
 
         }
-    }//GEN-LAST:event_grelhaEmprestimoMouseReleased
+    }//GEN-LAST:event_grelhaEmprestimoFiltroMouseReleased
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
@@ -858,7 +860,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         //new FrmBarraProgresso(null, true).setVisible(true);
-        new ImpressaoDao().imprimirEmprestados("pdf");
+        new ImpressaoDao().imprimirEmprestadosFiltro("pdf");
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -866,7 +868,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         //new FrmBarraProgresso(null, true).setVisible(true);
-        new ImpressaoDao().imprimirEmprestados("");
+        new ImpressaoDao().imprimirEmprestadosFiltro("");
 
     }//GEN-LAST:event_btnExcelActionPerformed
 
@@ -1009,7 +1011,7 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTipoLocalidade;
     private javax.swing.JCheckBox ckDevolvidos;
     private javax.swing.JCheckBox ckEmprestado;
-    private javax.swing.JTable grelhaEmprestimo;
+    private javax.swing.JTable grelhaEmprestimoFiltro;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

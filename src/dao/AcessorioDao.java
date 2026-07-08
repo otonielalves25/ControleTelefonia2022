@@ -142,7 +142,7 @@ public class AcessorioDao {
             stm = con.prepareStatement(sql);
             stm.setInt(1, emprestimo_id);
             rs = stm.executeQuery();
-            
+
             while (rs.next()) {
 
                 acessorio = new Acessorio();
@@ -159,6 +159,34 @@ public class AcessorioDao {
         }
         return Listagem;
     }
-    
-    
+
+    // Verifica se já tem cadastros
+    public boolean verificaJaCadastrado(String texto) {
+
+        boolean temCadastro = false;
+
+        String sql = "SELECT * FROM emprestimo_acessorio WHERE nomeAcessorio = ?";
+
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, texto);
+
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                temCadastro = true;
+            }
+
+            //fechando as conexões;
+            con.close();
+            stm.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar acessório.");           
+        }
+        return temCadastro;
+
+    }
+
 }

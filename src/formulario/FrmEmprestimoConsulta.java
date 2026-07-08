@@ -856,8 +856,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         String listagemACessorios = "";
 
         //new FrmBarraProgresso(null, true).setVisible(true);
-        int emprestimo_id = (int) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
-        String tipoTermo = (String) modeloGrelha.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
+        int emprestimo_id = (int) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 0);
+        String tipoTermo = (String) grelhaEmprestimo.getValueAt(grelhaEmprestimo.getSelectedRow(), 2);
 
         Emprestimo emp = emprestimoDao.retornaPorID(emprestimo_id);
         ArrayList<Acessorio> lista = new AcessorioDao().getListagemPorEmprestimo(emprestimo_id);
@@ -869,6 +869,7 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
         }
 
         if (!listagemACessorios.equalsIgnoreCase("")) {
+            
             listagemACessorios = listagemACessorios.substring(0, listagemACessorios.length() - 2);
             listagemACessorios = listagemACessorios + ".";
         }

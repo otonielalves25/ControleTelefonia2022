@@ -191,7 +191,7 @@ public class FrmCelular extends javax.swing.JFrame {
     //LIMPAR******************************************************************
 
     private void limparPouco() {
-
+        txtPatrimonio.setText("");
         txtSerie.setText("");
         txtEmei1.setText("");
         txtEmei2.setText("");
@@ -1049,11 +1049,23 @@ public class FrmCelular extends javax.swing.JFrame {
         // CADATRAO NOVO NO BANCO //////////////////////////////////////////////
         if (novo) {
             // verifica se ja em cadastro
-            Celular c = celularDao.verificarSeCadastrado(txtSerie.getText().trim(), txtEmei1.getText().trim(), txtPatrimonio.getText().trim());
+            Celular c;
+            
+            // Verifica se o patrimonio já está cadastrado
+            c = celularDao.verificaPorPatrimonio(txtPatrimonio.getText().replace(".", "").trim()); 
+
+            if (c != null) {
+                JOptionPane.showMessageDialog(this, "Patrimonio já tem no cadastro", null, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Verifica se o patrimonio já está cadastrado, com mesmo emai e séria
+            c = celularDao.verificarSeCadastrado(txtSerie.getText().trim(), txtEmei1.getText().trim(), txtPatrimonio.getText().replace(".", "").trim()); 
             if (c != null) {
                 JOptionPane.showMessageDialog(this, "Equipamento já tem no cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
+
             // se não tem cadastro continua
             if (celularDao.insert(celular)) {
                 JOptionPane.showMessageDialog(this, "Cadatrado com Sucesso !!!", null, JOptionPane.INFORMATION_MESSAGE);
@@ -1076,9 +1088,11 @@ public class FrmCelular extends javax.swing.JFrame {
         }
 
         if (ckVarios.isSelected()) {
+
             limparPouco();
             botaoNovo();
             novo = true;
+
             if (ckCodigoDot.isSelected()) {
                 gerarCodigoDot();
                 btnCodigoDot.setEnabled(false);

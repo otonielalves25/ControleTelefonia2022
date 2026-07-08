@@ -565,5 +565,77 @@ public class ImpressaoDao {
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    // IMPRIMIR TODOS OS EMPRESTIMOS ///////////////////////////////////////////
+    public void imprimirEmprestadosFiltro(String tipo) {
+
+        String caminhoArquivo = "";
+        File arquivoGerado = null;
+        JRExporter exporter = null;
+
+        String sql = SqlGlobal.getSqlFiltro();
+
+        try {
+
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+
+        } catch (SQLException ex) {
+
+        }
+
+        InputStream caminhoRelJasper = this.getClass().getResourceAsStream("/termo/RelatorioEmprestimos.jasper");
+
+        //String caminhoTeste = "../termo/TermoEmprestimoChip.jasper";
+        JRResultSetDataSource result = new JRResultSetDataSource((ResultSet) rs);
+
+        try {
+
+            JasperPrint impressao = JasperFillManager.fillReport(caminhoRelJasper, new HashMap(), result);
+
+            if (tipo.equalsIgnoreCase("pdf")) {
+
+                caminhoArquivo = caminhoRelativoUsuario + "RelatorioEmprestimos " + dataRelatorio() + ".pdf";
+                exporter = new JRPdfExporter();
+
+            } else {
+
+                caminhoArquivo = caminhoRelativoUsuario + "RelatorioEmprestimos " + dataRelatorio() + ".xlsx";
+                exporter = new JRXlsxExporter();
+
+            }
+
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, impressao);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, caminhoArquivo);
+
+            exporter.exportReport();
+
+            arquivoGerado = new File(caminhoArquivo);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            try {
+                desktop.open(arquivoGerado);
+                arquivoGerado.deleteOnExit();
+
+            } catch (IOException ex) {
+                System.out.println("Erro ao gerar o relatório");
+            }
+
+        } catch (JRException e) {
+        }
+
+        try {
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ImpressaoDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 
 }

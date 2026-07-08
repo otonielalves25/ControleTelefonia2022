@@ -195,7 +195,7 @@ public class UsuarioDao {
     //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
     public List<Usuario> getListagem() {
 
-        String sql = "SELECT * FROM usuario WHERE status = 'Ativo' ORDER BY nome";
+        String sql = "SELECT * FROM usuario ORDER BY nome";
         List<Usuario> lista = new ArrayList<>();
         Usuario usuario = null;
         try {

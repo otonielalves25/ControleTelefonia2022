@@ -564,7 +564,7 @@ public class EmprestimoDao {
                 + " " + modoPesquisa + " ORDER BY " + ordem;
 
         // PASSANDO OS VALORES NAS VARIÁVEL GLOBAL ////////////////////////////
-        SqlGlobal.setSqlGlogalEmprestimos(sql);
+        SqlGlobal.setSqlFiltro(sql);
 
         // PEQUISA POR NOME TUDO ///////////////////////////////////////////////////////////////// 
         Emprestimo emprestimo;

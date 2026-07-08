@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="044b7ee6-fea6-48d4-8139-ad8c2da5eaf6">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="LOGO" class="java.lang.Object"/>
 	<parameter name="logoDetran" class="java.lang.Object"/>
 	<parameter name="logoDot" class="java.lang.Object"/>
@@ -174,7 +174,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 			</staticText>
 			<textField>
 				<reportElement x="158" y="65" width="389" height="21" uuid="55b82153-250d-4ad4-99d0-6721f8521495"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="5" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.25"/>
@@ -198,7 +198,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 			</staticText>
 			<textField>
 				<reportElement x="158" y="106" width="151" height="20" uuid="68911cf8-0ba4-4e1b-b8bb-a2d4f2269eb6"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="5" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.25"/>
@@ -247,7 +247,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 			</staticText>
 			<textField>
 				<reportElement x="390" y="106" width="157" height="20" uuid="3e91cd94-e84f-4001-95b0-e8fcda498764"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="5" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.25"/>
@@ -258,7 +258,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 			</textField>
 			<textField>
 				<reportElement x="158" y="126" width="151" height="20" uuid="e01543ae-9652-43cb-adab-9394d8d7225e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="5" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.25"/>
@@ -282,7 +282,7 @@ LEFT JOIN empresa on chip.empresa_id = empresa.idEmpresa]]>
 			</staticText>
 			<textField>
 				<reportElement x="390" y="126" width="157" height="20" uuid="470eb00a-1954-4770-a842-f26fec4ba97e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="5" bottomPadding="1" rightPadding="1">
 					<topPen lineWidth="1.25"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.25"/>

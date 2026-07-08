@@ -85,8 +85,8 @@ public class CelularDao {
             stm.setBoolean(11, celular.isManual());
             stm.setBoolean(12, celular.isAdaptador());
             stm.setBoolean(13, celular.isFoneOuvido());
-               stm.setBoolean(14, celular.isCapinha());
-                stm.setString(15, celular.getPatrimonio());
+            stm.setBoolean(14, celular.isCapinha());
+            stm.setString(15, celular.getPatrimonio());
             stm.setInt(16, celular.getIdCelular());
             stm.execute();
             //fechando as conexões
@@ -106,7 +106,7 @@ public class CelularDao {
         try {
             con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-            stm.setString(1, celular.getStatus());           
+            stm.setString(1, celular.getStatus());
             stm.setString(2, celular.getObservacao());
             stm.setString(3, celular.getEstadoBem());
             stm.setInt(4, celular.getIdCelular());
@@ -120,15 +120,15 @@ public class CelularDao {
             return false;
         }
     }
-    
-        // ------------ALTERAR CADASTRA  --------------------------------------    
+
+    // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean alterarAcessoriosEmprestadoNoCadastro(Celular celular) {
 
         String sql = "UPDATE celular set caixa=?, carregador=?, manual=?, adaptador=?, foneOuvido=?, capinha = ? where idCelular = ?";
         try {
             con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
-             stm.setBoolean(1, celular.isCaixa());
+            stm.setBoolean(1, celular.isCaixa());
             stm.setBoolean(2, celular.isCarregador());
             stm.setBoolean(3, celular.isManual());
             stm.setBoolean(4, celular.isAdaptador());
@@ -145,7 +145,6 @@ public class CelularDao {
             return false;
         }
     }
-
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {
@@ -167,7 +166,7 @@ public class CelularDao {
 
     }
 
-    //----------- RETORNA APENAS UM USUARIO ---------------------------------------------------------
+    //----------- RETORNA APENAS UM CELULAR BY ID ---------------------------------------------------------
     public Celular getPorID(int codigo) {
 
         String sql = "SELECT * FROM celular "
@@ -231,8 +230,8 @@ public class CelularDao {
 
         return celular;
     }
-    
-      //----------- RETORNA TODOS APARELHOS ------------------------------------------------------------
+
+    //----------- RETORNA TODOS APARELHOS ------------------------------------------------------------
     public ArrayList<Celular> getAlls() {
 
         ArrayList<Celular> Listagem = new ArrayList<>();
@@ -240,7 +239,7 @@ public class CelularDao {
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa ";
-          
+
         Celular celular;
         Marca marca;
         Categoria categoria;
@@ -374,7 +373,7 @@ public class CelularDao {
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE ("+ tipoPesquisa +" LIKE ?) AND celular.status = 'Disponível'";
+                + "WHERE (" + tipoPesquisa + " LIKE ?) AND celular.status = 'Disponível'";
         Celular celular;
         Marca marca;
         Categoria categoria;
@@ -384,7 +383,7 @@ public class CelularDao {
             con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, "%" + busca + "%");
- 
+
             rs = stm.executeQuery();
             while (rs.next()) {
 
@@ -447,7 +446,7 @@ public class CelularDao {
             con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
             stm.setString(1, imei);
-            stm.setString(2, serie);           
+            stm.setString(2, serie);
             rs = stm.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -495,9 +494,73 @@ public class CelularDao {
 
         return celular;
     }
-    
+
+    // verificar Celular já cadastrado por patrimônio
+    public Celular verificaPorPatrimonio(String patrimonio) {
+
+        String sql = "SELECT * FROM celular "
+                + "JOIN marca ON  celular.marca_id = marca.idMarca "
+                + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
+                + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
+                + "WHERE celular.patrimonio = ?";
+        Celular celular = null;
+        Marca marca;
+        Categoria categoria;
+        Empresa empresa;
+        try {
+            con = conexao.ConexaoMySql.getConnection();
+            stm = con.prepareStatement(sql);
+            stm.setString(1, patrimonio);
+            rs = stm.executeQuery();
+            if (rs != null) {
+
+                celular = new Celular();
+                categoria = new Categoria();
+                marca = new Marca();
+                empresa = new Empresa();
+
+                celular.setIdCelular(rs.getInt("idCelular"));
+                celular.setImei1(rs.getString("imei1"));
+                celular.setImei2(rs.getString("imei2"));
+                celular.setSerie(rs.getString("serie"));
+                celular.setStatus(rs.getString("status"));
+                celular.setObservacao(rs.getString("observacao"));
+                celular.setEstadoBem(rs.getString("estadoBem"));
+                celular.setCaixa(rs.getBoolean("caixa"));
+                celular.setCarregador(rs.getBoolean("carregador"));
+                celular.setAdaptador(rs.getBoolean("adaptador"));
+                celular.setManual(rs.getBoolean("manual"));
+                celular.setFoneOuvido(rs.getBoolean("foneOuvido"));
+                celular.setCapinha(rs.getBoolean("capinha"));
+                celular.setPatrimonio(rs.getString("patrimonio"));
+
+                //empresa
+                empresa.setIdEmpresa(rs.getInt("idEmpresa"));
+                empresa.setNomeEmpresa(rs.getString("nomeEmpresa"));
+                celular.setEmpresa(empresa);
+                // marca
+                marca.setIdMarca(rs.getInt("idMarca"));
+                marca.setMarca(rs.getString("marca"));
+                // categoria
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setCategoria(rs.getString("categoria"));
+                marca.setCategoria(categoria);
+                celular.setMarca(marca);
+
+            }
+            //fechando as conexões
+            con.close();
+            stm.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar DAO. " + ex);
+        }
+
+        return celular;
+    }
+
     //GERADOR DE CÓDIGO AUTOMÁTICO /////////////////////////////////////////////
-     public String geradorCodigoDePatrimonios() {
+    public String geradorCodigoDePatrimonios() {
 
         String stg = "SELECT patrimonio FROM celular WHERE patrimonio BETWEEN 200200200000 AND 200200500000 ORDER BY patrimonio DESC LIMIT 1";
         Long patrimonioEncontrado;
@@ -505,7 +568,7 @@ public class CelularDao {
 
         try {
             con = conexao.ConexaoMySql.getConnection();
-            stm = con.prepareStatement(stg);        
+            stm = con.prepareStatement(stg);
             rs = stm.executeQuery();
 
             if (rs.next()) {
@@ -528,5 +591,5 @@ public class CelularDao {
 
         return patrimonioNovo;
     }
-    
+
 }

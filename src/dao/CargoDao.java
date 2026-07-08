@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Cargo;
 
-
 /**
  *
  * @author Tony
@@ -22,7 +21,9 @@ public class CargoDao {
 
     private Connection con;
     private PreparedStatement stm = null;
-    private ResultSet rs;
+    private ResultSet rs;   
+    
+    
 
     //INSERINDO NOVO CADASTRO **************************************************    
     public boolean insert(Cargo cargo) {
@@ -48,7 +49,7 @@ public class CargoDao {
     // ------------ALTERAR CADASTRA  --------------------------------------    
     public boolean update(Cargo cargo) {
 
-        String sql = "UPDATE cargoFuncionario set nomeCargo = ? where idCargo = ?";
+        String sql = "UPDATE cargoFuncionario SET nomeCargo = ? WHERE idCargo = ?";
         try {
             con = conexao.ConexaoMySql.getConnection();
             stm = con.prepareStatement(sql);
@@ -67,7 +68,7 @@ public class CargoDao {
 
     //-----------DELETAR USUARIO -----------------------------------------------
     public boolean delete(int codigo) {
-        String sql = "DELETE from cargoFuncionario where idCargo= ?";
+        String sql = "DELETE FROM cargoFuncionario WHERE idCargo= ?";
 
         try {
             con = conexao.ConexaoMySql.getConnection();
@@ -85,7 +86,6 @@ public class CargoDao {
 
     }
 
-   
     //----------- RETORNA TODOS ------------------------------------------------------------
     public ArrayList<Cargo> getListagemCargos() {
 
@@ -95,7 +95,7 @@ public class CargoDao {
 
         try {
             con = conexao.ConexaoMySql.getConnection();
-            stm = con.prepareStatement(sql);           
+            stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
 
@@ -112,6 +112,27 @@ public class CargoDao {
             JOptionPane.showMessageDialog(null, "Erro ao buscar todos cargos DAO. " + ex);
         }
         return Listagem;
+    }
+
+    // Verifica se já tem cadastros
+    public boolean verificaJaCadastrado(String texto) {
+
+        String sql = "SELECT 1 FROM cargoFuncionario WHERE nomeCargo = ?";
+
+        try (
+                Connection con = conexao.ConexaoMySql.getConnection(); 
+                PreparedStatement stm = con.prepareStatement(sql)) {
+
+            stm.setString(1, texto);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar cargo: " + e.getMessage());
+            return false;
+        }
     }
 
 }

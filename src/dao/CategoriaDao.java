@@ -37,8 +37,8 @@ public class CategoriaDao {
             con.close();
             stm.close();
             return true;
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Catedoria Dao. " + ex);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Catedoria Dao. " + e.toString());
             return false;
         }
 
@@ -59,7 +59,7 @@ public class CategoriaDao {
             stm.close();
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Categoria Dao. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar Categoria Dao. " + ex.toString());
             return false;
         }
     }
@@ -78,7 +78,7 @@ public class CategoriaDao {
             stm.close();
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e);
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir Tipo Dao. " + e.toString());
             return false;
         }
 
@@ -105,7 +105,7 @@ public class CategoriaDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex.toString());
         }
 
         return categoria;
@@ -132,7 +132,7 @@ public class CategoriaDao {
             con.close();
             stm.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar Categoria DAO. " + ex.toString());
         }
 
         return categoria;
@@ -162,7 +162,7 @@ public class CategoriaDao {
             stm.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar todos usuários DAO. " + ex.toString());
         }
         return Listagem;
     }
