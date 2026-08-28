@@ -179,6 +179,8 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenu21 = new javax.swing.JMenu();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenu23 = new javax.swing.JMenu();
+        jMenuItem28 = new javax.swing.JMenuItem();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenu11 = new javax.swing.JMenu();
@@ -779,6 +781,22 @@ public final class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu21);
 
+        jMenu23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ajuda2.png"))); // NOI18N
+        jMenu23.setText("Email");
+        jMenu23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenu23.setPreferredSize(new java.awt.Dimension(100, 19));
+
+        jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ajuda2.png"))); // NOI18N
+        jMenuItem28.setText("Cobrança de Protocolos");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu23.add(jMenuItem28);
+
+        jMenuBar1.add(jMenu23);
+
         jMenu12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ajuda.png"))); // NOI18N
         jMenu12.setText("Logs   ");
         jMenu12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -797,7 +815,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu12);
 
         jMenu11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ajuda2.png"))); // NOI18N
-        jMenu11.setText("Sobre    ");
+        jMenu11.setText("Sobre");
         jMenu11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenu11.setPreferredSize(new java.awt.Dimension(100, 19));
 
@@ -1139,6 +1157,12 @@ public final class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        // TODO add your handling code here:
+        FrmCobrancaEmail cobrancaEmail = new FrmCobrancaEmail();
+        cobrancaEmail.setVisible(true);
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1212,6 +1236,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu20;
     private javax.swing.JMenu jMenu21;
     private javax.swing.JMenu jMenu22;
+    private javax.swing.JMenu jMenu23;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
@@ -1236,6 +1261,7 @@ public final class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem25;
     private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;

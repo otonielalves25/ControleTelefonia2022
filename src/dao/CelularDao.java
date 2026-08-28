@@ -299,14 +299,26 @@ public class CelularDao {
     }
 
     //----------- RETORNA TODOS USUARIOS ------------------------------------------------------------
-    public ArrayList<Celular> getListagemLike(String tipo, String busca) {
+    public ArrayList<Celular> getListagemLike(String tipo, String busca, String filtro) {
 
         ArrayList<Celular> Listagem = new ArrayList<>();
+        
+        
+        if(filtro.equals("emprestado")){
+            filtro = "AND celular.status = 'EMPRESTADO'";
+        }else if(filtro.equals("disponivel")){
+             filtro = "AND celular.status = 'Disponível'";
+        }else{
+          filtro = "";  
+        }
+        
+        
+        
         String sql = "SELECT * FROM celular "
                 + "JOIN marca ON  celular.marca_id = marca.idMarca "
                 + "JOIN categoria ON  marca.categoria_id = categoria.idCategoria "
                 + "JOIN empresa ON  celular.empresa_id = empresa.idEmpresa "
-                + "WHERE " + tipo + " LIKE '%" + busca + "%'";
+                + "WHERE " + tipo + " LIKE '%" + busca + "%' " + filtro;
         Celular celular;
         Marca marca;
         Categoria categoria;

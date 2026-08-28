@@ -8,6 +8,7 @@ package formulario;
 import dao.AcessorioDao;
 import dao.CelularDao;
 import dao.ChipDao;
+import dao.CobrancaoDao;
 import dao.EmprestimoDao;
 import dao.FuncionarioDao;
 import dao.ImpressaoDao;
@@ -26,6 +27,7 @@ import javax.swing.JPanel;
 import modelo.Acessorio;
 import modelo.Celular;
 import modelo.Chip;
+import modelo.Cobranca;
 import modelo.Emprestimo;
 import modelo.Funcionario;
 import modelo.MotivoEmprestimo;
@@ -1276,11 +1278,16 @@ public class FrmEmprestimo extends javax.swing.JDialog {
         if (novo) {
             if (emprestimoDao.insert(emprestimo)) {
                 emprestimo_id = emprestimoDao.retornaUltimoIDCadastrado();
+                emprestimo.setIdEmprestimo(emprestimo_id);
                 cadatrarAcessorio(); // cadatrar acessorios
                 alterarChipBanco();
                 celularDao.updateStatus(celular); // MUDAR O ESTADO PARA EMPRESTADO               
 
+                // LOG DO SISTEMA
                 logDao.insert("Novo Emprestimo, para: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
+
+                // CADASTRA PRA COBRANÇA DE ASSINATURA DO PROTOCOLO
+                cadastrarCobranca(emprestimo);
 
                 if (!ckVarios.isSelected()) {
                     imprimirTermo();
@@ -1295,12 +1302,19 @@ public class FrmEmprestimo extends javax.swing.JDialog {
 
             // ALTERAR CADASTRO NO BANCO ///////////////////////////////////////////
         } else {
+            
             emprestimo.setIdEmprestimo(emprestimo_id);
+            
             if (emprestimoDao.update(emprestimo)) {
+
                 cadatrarAcessorio();
                 celularDao.updateStatus(celular); // MUDAR O ESTADO PARA EMPRESTADO                
                 JOptionPane.showMessageDialog(this, "Alterado com Sucesso.", null, JOptionPane.INFORMATION_MESSAGE);
                 logDao.insert("Alterar Emprestimo, de: " + txtNome.getText() + " , aparelho: " + txtAparelho.getText() + " , imei: " + txtImei.getText() + " chip: " + txtProtocolo.getText());
+
+                // CADASTRA PRA COBRANÇA DE ASSINATURA DO PROTOCOLO
+                cadastrarCobranca(emprestimo);
+
                 this.dispose();
 
             } else {
@@ -1331,6 +1345,26 @@ public class FrmEmprestimo extends javax.swing.JDialog {
             new ImpressaoDao().imprimirEmprestimoCelular(emprestimo_id, params);
         }
         params.clear();
+
+    }
+
+    // cadastra para cobrança ///////////////////////
+    private void cadastrarCobranca(Emprestimo emprestimo) {
+
+        CobrancaoDao cobrancaoDao = new CobrancaoDao();
+
+        Cobranca cobranca = new Cobranca();
+        cobranca.setData(emprestimo.getDataEmprestimo());
+        cobranca.setFuncionario(emprestimo.getFuncionario());
+        cobranca.setProtocolo(emprestimo.getProtocolo());
+        cobranca.setMotivo(txtAparelho.getText() + " , imei: " + txtImei.getText());
+        cobranca.setStatus("PENDENTE");
+        cobranca.setEmprestimo(emprestimo);
+        Usuario usuario = (Usuario) cboResponsavel.getSelectedItem();
+        cobranca.setUsuario(usuario);
+   
+        // Cadastra novo no banco 
+        cobrancaoDao.insert(cobranca);
 
     }
 

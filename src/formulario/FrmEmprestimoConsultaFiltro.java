@@ -219,14 +219,8 @@ public class FrmEmprestimoConsultaFiltro extends javax.swing.JFrame {
             grelhaEmprestimoFiltro.getColumnModel().getColumn(1).setMaxWidth(80);
             grelhaEmprestimoFiltro.getColumnModel().getColumn(2).setPreferredWidth(100);
             grelhaEmprestimoFiltro.getColumnModel().getColumn(2).setMaxWidth(100);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setPreferredWidth(130);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setMaxWidth(130);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(4).setPreferredWidth(270);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(4).setMaxWidth(270);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(5).setPreferredWidth(130);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(5).setMaxWidth(130);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(6).setPreferredWidth(200);
-            grelhaEmprestimoFiltro.getColumnModel().getColumn(6).setMaxWidth(200);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setPreferredWidth(350);
+            grelhaEmprestimoFiltro.getColumnModel().getColumn(3).setMaxWidth(350);
             grelhaEmprestimoFiltro.getColumnModel().getColumn(7).setPreferredWidth(190);
             grelhaEmprestimoFiltro.getColumnModel().getColumn(7).setMaxWidth(190);
             grelhaEmprestimoFiltro.getColumnModel().getColumn(8).setPreferredWidth(130);

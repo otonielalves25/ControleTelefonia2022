@@ -5,44 +5,28 @@
  */
 package formulario;
 
-import dao.FuncionarioDao;
+import dao.EmprestimoDao;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.Funcionario;
+import modelo.Emprestimo;
 
 /**
  *
  * @author Tony
  */
-public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
-
-    /**
-     * toni
-     *
-     * @return the codigoFuncionario
-     */
-    public int getCodigoFuncionario() {
-        return codigoFuncionario;
-    }
-
-    /**
-     * @param codigoFuncionario the codigoFuncionario to set
-     */
-    public void setCodigoFuncionario(int codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
-    }
+public class FrmEmprestimoConsultaRapida extends javax.swing.JDialog {
 
     DefaultTableModel modeloTabela;
-    FuncionarioDao funcionarioDao = new FuncionarioDao();
+    EmprestimoDao emprestimoDao = new EmprestimoDao();
 
     /**
      * Creates new form FrmFuncionarioConsultaRapida
      *
      * @param parent
      */
-    public FrmFuncionarioConsultaRapida(java.awt.Frame parent, boolean modal) {
+    public FrmEmprestimoConsultaRapida(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         modeloTabela = (DefaultTableModel) grelha.getModel();
@@ -51,15 +35,14 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
     // PESQUISA AVANÇADA DE FUNCIONARIOS ///////////////////////////////////////
     private void carregaPesquisa() {
-        List<Funcionario> listagem = funcionarioDao.getListagemLikeAtivos(txtPesquisa.getText().trim());
+
+        List<Emprestimo> listagem = emprestimoDao.getListagemEmprestimoPorProtocolo(txtPesquisa.getText());
         modeloTabela.setNumRows(0);
-        for (Funcionario funcionario : listagem) {
+        for (Emprestimo emprestimo : listagem) {
             modeloTabela.addRow(new Object[]{
-                funcionario.getIdFuncionario(),
-                funcionario.getNome(),
-                funcionario.getLocalidade().getNomeLocalidade(),
-                funcionario.getStatus()
-            });
+                emprestimo.getIdEmprestimo(),
+                emprestimo.getProtocolo(),
+                emprestimo.getFuncionario().getNome(),});
         }
     }
 
@@ -97,21 +80,19 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jPanel1.setBackground(java.awt.SystemColor.activeCaption);
 
         lblTitulo.setBackground(new java.awt.Color(51, 51, 51));
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/func.png"))); // NOI18N
-        lblTitulo.setText("Consulta Rápida de Funcionário - Ativos");
+        lblTitulo.setText("Empréstimo Consulta");
         lblTitulo.setToolTipText("");
         lblTitulo.setOpaque(true);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel1.setText("Nome do Funcionário:");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Protocolo ou Nome");
 
-        txtPesquisa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyPressed(evt);
@@ -121,17 +102,16 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             }
         });
 
-        grelha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         grelha.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "NOME", "SETOR", "STATUS"
+                "ID", "PROTOCOLO", "NOME"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -139,29 +119,17 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             }
         });
         grelha.setRowHeight(21);
-        grelha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                grelhaMouseClicked(evt);
-            }
-        });
-        grelha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                grelhaKeyPressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(grelha);
         if (grelha.getColumnModel().getColumnCount() > 0) {
             grelha.getColumnModel().getColumn(0).setPreferredWidth(50);
             grelha.getColumnModel().getColumn(0).setMaxWidth(50);
-            grelha.getColumnModel().getColumn(2).setPreferredWidth(180);
-            grelha.getColumnModel().getColumn(2).setMaxWidth(180);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(70);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(70);
+            grelha.getColumnModel().getColumn(1).setPreferredWidth(200);
+            grelha.getColumnModel().getColumn(1).setMaxWidth(200);
         }
 
         btnOk1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnOk1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagem/ok.png"))); // NOI18N
-        btnOk1.setText("Selecionar");
+        btnOk1.setText("Marcar para Cobrança");
         btnOk1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOk1ActionPerformed(evt);
@@ -183,7 +151,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnOk1)))
+                        .addComponent(btnOk1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -221,29 +189,18 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         carregaPesquisa();
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
-    private void grelhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_grelhaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_grelhaKeyPressed
-
-    private void grelhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grelhaMouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() >= 1) {
-            int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
-            this.setCodigoFuncionario(codigo);
-            this.dispose();
-        }
-    }//GEN-LAST:event_grelhaMouseClicked
-
     private void btnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOk1ActionPerformed
         // TODO add your handling code here:
+
         int linhaSelecionada = grelha.getSelectedRowCount();
+
         if (linhaSelecionada > 0) {
             int codigo = (int) modeloTabela.getValueAt(grelha.getSelectedRow(), 0);
-            this.setCodigoFuncionario(codigo);
+            this.emprestimo = emprestimoDao.retornaPorID(codigo);
             this.dispose();
         } else {
 
-            JOptionPane.showMessageDialog(null, "Selecione um Funcionário.", null, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione um protocolo.", null, JOptionPane.ERROR_MESSAGE);
 
         }
     }//GEN-LAST:event_btnOk1ActionPerformed
@@ -253,7 +210,7 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (grelha.getRowCount() == 1) {
                 int codigo = (int) modeloTabela.getValueAt(0, 0);
-                this.setCodigoFuncionario(codigo);
+                this.emprestimo = emprestimoDao.retornaPorID(codigo);
                 this.dispose();
             }
         }
@@ -278,20 +235,23 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmFuncionarioConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmprestimoConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmFuncionarioConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmprestimoConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmFuncionarioConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmprestimoConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmFuncionarioConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEmprestimoConsultaRapida.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmFuncionarioConsultaRapida dialog = new FrmFuncionarioConsultaRapida(new javax.swing.JFrame(), true);
+                FrmEmprestimoConsultaRapida dialog = new FrmEmprestimoConsultaRapida(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -302,7 +262,17 @@ public class FrmFuncionarioConsultaRapida extends javax.swing.JDialog {
             }
         });
     }
-    private int codigoFuncionario;
+
+    private Emprestimo emprestimo;
+
+    public Emprestimo getEmprestimo() {
+        return emprestimo;
+    }
+
+    public void setEmprestimo(Emprestimo emprestimo) {
+        this.emprestimo = emprestimo;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOk1;
     private javax.swing.JTable grelha;

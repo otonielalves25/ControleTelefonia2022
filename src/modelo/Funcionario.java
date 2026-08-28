@@ -10,12 +10,13 @@ package modelo;
  * @author Tony
  */
 public class Funcionario {
-    
-    private int  idFuncionario;
+
+    private int idFuncionario;
     private String nome;
     private String cpf;
-    private String rg;   
+    private String rg;
     private String status;
+    private String email;
     private Localidade localidade;
     private Cargo cargo;
 
@@ -83,8 +84,6 @@ public class Funcionario {
         this.rg = rg;
     }
 
-
-
     /**
      * @return the status
      */
@@ -125,8 +124,13 @@ public class Funcionario {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    
-    
-    
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

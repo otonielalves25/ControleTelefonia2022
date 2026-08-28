@@ -91,11 +91,11 @@ public class FrmCelular extends javax.swing.JFrame {
     //CARREGA GRELHA OTIMIZADA-------------------------------------------------
     public final void carregaGrelha() {
 
-        int contador = 0;
-        String tipoPesquisa = "";
+        String tipoPesquisa = "", filtro = "";
         DefaultTableModel modelo = (DefaultTableModel) grelha.getModel();
         modelo.setNumRows(0);
 
+        // rad pesquisa
         if (radSerie.isSelected()) {
             tipoPesquisa = "serie";
         } else if (radImei.isSelected()) {
@@ -108,7 +108,16 @@ public class FrmCelular extends javax.swing.JFrame {
             tipoPesquisa = "estadoBem";
         }
 
-        List<Celular> lista = celularDao.getListagemLike(tipoPesquisa, txtPesquisa.getText().trim());
+        //check teste emprestimo ou disponivel
+        if (!ckEmprestado.isSelected() && !ckDisponivel.isSelected()) {
+            ckEmprestado.setSelected(true);
+        } else if (ckEmprestado.isSelected() && !ckDisponivel.isSelected()) {
+            filtro = "emprestado";
+        } else if (!ckEmprestado.isSelected() && ckDisponivel.isSelected()) {
+            filtro = "disponivel";
+        } 
+
+        List<Celular> lista = celularDao.getListagemLike(tipoPesquisa, txtPesquisa.getText().trim(), filtro);
         modelo.setNumRows(0);
         for (Celular celular : lista) {
 
@@ -121,10 +130,10 @@ public class FrmCelular extends javax.swing.JFrame {
                 celular.getEmpresa().getNomeEmpresa(),
                 celular.getStatus(),
                 celular.getEstadoBem(),});
-            contador++;
+
         }
 
-        lblQuantidade.setText("Quantidade: " + contador + " localizados.");
+        lblQuantidade.setText("Quantidade: " + lista.size() + " localizados.");
         pintaInativos();
     }
 
@@ -191,6 +200,7 @@ public class FrmCelular extends javax.swing.JFrame {
     //LIMPAR******************************************************************
 
     private void limparPouco() {
+
         txtPatrimonio.setText("");
         txtSerie.setText("");
         txtEmei1.setText("");
@@ -200,6 +210,7 @@ public class FrmCelular extends javax.swing.JFrame {
 
     // HABILITAR ******************************************************************
     private void habilitado(boolean y) {
+
         txtSerie.setEnabled(y);
         grelha.setEnabled(!y);
         cboCategoria.setEnabled(y);
@@ -281,6 +292,8 @@ public class FrmCelular extends javax.swing.JFrame {
         radEstadoBem = new javax.swing.JRadioButton();
         btnCodigoDot = new javax.swing.JButton();
         ckCodigoDot = new javax.swing.JCheckBox();
+        ckEmprestado = new javax.swing.JCheckBox();
+        ckDisponivel = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -338,14 +351,8 @@ public class FrmCelular extends javax.swing.JFrame {
             grelha.getColumnModel().getColumn(0).setMinWidth(70);
             grelha.getColumnModel().getColumn(0).setPreferredWidth(70);
             grelha.getColumnModel().getColumn(0).setMaxWidth(70);
-            grelha.getColumnModel().getColumn(2).setPreferredWidth(120);
-            grelha.getColumnModel().getColumn(2).setMaxWidth(120);
-            grelha.getColumnModel().getColumn(3).setPreferredWidth(120);
-            grelha.getColumnModel().getColumn(3).setMaxWidth(120);
             grelha.getColumnModel().getColumn(4).setPreferredWidth(120);
             grelha.getColumnModel().getColumn(4).setMaxWidth(120);
-            grelha.getColumnModel().getColumn(5).setPreferredWidth(160);
-            grelha.getColumnModel().getColumn(5).setMaxWidth(160);
             grelha.getColumnModel().getColumn(6).setPreferredWidth(90);
             grelha.getColumnModel().getColumn(6).setMaxWidth(90);
             grelha.getColumnModel().getColumn(7).setPreferredWidth(90);
@@ -636,6 +643,16 @@ public class FrmCelular extends javax.swing.JFrame {
             }
         });
 
+        ckEmprestado.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        ckEmprestado.setForeground(new java.awt.Color(153, 0, 51));
+        ckEmprestado.setSelected(true);
+        ckEmprestado.setText("EMPRESTADO");
+
+        ckDisponivel.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        ckDisponivel.setForeground(new java.awt.Color(0, 102, 51));
+        ckDisponivel.setSelected(true);
+        ckDisponivel.setText("DISPONÍVEL");
+
         javax.swing.GroupLayout painelLayout = new javax.swing.GroupLayout(painel);
         painel.setLayout(painelLayout);
         painelLayout.setHorizontalGroup(
@@ -692,9 +709,10 @@ public class FrmCelular extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(painelLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelLayout.createSequentialGroup()
                         .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(128, 128, 128)
@@ -705,7 +723,6 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addGroup(painelLayout.createSequentialGroup()
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(btnCodigoDot, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -726,16 +743,20 @@ public class FrmCelular extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(radMarca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(radEstadoBem)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radEstadoBem)
+                                .addGap(18, 18, 18)
+                                .addComponent(ckEmprestado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ckDisponivel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(painelLayout.createSequentialGroup()
                                 .addComponent(ckCodigoDot)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(ckVarios)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(26, 26, 26))
         );
         painelLayout.setVerticalGroup(
@@ -779,35 +800,32 @@ public class FrmCelular extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboEstadoBem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboOperadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboEstadoBem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(4, 4, 4)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ckVarios)
-                            .addComponent(ckCodigoDot)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLayout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCodigoDot, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ckVarios)
+                        .addComponent(ckCodigoDot))
+                    .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCodigoDot, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -815,16 +833,18 @@ public class FrmCelular extends javax.swing.JFrame {
                     .addComponent(radImei)
                     .addComponent(radPatrimonio)
                     .addComponent(radMarca)
-                    .addComponent(radEstadoBem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(radEstadoBem)
+                    .addComponent(ckEmprestado)
+                    .addComponent(ckDisponivel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblQuantidade)
                         .addComponent(btnImprimir))
                     .addComponent(txtVisao, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -837,7 +857,9 @@ public class FrmCelular extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -855,6 +877,7 @@ public class FrmCelular extends javax.swing.JFrame {
         cboSituacao.setSelectedItem("Disponível");
         cboSituacao.setEnabled(false);
         txtPatrimonio.requestFocus();
+
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -1050,17 +1073,17 @@ public class FrmCelular extends javax.swing.JFrame {
         if (novo) {
             // verifica se ja em cadastro
             Celular c;
-            
+
             // Verifica se o patrimonio já está cadastrado
-            c = celularDao.verificaPorPatrimonio(txtPatrimonio.getText().replace(".", "").trim()); 
+            c = celularDao.verificaPorPatrimonio(txtPatrimonio.getText().replace(".", "").trim());
 
             if (c != null) {
                 JOptionPane.showMessageDialog(this, "Patrimonio já tem no cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             // Verifica se o patrimonio já está cadastrado, com mesmo emai e séria
-            c = celularDao.verificarSeCadastrado(txtSerie.getText().trim(), txtEmei1.getText().trim(), txtPatrimonio.getText().replace(".", "").trim()); 
+            c = celularDao.verificarSeCadastrado(txtSerie.getText().trim(), txtEmei1.getText().trim(), txtPatrimonio.getText().replace(".", "").trim());
             if (c != null) {
                 JOptionPane.showMessageDialog(this, "Equipamento já tem no cadastro", null, JOptionPane.ERROR_MESSAGE);
                 return;
@@ -3435,6 +3458,8 @@ public class FrmCelular extends javax.swing.JFrame {
     private javax.swing.JCheckBox ckCapinha;
     private javax.swing.JCheckBox ckCarregador;
     private javax.swing.JCheckBox ckCodigoDot;
+    private javax.swing.JCheckBox ckDisponivel;
+    private javax.swing.JCheckBox ckEmprestado;
     private javax.swing.JCheckBox ckFone;
     private javax.swing.JCheckBox ckManual;
     private javax.swing.JCheckBox ckVarios;

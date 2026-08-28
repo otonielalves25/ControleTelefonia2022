@@ -179,16 +179,8 @@ public class FrmEmprestimoConsulta extends javax.swing.JFrame {
             grelhaEmprestimo.getColumnModel().getColumn(1).setMaxWidth(80);
             grelhaEmprestimo.getColumnModel().getColumn(2).setPreferredWidth(100);
             grelhaEmprestimo.getColumnModel().getColumn(2).setMaxWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(3).setMaxWidth(100);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(270);
-            grelhaEmprestimo.getColumnModel().getColumn(4).setMaxWidth(270);
             grelhaEmprestimo.getColumnModel().getColumn(5).setPreferredWidth(130);
             grelhaEmprestimo.getColumnModel().getColumn(5).setMaxWidth(130);
-            grelhaEmprestimo.getColumnModel().getColumn(6).setPreferredWidth(200);
-            grelhaEmprestimo.getColumnModel().getColumn(6).setMaxWidth(200);
-            grelhaEmprestimo.getColumnModel().getColumn(7).setPreferredWidth(190);
-            grelhaEmprestimo.getColumnModel().getColumn(7).setMaxWidth(190);
             grelhaEmprestimo.getColumnModel().getColumn(8).setPreferredWidth(130);
             grelhaEmprestimo.getColumnModel().getColumn(8).setMaxWidth(130);
             grelhaEmprestimo.getColumnModel().getColumn(9).setPreferredWidth(110);
